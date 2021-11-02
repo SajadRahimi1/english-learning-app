@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 
 import '../colors.dart';
 
-Widget CustomCheckBox(double width, double height) {
+Widget CustomCheckBox(double width, double height, String text) {
   var checked = false.obs;
-
   return InkWell(
     onTap: () => checked.value = !checked.value,
     child: Row(
@@ -24,10 +23,10 @@ Widget CustomCheckBox(double width, double height) {
                     size: 16,
                   )
                 : const SizedBox())),
-        const Text(
-          "   ذخیره اطلاعات ورود",
-          style: TextStyle(
-              fontSize: 10, color: Color(0xff9F9F9F), fontFamily: "Yekan"),
+        Text(
+          text,
+          style: const TextStyle(
+              fontSize: 9, color: Color(0xff9F9F9F), fontFamily: "Yekan"),
         )
       ],
     ),

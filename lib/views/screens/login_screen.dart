@@ -1,10 +1,15 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:zabaner/views/colors.dart';
+import 'package:zabaner/views/screens/sign_up_screen.dart';
 import 'package:zabaner/views/widgets/custom_check_box.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const textInputDetail = [
+    ["نام کاربری", "رمز عبور"],
+    ["username.png", "lock.png"]
+  ];
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -32,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                     flex: 8,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: const Color(0xfff0eeee),
+                          color: const Color(0xfff5f5f5),
                           borderRadius: BorderRadius.circular(36)),
                       child: Container(
                         margin: EdgeInsets.symmetric(
@@ -46,19 +51,24 @@ class LoginScreen extends StatelessWidget {
                                 child: SizedBox(
                                   width: Get.width,
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: const [
-                                      Text(
-                                        "وارد شوید",
-                                        style: TextStyle(
-                                            fontSize: 15, fontFamily: "Yekan"),
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom: 6),
+                                        child: Text(
+                                          "وارد شوید",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontFamily: "Yekan"),
+                                        ),
                                       ),
                                       Text(
                                         "جهت دسترسی به پورتال خود نیاز به اطلاعات ورود است",
                                         style: TextStyle(
-                                            fontSize: 8, fontFamily: "Yekan"),
+                                            fontSize: 8,
+                                            fontFamily: "Yekan",
+                                            color: Color(0xff9F9F9F)),
                                       ),
                                     ],
                                   ),
@@ -72,17 +82,25 @@ class LoginScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
-                                      child: CustomTextInput(),
+                                      child: CustomTextInput(
+                                        hintText: textInputDetail[0][0],
+                                        iconPath: textInputDetail[1][0],
+                                      ),
                                       width: Get.width,
                                       height: Get.height / 23,
                                     ),
                                     SizedBox(
-                                      child: CustomTextInput(),
+                                      child: CustomTextInput(
+                                        hintText: textInputDetail[0][1],
+                                        iconPath: textInputDetail[1][1],
+                                      ),
                                       width: Get.width,
                                       height: Get.height / 23,
                                     ),
                                     CustomCheckBox(
-                                        Get.width / 20, Get.height / 35)
+                                        Get.width / 20,
+                                        Get.height / 35,
+                                        "   ذخیره اطلاعات ورود")
                                   ],
                                 )),
 
@@ -116,8 +134,8 @@ class LoginScreen extends StatelessWidget {
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
-                                        Text(
+                                      children: [
+                                        const Text(
                                           "حساب کاربری ندارید؟",
                                           style: TextStyle(
                                               fontSize: 12,
@@ -125,7 +143,10 @@ class LoginScreen extends StatelessWidget {
                                               fontFamily: "Yekan"),
                                         ),
                                         InkWell(
-                                          child: Text(
+                                          onTap: () => Get.to(
+                                            () => SignupScreen(),
+                                          ),
+                                          child: const Text(
                                             "ایجاد کنید",
                                             style: TextStyle(
                                                 fontSize: 12,
@@ -152,10 +173,10 @@ class LoginScreen extends StatelessWidget {
                                 flex: 1,
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: Get.width / 9,
-                                      vertical: Get.height / 120),
+                                      horizontal: Get.width / 8,
+                                      vertical: Get.height / 90),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                           color: orange, width: 0.5)),
                                   child: Row(
@@ -163,7 +184,7 @@ class LoginScreen extends StatelessWidget {
                                     children: [
                                       const Text("ورود با حساب کاربری گوگل ",
                                           style: TextStyle(
-                                              color:  Color(0xff616161),
+                                              color: Color(0xff616161),
                                               fontFamily: "Yekan",
                                               fontSize: 9)),
                                       Image.asset(
@@ -179,6 +200,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     )),
 
+                // Trouble image in center bottom
                 Expanded(
                     flex: 3,
                     child: Container(
@@ -187,6 +209,8 @@ class LoginScreen extends StatelessWidget {
                         "assets/images/TROUBLE.png",
                       ),
                     )),
+
+                // Buttons and texts in bottom center
                 Expanded(
                     flex: 2,
                     child: Column(
