@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:zabaner/views/colors.dart';
+import 'package:zabaner/views/screens/recovery_password.dart';
 import 'package:zabaner/views/screens/sign_up_screen.dart';
 import 'package:zabaner/views/widgets/custom_check_box.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
@@ -156,7 +157,9 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    const InkWell(
+                                    InkWell(
+                                      onTap: () => Get.to(
+                                          () => RecoveryPasswordScreen()),
                                       child: Text(
                                         "رمز عبور خود را فرموش کرده ام",
                                         style: TextStyle(

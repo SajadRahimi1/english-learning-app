@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zabaner/views/widgets/custom_check_box.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
 import '../colors.dart';
 
-class SignupScreen extends StatelessWidget {
-  static const textInputDetail = [
-    ["نام کاربری", "رمز عبور", "تکرار رمز عبور", "شماره موبایل", "ایمیل"],
-    ["username.png", "lock.png", "repassword.png", "mobile.png", "email2.png"]
-  ];
-
-  const SignupScreen({Key? key}) : super(key: key);
-
+class RecoveryPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -59,7 +51,7 @@ class SignupScreen extends StatelessWidget {
             // Signup Paramerts
             Container(
                 width: Get.width / 1.25,
-                height: Get.height / 1.8,
+                height: Get.height / 3.4,
                 decoration: BoxDecoration(
                     color: const Color(0xfff5f5f5),
                     borderRadius: BorderRadius.circular(36)),
@@ -78,13 +70,13 @@ class SignupScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(bottom: 6),
                               child: Text(
-                                "ثبت نام کنید",
+                                "فراموشی رمز عبور",
                                 style: TextStyle(
                                     fontSize: 13, fontFamily: "Yekan"),
                               ),
                             ),
                             Text(
-                              "جهت دسترسی به برنامه نیاز به  ورود اطلاعات است",
+                              "لطفا جهت بازیابی اطلاعات شماره موبایل یا ایمیل خود را وارد کنید",
                               style: TextStyle(
                                   fontSize: 8,
                                   fontFamily: "Yekan",
@@ -94,38 +86,25 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
 
-                      //login text input and remember me custom check box
+                      // Email or phone number text input
                       SizedBox(
-                          height: Get.height / 3.5,
+                          height: Get.height / 23,
                           // color: Colors.red,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List.generate(
-                                  6,
-                                  (index) => index == 5
-                                      ? CustomCheckBox(
-                                          Get.width / 22,
-                                          Get.height / 40,
-                                          "   استفاده از زبانر به معنی موافقت با قوانین می باشد")
-                                      : SizedBox(
-                                          width: Get.width,
-                                          height: Get.height / 23,
-                                          child: CustomTextInput(
-                                            hintText: textInputDetail[0][index],
-                                            iconPath: textInputDetail[1][index],
-                                          ),
-                                        )))),
+                          child: CustomTextInput(
+                            hintText: "ایمیل یا شماره همراه",
+                            iconPath: "key.png",
+                          )),
 
                       //login button
                       Container(
                           width: Get.width,
-                          height: Get.height / 12,
+                          height: Get.height / 13,
                           padding:
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {},
                             child: const Text(
-                              "ثبت نام",
+                              "بازیابی",
                               style:
                                   TextStyle(fontSize: 12, fontFamily: "Yekan"),
                             ),
@@ -138,45 +117,47 @@ class SignupScreen extends StatelessWidget {
                                             BorderRadius.circular(8)))),
                           )),
 
-                      // login with gmail button
-                      Container(
-                        height: Get.height / 23,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: Get.width / 10,
-                            vertical: Get.height / 90),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: orange, width: 0.5)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("ثبت نام با حساب کاربری گوگل",
-                                style: TextStyle(
-                                    color: Color(0xff616161),
+                      // Connect to support
+                      Padding(
+                        padding: EdgeInsets.only(top: Get.height / 60),
+                        child: SizedBox(
+                          height: Get.height / 28,
+                          width: Get.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: const [
+                              Text("اطلاعات ورود خود را فراموش کرده اید؟",
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: Color(0xff9F9F9F),
                                     fontFamily: "Yekan",
-                                    fontSize: 9)),
-                            Image.asset(
-                              "assets/images/gmail.png",
-                              width: Get.width / 12,
-                              height: Get.height / 45,
-                            )
-                          ],
+                                  )),
+                              InkWell(
+                                child: Text("ارتباط با پشتیبانی",
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      color: orange,
+                                      fontFamily: "Yekan",
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 )),
 
             // Image in bottom Center
             SizedBox(
-              height: Get.height / 5.5,
+              height: Get.height / 3,
               width: Get.width,
               // color: Colors.red,
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Image.asset(
                     "assets/images/signup_image.png",
-                    width: Get.width / 3.2,
+                    width: Get.width / 1.6,
                     // height: Get.height / 8,
                   )),
             )

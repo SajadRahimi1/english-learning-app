@@ -82,9 +82,9 @@ flutter:
         - asset: assets/fonts/Yekan.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: Aria;
+      fonts:
+        - asset: assets/fonts/Arial.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
