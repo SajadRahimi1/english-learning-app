@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/signup_controller.dart';
+import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/custom_check_box.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
@@ -15,6 +17,8 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignupController _controller = Get.put(SignupController());
+    List signupParamerts = ["", "", "", "", ""];
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -26,10 +30,8 @@ class SignupScreen extends StatelessWidget {
             Padding(
               padding:
                   EdgeInsets.only(right: Get.width / 20, top: Get.height / 35),
-              child: SizedBox(
-                // width: Get.width,
-                // height: Get.height / 12,
-
+              child: GestureDetector(
+                onTap: () => Get.back(),
                 child: Row(
                   children: const [
                     Icon(
@@ -113,6 +115,9 @@ class SignupScreen extends StatelessWidget {
                                           child: CustomTextInput(
                                             hintText: textInputDetail[0][index],
                                             iconPath: textInputDetail[1][index],
+                                            onChanged: (text) {
+                                              signupParamerts[index] = text;
+                                            },
                                           ),
                                         )))),
 
@@ -123,7 +128,13 @@ class SignupScreen extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _controller.signup(
+                                  signupParamerts[0],
+                                  signupParamerts[1],
+                                  signupParamerts[3],
+                                  signupParamerts[4]);
+                            },
                             child: const Text(
                               "ثبت نام",
                               style:

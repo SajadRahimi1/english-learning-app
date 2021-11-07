@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:zabaner/controllers/login_controller.dart';
 import 'package:zabaner/views/colors.dart';
+import 'package:zabaner/views/screens/main_screen.dart';
 import 'package:zabaner/views/screens/recovery_password.dart';
 import 'package:zabaner/views/screens/sign_up_screen.dart';
 import 'package:zabaner/views/widgets/custom_check_box.dart';
@@ -13,6 +15,8 @@ class LoginScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    final LoginController _controller = Get.put(LoginController());
+    String username = "", password = "";
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -86,6 +90,9 @@ class LoginScreen extends StatelessWidget {
                                       child: CustomTextInput(
                                         hintText: textInputDetail[0][0],
                                         iconPath: textInputDetail[1][0],
+                                        onChanged: (text) {
+                                          username = text;
+                                        },
                                       ),
                                       width: Get.width,
                                       height: Get.height / 23,
@@ -94,6 +101,9 @@ class LoginScreen extends StatelessWidget {
                                       child: CustomTextInput(
                                         hintText: textInputDetail[0][1],
                                         iconPath: textInputDetail[1][1],
+                                        onChanged: (text) {
+                                          password = text;
+                                        },
                                       ),
                                       width: Get.width,
                                       height: Get.height / 23,
@@ -112,7 +122,9 @@ class LoginScreen extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                     vertical: Get.height / 32),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _controller.login(username, password);
+                                  },
                                   child: const Text(
                                     "ورود",
                                     style: TextStyle(
@@ -224,11 +236,15 @@ class LoginScreen extends StatelessWidget {
                                 fontFamily: "Yekan",
                                 fontSize: 13,
                                 color: Color(0xff858585))),
+
+                        // Login as geust
                         SizedBox(
                             width: Get.width / 1.5,
                             height: Get.height / 24,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(MainScreen());
+                              },
                               child: const Text("ورود به عنوان میهمان",
                                   style: TextStyle(
                                       fontFamily: "Yekan", fontSize: 12)),
@@ -240,6 +256,8 @@ class LoginScreen extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8)))),
                             )),
+
+                        // Connect to support
                         InkWell(
                           onTap: () {},
                           child: Row(

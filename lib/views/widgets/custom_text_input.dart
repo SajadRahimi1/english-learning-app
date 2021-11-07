@@ -3,18 +3,23 @@ import 'package:zabaner/views/colors.dart';
 
 class CustomTextInput extends StatelessWidget {
   const CustomTextInput(
-      {Key? key, required this.hintText, required this.iconPath})
+      {Key? key,
+      required this.hintText,
+      required this.iconPath,
+      this.onChanged})
       : super(key: key);
   final String hintText, iconPath;
-
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        onChanged: onChanged,
+        style: TextStyle(fontFamily: "Yekan", fontSize: 14),
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
             filled: true,
             hintText: hintText,
-            contentPadding: const EdgeInsets.all(0),
+            contentPadding: EdgeInsets.zero,
             hintStyle: const TextStyle(
                 fontSize: 10, fontFamily: "Yekan", color: Color(0xffb0b0b0)),
             hintTextDirection: TextDirection.rtl,

@@ -5,7 +5,7 @@ import 'package:zabaner/views/widgets/custom_text_input.dart';
 
 import '../colors.dart';
 
-class RecoveryPasswordScreen extends StatelessWidget {
+class SetNewPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -50,7 +50,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
             // Signup Paramerts
             Container(
                 width: Get.width / 1.25,
-                height: Get.height / 3.4,
+                height: Get.height / 2.8,
                 decoration: BoxDecoration(
                     color: const Color(0xfff5f5f5),
                     borderRadius: BorderRadius.circular(36)),
@@ -69,13 +69,13 @@ class RecoveryPasswordScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(bottom: 6),
                               child: Text(
-                                "فراموشی رمز عبور",
+                                "تغییر رمز عبور",
                                 style: TextStyle(
                                     fontSize: 13, fontFamily: "Yekan"),
                               ),
                             ),
                             Text(
-                              "لطفا جهت بازیابی اطلاعات شماره موبایل یا ایمیل خود را وارد کنید",
+                              "لطفا رمز عبور جدید را وارد نمایید",
                               style: TextStyle(
                                   fontSize: 8,
                                   fontFamily: "Yekan",
@@ -85,13 +85,42 @@ class RecoveryPasswordScreen extends StatelessWidget {
                         ),
                       ),
 
-                      // Email or phone number text input
+                      // password and repet password text input
                       SizedBox(
-                          height: Get.height / 23,
-                          // color: Colors.red,
-                          child: const CustomTextInput(
-                            hintText: "ایمیل یا شماره همراه",
-                            iconPath: "key.png",
+                          height: Get.height / 10.4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: Get.height / 23,
+                                child: const CustomTextInput(
+                                  hintText: "رمز عبور جدید",
+                                  iconPath: "lock.png",
+                                ),
+                              ),
+                              SizedBox(
+                                height: Get.height / 23,
+                                child: const CustomTextInput(
+                                  hintText: "تکرار رمز عبور",
+                                  iconPath: "repassword.png",
+                                ),
+                              ),
+                            ],
+                          )),
+
+                      // Hint text
+                      SizedBox(
+                          width: Get.width,
+                          height: Get.height / 20,
+                          child: const Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              "رمز انتخابی  شما باید حداقل 8 کاراکتر شامل حروف، اعداد و حداقل یک کاراکتر  ویژه باشد.",
+                              style: TextStyle(
+                                  color: Color(0xff9F9F9F),
+                                  fontFamily: "Yekan",
+                                  fontSize: 9),
+                            ),
                           )),
 
                       //login button
@@ -101,11 +130,9 @@ class RecoveryPasswordScreen extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
-                            onPressed: () {
-                              Get.to(() => ValidateResetPasswordCode());
-                            },
+                            onPressed: () {},
                             child: const Text(
-                              "بازیابی",
+                              "تغییر رمز عبور",
                               style:
                                   TextStyle(fontSize: 12, fontFamily: "Yekan"),
                             ),
@@ -117,41 +144,13 @@ class RecoveryPasswordScreen extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(8)))),
                           )),
-
-                      // Connect to support
-                      Padding(
-                        padding: EdgeInsets.only(top: Get.height / 60),
-                        child: SizedBox(
-                          height: Get.height / 28,
-                          width: Get.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const [
-                              Text("اطلاعات ورود خود را فراموش کرده اید؟",
-                                  style: TextStyle(
-                                    fontSize: 9,
-                                    color: Color(0xff9F9F9F),
-                                    fontFamily: "Yekan",
-                                  )),
-                              InkWell(
-                                child: Text("ارتباط با پشتیبانی",
-                                    style: TextStyle(
-                                      fontSize: 9,
-                                      color: orange,
-                                      fontFamily: "Yekan",
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 )),
 
             // Image in bottom Center
             SizedBox(
-              height: Get.height / 3,
+              height: Get.height / 3.8,
               width: Get.width,
               child: Align(
                   alignment: Alignment.bottomCenter,

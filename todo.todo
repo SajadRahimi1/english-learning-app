@@ -1,0 +1,20 @@
+- Splash Screen 
+    - UI @done
+
+- Login Screen
+    - Login UI @done
+    - Connect to backend
+    - Send data to backend
+    - Login with gmail
+
+- Signup Screen
+    - UI @done
+    - Send data to backend
+    - Singup with gmail
+
+- Reset Screen
+    - UI @done
+    - Send phone number to backend and get response
+    - Validate sms code screen
+        - UI @done
+        - validate sms code for reset password with backend
