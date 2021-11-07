@@ -18,7 +18,6 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Top of screen
             Container(
-              // color: Colors.red,
               height: Get.height / 7,
               padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
               child: Row(
@@ -50,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontFamily: "Yekan",
                               fontSize: 10,
-                              color: Color(0xffC2C2C2)),
+                              color: Color(0xff919191)),
                         )
                       ],
                     ),
@@ -79,120 +78,126 @@ class HomeScreen extends StatelessWidget {
                   color: const Color(0xffF9F9F9),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(37)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Circle Level
-                      SizedBox(
-                          width: Get.width / 2,
-                          child: Column(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(top: 8, bottom: 5),
-                                child: Text("LEVEL 2"),
-                              ),
+                  child: InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/statics'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Circle Level
+                        SizedBox(
+                            width: Get.width / 2,
+                            child: Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8, bottom: 5),
+                                  child: Text("LEVEL 2"),
+                                ),
 
-                              // Progress Circle
-                              SizedBox(
-                                height: Get.height / 3.8,
-                                width: Get.width / 2.2,
-                                child: Stack(
-                                  children: [
-                                    SizedBox(
-                                      height: Get.height / 3.8,
-                                      width: Get.width / 2.2,
-                                      child: Card(
-                                        color: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(150)),
-                                        child: const CircularProgressIndicator(
-                                          strokeWidth: 6,
-                                          color: Color(0xffFFC200),
-                                          value: 0.3,
+                                // Progress Circle
+                                SizedBox(
+                                  height: Get.height / 3.8,
+                                  width: Get.width / 2.2,
+                                  child: Stack(
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height / 3.8,
+                                        width: Get.width / 2.2,
+                                        child: Card(
+                                          color: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(150)),
+                                          child:
+                                              const CircularProgressIndicator(
+                                            strokeWidth: 6,
+                                            color: Color(0xffFFC200),
+                                            value: 0.3,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const Center(
-                                      child: Text(
-                                        "8/20",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 15,
-                                            color: Color(0xff707070)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-
-                      // Time textes
-                      Padding(
-                        padding: EdgeInsets.only(left: Get.width / 30),
-                        child: SizedBox(
-                            width: Get.width / 3.5,
-                            height: Get.height / 3.8,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // chart circle box image
-                                Card(
-                                  color: const Color(0xffffffff),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(150)),
-                                  child: Container(
-                                    width: Get.width / 7.3,
-                                    height: Get.height / 13,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle),
-                                    child: Image.asset(
-                                      "assets/images/CHART2.png",
-                                      fit: BoxFit.contain,
-                                    ),
+                                      const Center(
+                                        child: Text(
+                                          "8/20",
+                                          style: TextStyle(
+                                              fontFamily: "Arial",
+                                              fontSize: 15,
+                                              color: Color(0xff707070)),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ),
-
-                                const Text(
-                                  "MO:    2D:8H:22M ",
-                                  style: TextStyle(
-                                      fontFamily: "Arial",
-                                      fontSize: 10,
-                                      color: const Color(0xff9F9F9F)),
-                                ),
-                                const Text(
-                                  "Tu:      2D:8H:22M ",
-                                  style: TextStyle(
-                                      fontFamily: "Arial",
-                                      fontSize: 10,
-                                      color: const Color(0xff9F9F9F)),
-                                ),
-                                const Text(
-                                  "We:     2D:8H:22M ",
-                                  style: TextStyle(
-                                      fontFamily: "Arial",
-                                      fontSize: 10,
-                                      color: const Color(0xff9F9F9F)),
-                                ),
-                                const Text(
-                                  "Th:      2D:8H:22M ",
-                                  style: TextStyle(
-                                      fontFamily: "Arial",
-                                      fontSize: 10,
-                                      color: const Color(0xff9F9F9F)),
-                                ),
-                                const Text(
-                                  "Fr:       2D:8H:22M ",
-                                  style: TextStyle(
-                                      fontFamily: "Arial",
-                                      fontSize: 10,
-                                      color: const Color(0xff9F9F9F)),
-                                ),
+                                )
                               ],
                             )),
-                      )
-                    ],
+
+                        // Time textes
+                        Padding(
+                          padding: EdgeInsets.only(left: Get.width / 30),
+                          child: SizedBox(
+                              width: Get.width / 3.5,
+                              height: Get.height / 3.8,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // chart circle box image
+                                  Card(
+                                    color: const Color(0xffffffff),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(150)),
+                                    child: Container(
+                                      width: Get.width / 7.3,
+                                      height: Get.height / 13,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle),
+                                      child: Image.asset(
+                                        "assets/images/CHART2.png",
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const Text(
+                                    "MO:    2D:8H:22M ",
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        fontSize: 10,
+                                        color: const Color(0xff9F9F9F)),
+                                  ),
+                                  const Text(
+                                    "Tu:      2D:8H:22M ",
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        fontSize: 10,
+                                        color: const Color(0xff9F9F9F)),
+                                  ),
+                                  const Text(
+                                    "We:     2D:8H:22M ",
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        fontSize: 10,
+                                        color: const Color(0xff9F9F9F)),
+                                  ),
+                                  const Text(
+                                    "Th:      2D:8H:22M ",
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        fontSize: 10,
+                                        color: const Color(0xff9F9F9F)),
+                                  ),
+                                  const Text(
+                                    "Fr:       2D:8H:22M ",
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        fontSize: 10,
+                                        color: const Color(0xff9F9F9F)),
+                                  ),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -207,7 +212,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: "Yekan",
                       fontSize: 12,
-                      color: Color(0xffC2C2C2)),
+                      color: Color(0xff919191)),
                 )),
 
             // recent article in bottom of screen
