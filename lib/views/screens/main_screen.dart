@@ -4,6 +4,7 @@ import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/client_statics_screen.dart';
 import 'package:zabaner/views/screens/home_screen.dart';
+import 'package:zabaner/views/screens/profile_screen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -23,7 +24,9 @@ class MainScreen extends StatelessWidget {
                   builder: (context) {
                     switch (settings.name) {
                       case '/statics':
-                        return StaticsScreen();
+                        return const StaticsScreen();
+                      case '/profile':
+                        return ProfileScreen();
                     }
                     return HomeScreen();
                   },

@@ -14,7 +14,7 @@ class CustomTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         onChanged: onChanged,
-        style: TextStyle(fontFamily: "Yekan", fontSize: 14),
+        style: const TextStyle(fontFamily: "Yekan", fontSize: 14),
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
             filled: true,

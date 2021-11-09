@@ -24,10 +24,13 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // profile image
-                  CircleAvatar(
-                    radius: Get.width / 13,
-                    backgroundImage: const NetworkImage(
-                        "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/profile'),
+                    child: CircleAvatar(
+                      radius: Get.width / 13,
+                      backgroundImage: const NetworkImage(
+                          "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                    ),
                   ),
 
                   // Hello Text
