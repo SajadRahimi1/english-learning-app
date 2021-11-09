@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/views/screens/profile_account_screen.dart';
+import 'package:zabaner/views/screens/profile_support_screen.dart';
 
 import 'package:zabaner/views/widgets/profile_tab_widget.dart';
 
@@ -10,6 +11,18 @@ class ProfileScreen extends StatelessWidget {
     false,
     false,
   ].obs;
+  var tabWidget = [
+    ProfileAccount(),
+    ProfileSupport(),
+    Container(
+      width: Get.width,
+      height: Get.height / 2,
+      color: Colors.yellow[100],
+    )
+  ];
+  var tabIndex = 0.obs;
+
+  ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,6 +61,7 @@ class ProfileScreen extends StatelessWidget {
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[0] = true;
+                                      tabIndex.value = 0;
                                     },
                                   )),
                               Obx(() => ProfileTab(
@@ -57,6 +71,7 @@ class ProfileScreen extends StatelessWidget {
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[1] = true;
+                                      tabIndex.value = 1;
                                     },
                                   )),
                               Obx(() => ProfileTab(
@@ -66,6 +81,7 @@ class ProfileScreen extends StatelessWidget {
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[2] = true;
+                                      tabIndex.value = 2;
                                     },
                                   )),
                               ProfileTab(image: "exit.png"),
@@ -79,17 +95,10 @@ class ProfileScreen extends StatelessWidget {
 
                 // Empty Space Between text and top section
                 SizedBox(
-                  height: Get.height / 14,
+                  height: Get.height / 20,
                 ),
 
-                Obx(() => Visibility(visible: tab[0], child: ProfileAccount())),
-                Obx(() => Visibility(
-                    visible: tab[1],
-                    child: Container(
-                      height: Get.height / 2,
-                      width: Get.width,
-                      color: Colors.green,
-                    )))
+                Obx(() => tabWidget[tabIndex.value])
               ],
             ),
           ),
