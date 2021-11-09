@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/views/screens/profile_account_screen.dart';
+import 'package:zabaner/views/screens/profile_setting_screen.dart';
 import 'package:zabaner/views/screens/profile_support_screen.dart';
 
 import 'package:zabaner/views/widgets/profile_tab_widget.dart';
@@ -11,15 +12,7 @@ class ProfileScreen extends StatelessWidget {
     false,
     false,
   ].obs;
-  var tabWidget = [
-    ProfileAccount(),
-    ProfileSupport(),
-    Container(
-      width: Get.width,
-      height: Get.height / 2,
-      color: Colors.yellow[100],
-    )
-  ];
+  var tabWidget = [ProfileAccount(), ProfileSupport(), CustomSwitch()];
   var tabIndex = 0.obs;
 
   ProfileScreen({Key? key}) : super(key: key);
@@ -48,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: Get.width / 23),
-                        child: Container(
+                        child: SizedBox(
                           height: Get.height / 10,
                           width: Get.width / 1.56,
                           child: Row(
@@ -84,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                                       tabIndex.value = 2;
                                     },
                                   )),
-                              ProfileTab(image: "exit.png"),
+                              const ProfileTab(image: "exit.png"),
                             ],
                           ),
                         ),
