@@ -18,6 +18,7 @@ class ProfileSupport extends StatelessWidget {
           ),
         ),
 
+        // Card in Middle of screen
         Card(
           color: const Color(0xffF9F9F9),
           elevation: 2,
@@ -101,6 +102,7 @@ class ProfileSupport extends StatelessWidget {
           ),
         ),
 
+        // Support email text
         SizedBox(
           width: Get.width / 1.2,
           child: const Text(
@@ -110,6 +112,8 @@ class ProfileSupport extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
+
+        // Zabaner Logo
         SizedBox(
             width: Get.width / 1.6,
             child:

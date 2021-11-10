@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
     false,
     false,
   ].obs;
-  var tabWidget = [ProfileAccount(), ProfileSupport(), CustomSwitch()];
+  final tabWidget = [ProfileAccount(), ProfileSupport(), ProfileSetting()];
   var tabIndex = 0.obs;
 
   ProfileScreen({Key? key}) : super(key: key);
@@ -88,10 +88,10 @@ class ProfileScreen extends StatelessWidget {
 
                 // Empty Space Between text and top section
                 SizedBox(
-                  height: Get.height / 20,
+                  height: Get.height / 35,
                 ),
 
-                Obx(() => tabWidget[tabIndex.value])
+                Expanded(child: Obx(() => tabWidget[tabIndex.value]))
               ],
             ),
           ),

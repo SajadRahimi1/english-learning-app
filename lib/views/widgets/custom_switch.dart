@@ -7,16 +7,16 @@ class CustomSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => enable.value = !enable.value,
-      child: Container(
-          width: MediaQuery.of(context).size.width / 7,
-          height: MediaQuery.of(context).size.height / 25,
+      child: SizedBox(
+          width: MediaQuery.of(context).size.width / 9,
+          height: MediaQuery.of(context).size.height / 28,
           child: Obx(
             () => Stack(
               children: [
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 8,
-                    height: MediaQuery.of(context).size.height / 42,
+                    width: MediaQuery.of(context).size.width / 11,
+                    height: MediaQuery.of(context).size.height / 55,
                     decoration: BoxDecoration(
                         color: enable.value
                             ? const Color(0xff3254F9)
@@ -30,7 +30,7 @@ class CustomSwitch extends StatelessWidget {
                       ? Alignment.centerLeft
                       : Alignment.centerRight,
                   child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.width / 37,
+                    radius: MediaQuery.of(context).size.width / 42,
                     backgroundColor: enable.value
                         ? const Color(0xff050092)
                         : const Color(0xff000000),
