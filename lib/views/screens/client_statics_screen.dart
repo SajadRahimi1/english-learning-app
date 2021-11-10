@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/views/widgets/bar_chart_widget.dart';
 
 class StaticsScreen extends StatelessWidget {
   const StaticsScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class StaticsScreen extends StatelessWidget {
                             height: 3,
                           ),
                           Text(
-                            "امروز وقتشه که یه قدم بیشتر مهارت کسب کنی",
+                            "اخبار متنوع به زبان انگلیسی",
                             style: TextStyle(
                                 fontFamily: "Yekan",
                                 fontSize: 8,
@@ -223,7 +224,7 @@ class StaticsScreen extends StatelessWidget {
                 child: SizedBox(
                     width: Get.width,
                     child: const Text(
-                      "مدت زمان مطالعه کتاب ها و گرامر",
+                      "مدت زمان مطالعه منابع و اخبار",
                       style: TextStyle(
                           fontFamily: "Yekan",
                           fontSize: 11,
@@ -248,21 +249,63 @@ class StaticsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // ============ Lines in backforund of charts ============
                               Divider(
-                                // color: Colors.black,
                                 thickness: 1,
                                 height: Get.height / 22,
                               ),
                               Divider(
-                                // color: Colors.black,
                                 thickness: 1,
                                 height: Get.height / 22,
                               ),
                               Divider(
-                                // color: Colors.black,
                                 thickness: 1,
                                 height: Get.height / 22,
                               ),
+                              // =======================================================
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: Get.width,
+                          height: Get.height,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: Get.height / 35,
+                              vertical: Get.height / 40),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              barChart(
+                                  width: Get.width / 70,
+                                  height: Get.height / 8 / 1.6,
+                                  color: const Color(0xffFFE14D),
+                                  topText: "00:03:01",
+                                  bottomText: "امروز"),
+                              barChart(
+                                  width: Get.width / 70,
+                                  height: Get.height / 8 / 2.5,
+                                  color: const Color(0xffAEE908),
+                                  topText: "00:02:24",
+                                  bottomText: "دیروز"),
+                              barChart(
+                                  width: Get.width / 70,
+                                  height: Get.height / 8,
+                                  color: const Color(0xffE90827),
+                                  topText: "00:10:20",
+                                  bottomText: "00/07/01"),
+                              barChart(
+                                  width: Get.width / 70,
+                                  height: Get.height / 8 / 1.2,
+                                  color: const Color(0xffFFA4AA),
+                                  topText: "00:07:44",
+                                  bottomText: "00/06/31"),
+                              barChart(
+                                  width: Get.width / 70,
+                                  height: Get.height / 8 / 1.6,
+                                  color: const Color(0xffA4A7FF),
+                                  topText: "00:05:01",
+                                  bottomText: "00/06/30"),
                             ],
                           ),
                         )
