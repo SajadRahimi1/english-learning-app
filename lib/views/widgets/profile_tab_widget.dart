@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatelessWidget {
-  final String image;
+  final String image, title;
   final void Function()? onTap;
-  const ProfileTab({Key? key, required this.image, this.onTap})
+  const ProfileTab(
+      {Key? key, required this.image, this.onTap, required this.title})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ProfileTab extends StatelessWidget {
 
         // Tab text
         Text(
-          "Account",
+          title,
           style: TextStyle(
               fontFamily: "Yekan",
               fontSize: 10,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/views/screens/login_screen.dart';
 import 'package:zabaner/views/screens/profile_account_screen.dart';
 import 'package:zabaner/views/screens/profile_setting_screen.dart';
 import 'package:zabaner/views/screens/profile_support_screen.dart';
-
 import 'package:zabaner/views/widgets/profile_tab_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -51,6 +51,7 @@ class ProfileScreen extends StatelessWidget {
                                     image: tab[0] == true
                                         ? "account_enable2.png"
                                         : "account_disable2.png",
+                                    title: "Account",
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[0] = true;
@@ -61,6 +62,7 @@ class ProfileScreen extends StatelessWidget {
                                     image: tab[1] == true
                                         ? "support_enable2.png"
                                         : "support_disable2.png",
+                                    title: "Support",
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[1] = true;
@@ -71,13 +73,18 @@ class ProfileScreen extends StatelessWidget {
                                     image: tab[2] == true
                                         ? "setting_enable2.png"
                                         : "setting_disable2.png",
+                                    title: "Settings",
                                     onTap: () {
                                       tab.value = List.filled(3, false);
                                       tab[2] = true;
                                       tabIndex.value = 2;
                                     },
                                   )),
-                              const ProfileTab(image: "exit.png"),
+                              ProfileTab(
+                                image: "exit.png",
+                                title: "Log Out",
+                                onTap: () => Get.offAll(LoginScreen()),
+                              ),
                             ],
                           ),
                         ),
