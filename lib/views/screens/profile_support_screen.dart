@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zabaner/views/widgets/custom_text_input_profile.dart';
 
 class ProfileSupport extends StatelessWidget {
+  const ProfileSupport({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +40,7 @@ class ProfileSupport extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: "Yekan",
                       fontSize: 11,
-                      color: const Color(0xff5a5a5a)),
+                      color: Color(0xff5a5a5a)),
                 ),
 
                 // Text input

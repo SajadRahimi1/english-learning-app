@@ -123,7 +123,7 @@ class ValidateResetPasswordCode extends StatelessWidget {
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => SetNewPasswordScreen());
+                              Get.to(() => const SetNewPasswordScreen());
                             },
                             child: const Text(
                               "اعتبار سنجی",

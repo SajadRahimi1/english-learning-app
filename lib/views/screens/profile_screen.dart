@@ -12,7 +12,11 @@ class ProfileScreen extends StatelessWidget {
     false,
     false,
   ].obs;
-  final tabWidget = [ProfileAccount(), ProfileSupport(), ProfileSetting()];
+  final tabWidget = [
+    const ProfileAccount(),
+    const ProfileSupport(),
+    ProfileSetting()
+  ];
   var tabIndex = 0.obs;
 
   ProfileScreen({Key? key}) : super(key: key);
@@ -83,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                               ProfileTab(
                                 image: "exit.png",
                                 title: "Log Out",
-                                onTap: () => Get.offAll(LoginScreen()),
+                                onTap: () => Get.offAll(const LoginScreen()),
                               ),
                             ],
                           ),

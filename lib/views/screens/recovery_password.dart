@@ -6,6 +6,8 @@ import 'package:zabaner/views/widgets/custom_text_input.dart';
 import '../colors.dart';
 
 class RecoveryPasswordScreen extends StatelessWidget {
+  const RecoveryPasswordScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -102,7 +104,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => ValidateResetPasswordCode());
+                              Get.to(() => const ValidateResetPasswordCode());
                             },
                             child: const Text(
                               "بازیابی",

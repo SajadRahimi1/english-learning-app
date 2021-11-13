@@ -13,6 +13,8 @@ class LoginScreen extends StatelessWidget {
     ["نام کاربری", "رمز عبور"],
     ["username.png", "lock.png"]
   ];
+
+  const LoginScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final LoginController _controller = Get.put(LoginController());
@@ -108,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                                       width: Get.width,
                                       height: Get.height / 23,
                                     ),
-                                    CustomCheckBox(
+                                    customCheckBox(
                                         Get.width / 20,
                                         Get.height / 35,
                                         "   ذخیره اطلاعات ورود")
@@ -123,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                                     vertical: Get.height / 32),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    _controller.login(username, password);
+                                    // _controller.login(username, password);
                                   },
                                   child: const Text(
                                     "ورود",
@@ -157,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () => Get.to(
-                                            () => SignupScreen(),
+                                            () => const SignupScreen(),
                                           ),
                                           child: const Text(
                                             "ایجاد کنید",
@@ -171,8 +173,8 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     InkWell(
                                       onTap: () => Get.to(
-                                          () => RecoveryPasswordScreen()),
-                                      child: Text(
+                                          () => const RecoveryPasswordScreen()),
+                                      child: const Text(
                                         "رمز عبور خود را فرموش کرده ام",
                                         style: TextStyle(
                                             fontSize: 9,
@@ -243,7 +245,7 @@ class LoginScreen extends StatelessWidget {
                             height: Get.height / 24,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(MainScreen());
+                                Get.to(const MainScreen());
                               },
                               child: const Text("ورود به عنوان میهمان",
                                   style: TextStyle(

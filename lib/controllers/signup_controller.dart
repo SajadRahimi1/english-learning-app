@@ -12,7 +12,7 @@ class SignupController extends GetConnect {
 
   Future<void> signup(
       String username, String password, String mobile, String? email) async {
-    var response = await post(signup_url, {
+    var response = await post(signupUrl, {
       "username": username,
       "password": password,
       "mobile": mobile,

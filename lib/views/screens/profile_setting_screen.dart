@@ -4,6 +4,8 @@ import 'package:zabaner/views/widgets/custom_setting_card.dart';
 
 class ProfileSetting extends StatelessWidget {
   var backupOnServer = false.obs;
+
+  ProfileSetting({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

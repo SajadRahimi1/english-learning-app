@@ -10,6 +10,8 @@ class ProfileAccount extends StatelessWidget {
     "ایمیل",
     "موبایل"
   ];
+
+  const ProfileAccount({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

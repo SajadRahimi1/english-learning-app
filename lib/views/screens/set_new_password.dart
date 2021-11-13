@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zabaner/views/screens/validate_reset_password_screen.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
 import '../colors.dart';
 
 class SetNewPasswordScreen extends StatelessWidget {
+  const SetNewPasswordScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(

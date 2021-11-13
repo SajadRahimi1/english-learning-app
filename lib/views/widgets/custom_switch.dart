@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 class CustomSwitch extends StatelessWidget {
   var enable = false.obs;
+
+  CustomSwitch({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(

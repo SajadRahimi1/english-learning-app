@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/controllers/signup_controller.dart';
-import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/custom_check_box.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
@@ -105,7 +104,7 @@ class SignupScreen extends StatelessWidget {
                               children: List.generate(
                                   6,
                                   (index) => index == 5
-                                      ? CustomCheckBox(
+                                      ? customCheckBox(
                                           Get.width / 22,
                                           Get.height / 40,
                                           "   استفاده از زبانر به معنی موافقت با قوانین می باشد")

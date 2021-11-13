@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zabaner/views/colors.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     const links = [
@@ -166,35 +167,35 @@ class HomeScreen extends StatelessWidget {
                                     style: TextStyle(
                                         fontFamily: "Arial",
                                         fontSize: 10,
-                                        color: const Color(0xff9F9F9F)),
+                                        color: Color(0xff9F9F9F)),
                                   ),
                                   const Text(
                                     "Tu:      2D:8H:22M ",
                                     style: TextStyle(
                                         fontFamily: "Arial",
                                         fontSize: 10,
-                                        color: const Color(0xff9F9F9F)),
+                                        color: Color(0xff9F9F9F)),
                                   ),
                                   const Text(
                                     "We:     2D:8H:22M ",
                                     style: TextStyle(
                                         fontFamily: "Arial",
                                         fontSize: 10,
-                                        color: const Color(0xff9F9F9F)),
+                                        color: Color(0xff9F9F9F)),
                                   ),
                                   const Text(
                                     "Th:      2D:8H:22M ",
                                     style: TextStyle(
                                         fontFamily: "Arial",
                                         fontSize: 10,
-                                        color: const Color(0xff9F9F9F)),
+                                        color: Color(0xff9F9F9F)),
                                   ),
                                   const Text(
                                     "Fr:       2D:8H:22M ",
                                     style: TextStyle(
                                         fontFamily: "Arial",
                                         fontSize: 10,
-                                        color: const Color(0xff9F9F9F)),
+                                        color: Color(0xff9F9F9F)),
                                   ),
                                 ],
                               )),

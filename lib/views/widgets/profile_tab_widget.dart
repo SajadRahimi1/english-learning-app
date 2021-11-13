@@ -29,10 +29,8 @@ class ProfileTab extends StatelessWidget {
         // Tab text
         Text(
           title,
-          style: TextStyle(
-              fontFamily: "Yekan",
-              fontSize: 10,
-              color: const Color(0xff5A5A5A)),
+          style: const TextStyle(
+              fontFamily: "Yekan", fontSize: 10, color: Color(0xff5A5A5A)),
         )
       ],
     );

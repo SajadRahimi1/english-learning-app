@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../colors.dart';
 
-Widget CustomCheckBox(double width, double height, String text) {
+Widget customCheckBox(double width, double height, String text) {
   var checked = false.obs;
   return InkWell(
     onTap: () => checked.value = !checked.value,
