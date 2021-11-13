@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 
-class BookScreen extends StatelessWidget {
-  const BookScreen({Key? key}) : super(key: key);
+class PodcastScreen extends StatelessWidget {
+  const PodcastScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class BookScreen extends StatelessWidget {
                 backgroundColor: const Color(0xffffffff),
                 body: Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
-                  child: ListView(children: [
+                  child: Column(children: [
                     // close this screen button
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
@@ -95,11 +95,13 @@ class BookScreen extends StatelessWidget {
                       height: Get.height / 30,
                     ),
 
+                    // Image and Title
                     SizedBox(
                       width: Get.width,
-                      height: Get.height / 4,
+                      height: Get.height / 3.5,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,20 +109,20 @@ class BookScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: Get.width / 10,
-                                    height: Get.height / 22,
+                                    width: Get.width / 12,
+                                    height: Get.height / 21,
                                     child: Image.asset(
-                                      "assets/images/bookr.png",
+                                      "assets/images/podcast.png",
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                   Column(
                                     children: [
                                       SizedBox(
-                                        width: Get.width / 2,
-                                        height: Get.height / 22,
+                                        width: Get.width / 2.5,
+                                        height: Get.height / 24,
                                         child: const Text(
-                                          "   Oxford Dictionary",
+                                          "   Global News",
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontFamily: "Yekan",
@@ -128,8 +130,8 @@ class BookScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: Get.width / 2,
-                                        height: Get.height / 22,
+                                        width: Get.width / 2.5,
+                                        height: Get.height / 24,
                                         child: const Text(
                                           "     Dictionary of English",
                                           style: TextStyle(
@@ -143,15 +145,15 @@ class BookScreen extends StatelessWidget {
                                 ],
                               ),
                               const Text(
-                                "دیکشنری اکسفورد",
+                                "اخبار جهانی",
                                 style: TextStyle(
                                     fontFamily: "Yekan",
                                     fontWeight: FontWeight.w400),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: Get.height / 50),
+                                padding: EdgeInsets.only(top: Get.height / 70),
                                 child: const Text(
-                                  "راهنمای مبتدیان جهت مکالمات روزانه",
+                                  "اخبار جهانی امروز در پادکست بی بی سی",
                                   style: TextStyle(
                                       fontFamily: "Yekan",
                                       fontSize: 10,
@@ -161,18 +163,121 @@ class BookScreen extends StatelessWidget {
                             ],
                           ),
                           Container(
-                            width: Get.width / 3.2,
-                            height: double.infinity,
+                            width: Get.width / 2.3,
+                            height: Get.height / 4,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(20),
                                 image: const DecorationImage(
                                     image: NetworkImage(
-                                        "https://images-na.ssl-images-amazon.com/images/I/51VDi1DSQjL._SX378_BO1,204,203,200_.jpg"),
+                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/BBC_World_News_2019.svg/1200px-BBC_World_News_2019.svg.png"),
                                     fit: BoxFit.fill)),
                           )
                         ],
                       ),
-                    )
+                    ),
+
+                    // Episodes
+                    Expanded(
+                        child: ListView(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: Get.height / 50),
+                          width: Get.width,
+                          height: Get.height / 18,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffDBDBDB),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.height / 150,
+                                horizontal: Get.width / 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset("assets/images/play.png"),
+                                const Text("1. BBC Today Global News Podcast",
+                                    textDirection: TextDirection.ltr,
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        color: Color(0xff777777)))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: Get.height / 50),
+                          width: Get.width,
+                          height: Get.height / 18,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffDBDBDB),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.height / 150,
+                                horizontal: Get.width / 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset("assets/images/play.png"),
+                                const Text("2. Snap Judgment Sounds With BBC",
+                                    textDirection: TextDirection.ltr,
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        color: Color(0xff777777)))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: Get.height / 50),
+                          width: Get.width,
+                          height: Get.height / 18,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffDBDBDB),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.height / 150,
+                                horizontal: Get.width / 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset("assets/images/play.png"),
+                                const Text("3. Dare To Lead With Edvard Brown",
+                                    textDirection: TextDirection.ltr,
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        color: Color(0xff777777)))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: Get.height / 50),
+                          width: Get.width,
+                          height: Get.height / 18,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffDBDBDB),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.height / 150,
+                                horizontal: Get.width / 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset("assets/images/play.png"),
+                                const Text("4. Last Giant Produced By Drake ",
+                                    textDirection: TextDirection.ltr,
+                                    style: TextStyle(
+                                        fontFamily: "Arial",
+                                        color: Color(0xff777777)))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
                   ]),
                 ))));
   }

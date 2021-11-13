@@ -5,6 +5,7 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/client_statics_screen.dart';
 import 'package:zabaner/views/screens/home_screen.dart';
+import 'package:zabaner/views/screens/pocast_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
 
@@ -43,6 +44,8 @@ class MainScreen extends StatelessWidget {
                     switch (settings.name) {
                       case '/bookScreen':
                         return const BookScreen();
+                      case "/podcast":
+                        return const PodcastScreen();
                     }
                     return const ResourcesScreen();
                   },

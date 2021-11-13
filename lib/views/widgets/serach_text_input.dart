@@ -23,7 +23,7 @@ class SearchTextInput extends StatelessWidget {
         prefixIcon: SizedBox(
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 13, top: 4, bottom: 4, right: 13),
+                const EdgeInsets.only(left: 13, top: 4, bottom: 4, right: 5),
             child: Image.asset(
               "assets/images/search.png",
               fit: BoxFit.scaleDown,
