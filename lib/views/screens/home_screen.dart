@@ -99,25 +99,23 @@ class HomeScreen extends StatelessWidget {
 
                                 // Progress Circle
                                 SizedBox(
-                                  height: Get.height / 3.8,
+                                  height: Get.height / 4.2,
                                   width: Get.width / 2.2,
                                   child: Stack(
                                     children: [
-                                      SizedBox(
+                                      Container(
                                         height: Get.height / 3.8,
                                         width: Get.width / 2.2,
-                                        child: Card(
+                                        decoration:const BoxDecoration(
                                           color: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(150)),
+                                          shape: BoxShape.circle),
                                           child:
                                               const CircularProgressIndicator(
                                             strokeWidth: 6,
                                             color: Color(0xffFFC200),
                                             value: 0.3,
                                           ),
-                                        ),
+                                        // ),
                                       ),
                                       const Center(
                                         child: Text(

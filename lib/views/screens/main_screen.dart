@@ -5,6 +5,7 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/client_statics_screen.dart';
 import 'package:zabaner/views/screens/home_screen.dart';
+import 'package:zabaner/views/screens/news_screen.dart';
 import 'package:zabaner/views/screens/pocast_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
@@ -23,6 +24,7 @@ class MainScreen extends StatelessWidget {
             controller: _controller.pageController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
+              // Home screen and navigate to profile screen
               Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(
                   settings: settings,
@@ -37,6 +39,8 @@ class MainScreen extends StatelessWidget {
                   },
                 ),
               ),
+              
+              // Resources screen and navigate and Book, Podcast screen
               Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(
                   settings: settings,
@@ -51,9 +55,17 @@ class MainScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                color: Colors.cyan,
-              ),
+              
+              // News screen and navigate to news pages
+              Navigator(
+                onGenerateRoute: (settings) => MaterialPageRoute(
+                  settings: settings,
+                  builder: (context) {
+                    // switch (settings.name){}
+                    return NewsScreen();
+                  },
+                ),
+              )
             ],
           ),
         ),
