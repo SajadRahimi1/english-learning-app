@@ -90,7 +90,6 @@ class ValidateResetPasswordCode extends StatelessWidget {
                       // Code text input
                       SizedBox(
                           height: Get.height / 19,
-                          // width: Get.width,
                           child: Directionality(
                             textDirection: TextDirection.ltr,
                             child: Row(

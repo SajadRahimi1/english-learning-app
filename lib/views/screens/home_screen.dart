@@ -91,31 +91,40 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                             width: Get.width / 2,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 8, bottom: 5),
-                                  child: Text("LEVEL 2"),
+                                // Level text
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 8, bottom: Get.height / 100),
+                                  child: const Text(
+                                    "LEVEL 2",
+                                    style: TextStyle(
+                                        fontFamily: "Aria",
+                                        fontSize: 18,
+                                        color: Color(0xff707070)),
+                                  ),
                                 ),
 
                                 // Progress Circle
                                 SizedBox(
-                                  height: Get.height / 4.2,
-                                  width: Get.width / 2.2,
+                                  height: Get.height / 3.8,
+                                  width: Get.width / 2,
                                   child: Stack(
                                     children: [
-                                      Container(
-                                        height: Get.height / 3.8,
-                                        width: Get.width / 2.2,
-                                        decoration:const BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle),
+                                      Card(
+                                        shape: const CircleBorder(),
+                                        elevation: 3,
+                                        child: SizedBox(
+                                          height: Get.height,
+                                          width: Get.width,
                                           child:
                                               const CircularProgressIndicator(
-                                            strokeWidth: 6,
+                                            strokeWidth: 8,
                                             color: Color(0xffFFC200),
                                             value: 0.3,
                                           ),
-                                        // ),
+                                        ),
                                       ),
                                       const Center(
                                         child: Text(
@@ -227,13 +236,13 @@ class HomeScreen extends StatelessWidget {
                   reverse: true,
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 30),
                   itemBuilder: (context, index) => Container(
-                    width: Get.width / 3,
+                    width: Get.width / 2.6,
                     decoration: BoxDecoration(
                         color: Colors.cyan,
                         image: DecorationImage(
                             image: NetworkImage(links[index]),
                             fit: BoxFit.fill),
-                        borderRadius: BorderRadius.circular(32)),
+                        borderRadius: BorderRadius.circular(35)),
                     margin: const EdgeInsets.symmetric(horizontal: 5),
                   ),
                 ),

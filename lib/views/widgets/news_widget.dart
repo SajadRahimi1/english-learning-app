@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:zabaner/models/urls.dart';
 
 class NewsWidget extends StatelessWidget {
-  const NewsWidget({Key? key, required this.description, required this.title})
+  const NewsWidget(
+      {Key? key,
+      required this.description,
+      required this.title,
+      required this.imagePath})
       : super(key: key);
-  final String title, description;
+  final String title, description, imagePath;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,9 +26,8 @@ class NewsWidget extends StatelessWidget {
           // Icons
           SizedBox(
             width: MediaQuery.of(context).size.width / 6,
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height / 7.7,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.bookmark_outline,
@@ -31,7 +35,7 @@ class NewsWidget extends StatelessWidget {
                   color: Color(0xff707070),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 30,
+                  height: MediaQuery.of(context).size.height / 50,
                 ),
                 const Icon(
                   Icons.share,
@@ -43,36 +47,42 @@ class NewsWidget extends StatelessWidget {
           ),
 
           // title and describtion text
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 2.25,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(fontFamily: "Arial", fontSize: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 2.6,
+              height: MediaQuery.of(context).size.height / 8,
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontFamily: "Arial", fontSize: 12),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 100,
                   ),
-                  Text(
+                  child: Text(
                     title,
                     style: const TextStyle(
                         fontFamily: "Arial",
                         fontSize: 10,
                         color: Color(0xff676767)),
                   ),
-                ]),
+                ),
+              ]),
+            ),
           ),
 
           // Image
           Container(
-            width: MediaQuery.of(context).size.width / 3,
+            width: MediaQuery.of(context).size.width / 2.7,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                image: const DecorationImage(
-                    image: NetworkImage(
-                        "https://www.vuelio.com/uk/wp-content/uploads/2019/02/Breaking-News.jpg"),
+                image: DecorationImage(
+                    image: NetworkImage("$baseUrl$imagePath"),
                     fit: BoxFit.fill)),
           )
         ],

@@ -68,7 +68,7 @@ class VideoListTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: MediaQuery.of(context).size.width / 4.6,
+          width: MediaQuery.of(context).size.width / 4,
           height: MediaQuery.of(context).size.height / 7.3,
           decoration: BoxDecoration(
               color: Colors.cyan,

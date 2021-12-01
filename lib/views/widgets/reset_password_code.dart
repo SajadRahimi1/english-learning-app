@@ -11,7 +11,7 @@ class ResetPasswordCode extends StatelessWidget {
     return Flexible(
         child: Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width / 26, vertical: 3),
+          horizontal: MediaQuery.of(context).size.width / 31, vertical: 3),
       child: TextFormField(
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
@@ -30,11 +30,11 @@ class ResetPasswordCode extends StatelessWidget {
             filled: true,
             counterText: "",
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: orange, width: 0.3),
-                borderRadius: BorderRadius.all(Radius.circular(8))),
+                borderSide: BorderSide(color: orange, width: 0.7),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: orange, width: 0.3),
-                borderRadius: BorderRadius.all(Radius.circular(8)))),
+                borderSide: BorderSide(color: orange, width: 0.7),
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
       ),
     ));
   }

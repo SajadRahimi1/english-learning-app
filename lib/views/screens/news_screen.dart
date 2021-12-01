@@ -58,9 +58,9 @@ class NewsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Text(
-                                      "سلام سامان!",
+                                      "منابع زبان انگلیسی",
                                       style: TextStyle(
-                                          fontFamily: "Yekan", fontSize: 16),
+                                          fontFamily: "Yekan", fontSize: 18),
                                     ),
                                     SizedBox(
                                       height: 3,
@@ -69,7 +69,7 @@ class NewsScreen extends StatelessWidget {
                                       "اخبار متنوع به زبان انگلیسی",
                                       style: TextStyle(
                                           fontFamily: "Yekan",
-                                          fontSize: 8,
+                                          fontSize: 10,
                                           color: Color(0xff919191)),
                                     )
                                   ],
@@ -137,6 +137,8 @@ class NewsScreen extends StatelessWidget {
                                       newsDataController.content[index].title,
                                   description: newsDataController
                                       .content[index].description,
+                                  imagePath: newsDataController
+                                      .content[index].imagePath,
                                 ),
                               )),
                         )
