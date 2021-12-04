@@ -19,7 +19,7 @@ class NewsWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           color: const Color(0xffDBDBDB),
-          borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(18)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -80,7 +80,7 @@ class NewsWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 2.7,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
                     image: NetworkImage("$baseUrl$imagePath"),
                     fit: BoxFit.fill)),

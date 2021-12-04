@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:zabaner/models/category_content_model.dart';
@@ -7,6 +8,7 @@ import 'package:zabaner/models/urls.dart';
 class NewsDataController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   var categories = [].obs;
+
   RxList<CategoryContent> content = [
     CategoryContent(
         bookmark: false,
@@ -18,6 +20,7 @@ class NewsDataController extends GetxController with StateMixin {
   @override
   void onInit() async {
     super.onInit();
+    change(null, status: RxStatus.loading());
     var response = await _getConnect.get(newsCagetoryUrl);
     categories.addAll(jsonDecode(response.bodyString ?? "[]"));
     getContent(categories[0]);
@@ -29,6 +32,9 @@ class NewsDataController extends GetxController with StateMixin {
         .get(newsCategoryContentUrl, query: {'category': category});
     if (req.statusCode == 200) {
       content.addAll(categoryContentFromJson(req.bodyString ?? ""));
-    } else {}
+      change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error("مشکل در ارتباط با سرور"));
+    }
   }
 }

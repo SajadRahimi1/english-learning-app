@@ -24,9 +24,7 @@ class CustomTextInputProfile extends StatelessWidget {
                 hintText: hintText,
                 contentPadding: EdgeInsets.zero,
                 hintStyle: const TextStyle(
-                    fontSize: 10,
-                    fontFamily: "Yekan",
-                    color: Color(0xffb0b0b0)),
+                    fontFamily: "Yekan", color: Color(0xffb0b0b0)),
                 hintTextDirection: TextDirection.rtl,
                 fillColor: const Color(0xffffffff),
                 prefixIconConstraints: BoxConstraints(
@@ -55,9 +53,7 @@ class CustomTextInputProfile extends StatelessWidget {
                 hintText: hintText,
                 contentPadding: EdgeInsets.zero,
                 hintStyle: const TextStyle(
-                    fontSize: 10,
-                    fontFamily: "Yekan",
-                    color: Color(0xffb0b0b0)),
+                    fontFamily: "Yekan", color: Color(0xffb0b0b0)),
                 hintTextDirection: TextDirection.rtl,
                 fillColor: const Color(0xffE8E8E8),
                 prefixIconConstraints: BoxConstraints(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/resources_controller.dart';
 import 'package:zabaner/views/widgets/book_resources.dart';
 import 'package:zabaner/views/widgets/pocast_resources.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
@@ -10,6 +11,7 @@ class ResourcesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ResourcesController _controller = Get.put(ResourcesController());
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -55,9 +57,9 @@ class ResourcesScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "سلام سامان!",
+                                  "منابع زبان انگلیسی",
                                   style: TextStyle(
-                                      fontFamily: "Yekan", fontSize: 16),
+                                      fontFamily: "Yekan", fontSize: 18),
                                 ),
                                 SizedBox(
                                   height: 3,
@@ -66,7 +68,7 @@ class ResourcesScreen extends StatelessWidget {
                                   "اخبار متنوع به زبان انگلیسی",
                                   style: TextStyle(
                                       fontFamily: "Yekan",
-                                      fontSize: 8,
+                                      fontSize: 10,
                                       color: Color(0xff919191)),
                                 )
                               ],
@@ -96,9 +98,19 @@ class ResourcesScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    BookResources(),
-                    PocastResources(),
-                    VideoResources()
+                    _controller.obx((state) => Column(
+                          children: [
+                            BookResources(
+                              resource: _controller.resourcesList[1].resources,
+                            ),
+                            PocastResources(
+                                resource:
+                                    _controller.resourcesList[0].resources),
+                            VideoResources(
+                                resource:
+                                    _controller.resourcesList[2].resources)
+                          ],
+                        ))
                   ]),
                 ))));
   }

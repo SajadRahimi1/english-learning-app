@@ -3,3 +3,6 @@ const signinUrl = "$baseUrl/api/v1/auth/signin";
 const signupUrl = "$baseUrl/api/v1/auth/signup";
 const newsCagetoryUrl = "$baseUrl/api/v1/news-categories";
 const newsCategoryContentUrl = "$baseUrl/api/v1/news";
+const resourcesUrl = "$baseUrl/api/v1/resources/home";
+const profileInformationUrl = "$baseUrl/api/v1/user";
+const updateProfileUrl = "$baseUrl/api/v1/user";

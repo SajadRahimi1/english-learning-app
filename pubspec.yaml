@@ -37,6 +37,7 @@ dependencies:
   get: ^4.3.8
   dio: ^4.0.1
   flutter_sound_lite: ^8.4.2
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:

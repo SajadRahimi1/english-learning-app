@@ -130,17 +130,31 @@ class NewsScreen extends StatelessWidget {
 
                         // body of tabs
                         Expanded(
-                          child: Obx(() => ListView.builder(
-                                itemCount: newsDataController.content.length,
-                                itemBuilder: (context, index) => NewsWidget(
-                                  title:
-                                      newsDataController.content[index].title,
-                                  description: newsDataController
-                                      .content[index].description,
-                                  imagePath: newsDataController
-                                      .content[index].imagePath,
-                                ),
-                              )),
+                          child: newsDataController.obx(
+                              (status) => ListView.builder(
+                                    itemCount:
+                                        newsDataController.content.length,
+                                    itemBuilder: (context, index) => NewsWidget(
+                                      title: newsDataController
+                                          .content[index].title,
+                                      description: newsDataController
+                                          .content[index].description,
+                                      imagePath: newsDataController
+                                          .content[index].imagePath,
+                                    ),
+                                  ),
+                              onLoading: const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              onError: (message) => Center(
+                                    child: Text(
+                                      message.toString(),
+                                      style: const TextStyle(
+                                          color: Color(0xffff0000),
+                                          fontFamily: "Yekan",
+                                          fontSize: 18),
+                                    ),
+                                  )),
                         )
                       ]))))),
     );

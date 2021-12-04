@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zabaner/models/resources_model.dart';
+import 'package:zabaner/models/urls.dart';
 
 class BookResources extends StatelessWidget {
+  const BookResources({Key? key, required this.resource}) : super(key: key);
+  final List<Resource> resource;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,16 +49,21 @@ class BookResources extends StatelessWidget {
                 right: MediaQuery.of(context).size.width / 25,
               ),
               reverse: true,
-              itemBuilder: (context, index) => BookListTile(),
+              itemBuilder: (context, index) => BookListTile(
+                  imagePath: resource[index].imagePath,
+                  title: resource[index].title,
+                  id: resource[index].id),
               separatorBuilder: (context, index) => SizedBox(
-                width: MediaQuery.of(context).size.width / 15,
+                width: MediaQuery.of(context).size.width / 20,
               ),
             ),
           ),
         ),
         Divider(
-          color: Colors.grey[500],
+          color: const Color(0xffDBDBDB),
           height: MediaQuery.of(context).size.height / 30,
+          endIndent: MediaQuery.of(context).size.width / 20,
+          // indent: MediaQuery.of(context).size.width / 20,
         )
       ],
     );
@@ -62,6 +71,13 @@ class BookResources extends StatelessWidget {
 }
 
 class BookListTile extends StatelessWidget {
+  const BookListTile(
+      {Key? key,
+      required this.imagePath,
+      required this.title,
+      required this.id})
+      : super(key: key);
+  final String imagePath, title, id;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -78,15 +94,15 @@ class BookListTile extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.cyan,
                 borderRadius: BorderRadius.circular(20),
-                image: const DecorationImage(
+                image: DecorationImage(
                     image: NetworkImage(
-                      "https://images-na.ssl-images-amazon.com/images/I/51IkbV1cnGL.jpg",
+                      "$baseUrl$imagePath",
                     ),
                     fit: BoxFit.fill)),
           ),
-          const Text(
-            "English Book",
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
                 color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
           )
         ],
