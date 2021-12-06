@@ -20,22 +20,6 @@ class ResourcesScreen extends StatelessWidget {
                 body: Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
                   child: ListView(children: [
-                    // close this screen button
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.arrow_back,
-                            size: 18,
-                          ),
-                          Text("  بازگشت",
-                              style:
-                                  TextStyle(fontFamily: "Yekan", fontSize: 12)),
-                        ],
-                      ),
-                    ),
-
                     // Top of screen
                     SizedBox(
                       height: Get.height / 10,
@@ -105,10 +89,10 @@ class ResourcesScreen extends StatelessWidget {
                             ),
                             PocastResources(
                                 resource:
-                                    _controller.resourcesList[0].resources),
+                                    _controller.resourcesList[2].resources),
                             VideoResources(
                                 resource:
-                                    _controller.resourcesList[2].resources)
+                                    _controller.resourcesList[0].resources)
                           ],
                         ))
                   ]),

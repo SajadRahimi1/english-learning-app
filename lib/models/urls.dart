@@ -6,3 +6,5 @@ const newsCategoryContentUrl = "$baseUrl/api/v1/news";
 const resourcesUrl = "$baseUrl/api/v1/resources/home";
 const profileInformationUrl = "$baseUrl/api/v1/user";
 const updateProfileUrl = "$baseUrl/api/v1/user";
+const getBookDetailUrl = "$baseUrl/api/v1/books/";
+const homeDataUrl = "$baseUrl/api/v1/home";

@@ -39,7 +39,7 @@ class MainScreen extends StatelessWidget {
                   },
                 ),
               ),
-              
+
               // Resources screen and navigate and Book, Podcast screen
               Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(
@@ -47,7 +47,7 @@ class MainScreen extends StatelessWidget {
                   builder: (context) {
                     switch (settings.name) {
                       case '/bookScreen':
-                        return const BookScreen();
+                        return BookScreen();
                       case "/podcast":
                         return const PodcastScreen();
                     }
@@ -55,7 +55,7 @@ class MainScreen extends StatelessWidget {
                   },
                 ),
               ),
-              
+
               // News screen and navigate to news pages
               Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(

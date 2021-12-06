@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/book_detail_controller.dart';
+import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 
 class BookScreen extends StatelessWidget {
-  const BookScreen({Key? key}) : super(key: key);
+  BookScreen({Key? key}) : super(key: key);
+  final BookController _controller = Get.put(BookController());
 
   @override
   Widget build(BuildContext context) {
+    final String bookId = ModalRoute.of(context)?.settings.arguments as String;
+    _controller.getBookDetail(
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI",
+        bookId);
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -17,7 +24,9 @@ class BookScreen extends StatelessWidget {
                   child: ListView(children: [
                     // close this screen button
                     GestureDetector(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        Navigator.pop(context, false);
+                      },
                       child: Row(
                         children: const [
                           Icon(
@@ -95,83 +104,89 @@ class BookScreen extends StatelessWidget {
                       height: Get.height / 30,
                     ),
 
-                    SizedBox(
-                      width: Get.width,
-                      height: Get.height / 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    _controller.obx(
+                      (state) => SizedBox(
+                          width: Get.width,
+                          height: Get.height / 4,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    width: Get.width / 10,
-                                    height: Get.height / 22,
-                                    child: Image.asset(
-                                      "assets/images/bookr.png",
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                  Column(
+                                  Row(
                                     children: [
                                       SizedBox(
-                                        width: Get.width / 2,
+                                        width: Get.width / 10,
                                         height: Get.height / 22,
-                                        child: const Text(
-                                          "   Oxford Dictionary",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontFamily: "Yekan",
-                                              fontSize: 16),
+                                        child: Image.asset(
+                                          "assets/images/bookr.png",
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: Get.width / 2,
-                                        height: Get.height / 22,
-                                        child: const Text(
-                                          "     Dictionary of English",
-                                          style: TextStyle(
-                                              fontFamily: "Yekan",
-                                              color: Color(0xffC2C2C2),
-                                              fontSize: 10),
-                                        ),
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width / 2,
+                                            height: Get.height / 22,
+                                            child: Text(
+                                              "   ${_controller.bookDetail.title}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: "Yekan",
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width / 2,
+                                            height: Get.height / 22,
+                                            child: const Text(
+                                              "     Dictionary of English",
+                                              style: TextStyle(
+                                                  fontFamily: "Yekan",
+                                                  color: Color(0xffC2C2C2),
+                                                  fontSize: 10),
+                                            ),
+                                          )
+                                        ],
                                       )
                                     ],
+                                  ),
+                                  SizedBox(
+                                    width: Get.width / 1.7,
+                                    child: Text(
+                                      _controller.bookDetail.faTitle,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: "Yekan",
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: Get.height / 50),
+                                    child: const Text(
+                                      "راهنمای مبتدیان جهت مکالمات روزانه",
+                                      style: TextStyle(
+                                          fontFamily: "Yekan",
+                                          fontSize: 10,
+                                          color: Color(0xffC2C2C2)),
+                                    ),
                                   )
                                 ],
                               ),
-                              const Text(
-                                "دیکشنری اکسفورد",
-                                style: TextStyle(
-                                    fontFamily: "Yekan",
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: Get.height / 50),
-                                child: const Text(
-                                  "راهنمای مبتدیان جهت مکالمات روزانه",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan",
-                                      fontSize: 10,
-                                      color: Color(0xffC2C2C2)),
-                                ),
+                              Container(
+                                width: Get.width / 3.2,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                        image: NetworkImage(baseUrl +
+                                            _controller.bookDetail.imagePath),
+                                        fit: BoxFit.fill)),
                               )
                             ],
-                          ),
-                          Container(
-                            width: Get.width / 3.2,
-                            height: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: const DecorationImage(
-                                    image: NetworkImage(
-                                        "https://images-na.ssl-images-amazon.com/images/I/51VDi1DSQjL._SX378_BO1,204,203,200_.jpg"),
-                                    fit: BoxFit.fill)),
-                          )
-                        ],
-                      ),
+                          )),
                     )
                   ]),
                 ))));

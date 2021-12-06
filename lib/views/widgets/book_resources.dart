@@ -63,7 +63,6 @@ class BookResources extends StatelessWidget {
           color: const Color(0xffDBDBDB),
           height: MediaQuery.of(context).size.height / 30,
           endIndent: MediaQuery.of(context).size.width / 20,
-          // indent: MediaQuery.of(context).size.width / 20,
         )
       ],
     );
@@ -81,10 +80,7 @@ class BookListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        '/bookScreen',
-      ),
+      onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
