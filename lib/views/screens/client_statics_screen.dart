@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/static_screen_controller.dart';
 import 'package:zabaner/views/widgets/bar_chart_widget.dart';
 
 class StaticsScreen extends StatelessWidget {
-  const StaticsScreen({Key? key}) : super(key: key);
+  StaticsScreen({Key? key}) : super(key: key);
 
+  final StaticController _controller = Get.put(StaticController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -176,40 +178,41 @@ class StaticsScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: const [
-                              Text(
-                                "0h /  0m  / 0s",
-                                style: TextStyle(
-                                    color: Color(0xff919191),
-                                    fontFamily: "Arial",
-                                    fontSize: 11),
-                              ),
-                              Text(
-                                "0h /  0m  / 0s",
-                                style: TextStyle(
-                                    color: Color(0xff919191),
-                                    fontFamily: "Arial",
-                                    fontSize: 11),
-                              ),
-                              Text(
-                                "0h /  0m  / 0s",
-                                style: TextStyle(
-                                    color: Color(0xff919191),
-                                    fontFamily: "Arial",
-                                    fontSize: 11),
-                              ),
-                              Text(
-                                "0h /  0m  / 0s",
-                                style: TextStyle(
-                                    color: Color(0xff919191),
-                                    fontFamily: "Arial",
-                                    fontSize: 11),
-                              ),
-                            ],
-                          ),
+                          _controller.obx((status) => Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    _controller.summaryTime.minDuration,
+                                    style: const TextStyle(
+                                        color: Color(0xff919191),
+                                        fontFamily: "Arial",
+                                        fontSize: 11),
+                                  ),
+                                  Text(
+                                    _controller.summaryTime.maxDuration,
+                                    style: const TextStyle(
+                                        color: Color(0xff919191),
+                                        fontFamily: "Arial",
+                                        fontSize: 11),
+                                  ),
+                                  Text(
+                                    _controller.summaryTime.avgDuration,
+                                    style: const TextStyle(
+                                        color: Color(0xff919191),
+                                        fontFamily: "Arial",
+                                        fontSize: 11),
+                                  ),
+                                  Text(
+                                    _controller.summaryTime.sumDuration,
+                                    style: const TextStyle(
+                                        color: Color(0xff919191),
+                                        fontFamily: "Arial",
+                                        fontSize: 11),
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
                     ),

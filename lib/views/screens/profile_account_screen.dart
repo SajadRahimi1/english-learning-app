@@ -29,8 +29,13 @@ class ProfileAccount extends StatelessWidget {
           ),
         ),
 
-        _controller.obx(
-          (status) => Card(
+        _controller.obx((status) {
+          List information = [
+            _controller.profileInformation.firstName,
+            _controller.profileInformation.lastName,
+            _controller.profileInformation.bDay.toString()
+          ];
+          return Card(
             color: const Color(0xffF9F9F9),
             elevation: 2,
             shape:
@@ -49,8 +54,10 @@ class ProfileAccount extends StatelessWidget {
                       onTap: () => _controller.getImage(),
                       child: CircleAvatar(
                         radius: Get.width / 6.5,
-                        backgroundImage: NetworkImage(baseUrl +
-                            _controller.profileInformation.avatarPath),
+                        backgroundImage: NetworkImage(
+                            "http://192.168.1.15/media/thumbnails/618a18cec7fb1e865f2ca745file_example_MP4_640_3MG.mp4"),
+                        // backgroundImage: NetworkImage(baseUrl +
+                        //     _controller.profileInformation.avatarPath),
                       ),
                     ),
                     const Text(
@@ -66,6 +73,7 @@ class ProfileAccount extends StatelessWidget {
                         child: CustomTextInputProfile(
                           hintText: _controller.profileInformation.firstName,
                           iconPath: "username.png",
+                          onChanged: (text) => information[0] = text,
                         )),
 
                     // last name text input
@@ -76,6 +84,7 @@ class ProfileAccount extends StatelessWidget {
                         child: CustomTextInputProfile(
                           hintText: _controller.profileInformation.lastName,
                           iconPath: "username.png",
+                          onChanged: (text) => information[1] = text,
                         )),
 
                     // birthday date text input
@@ -84,10 +93,11 @@ class ProfileAccount extends StatelessWidget {
                         width: Get.width / 1.5,
                         // color: Colors.green,
                         child: CustomTextInputProfile(
-                          hintText: _controller.profileInformation.bDay.year
-                              .toString(),
-                          iconPath: "birthday.png",
-                        )),
+                            hintText: _controller.profileInformation.bDay.year
+                                .toString(),
+                            iconPath: "birthday.png",
+                            onChanged: (text) => information[2] =
+                                DateTime(int.parse(text)).toString())),
 
                     // email text input
                     SizedBox(
@@ -118,7 +128,13 @@ class ProfileAccount extends StatelessWidget {
                             "ذخیره تغییرات",
                             style: TextStyle(fontFamily: "Yekan", fontSize: 12),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _controller.updateProfile(
+                              information[0],
+                              information[1],
+                              information[2],
+                            );
+                          },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
                               shape: MaterialStateProperty.all(
@@ -131,8 +147,8 @@ class ProfileAccount extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ],
     );
   }

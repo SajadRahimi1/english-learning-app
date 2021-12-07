@@ -27,6 +27,7 @@ class ProfileScreen extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           backgroundColor: const Color(0xffffffff),
+          // resizeToAvoidBottomInset: false,
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: Get.width / 30),
             child: Column(
@@ -102,7 +103,9 @@ class ProfileScreen extends StatelessWidget {
                   height: Get.height / 35,
                 ),
 
-                Expanded(child: Obx(() => tabWidget[tabIndex.value]))
+                Expanded(
+                    child: SingleChildScrollView(
+                        child: Obx(() => tabWidget[tabIndex.value])))
               ],
             ),
           ),

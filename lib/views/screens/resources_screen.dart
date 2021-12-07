@@ -11,6 +11,7 @@ class ResourcesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var onSearchClick = false.obs;
     final ResourcesController _controller = Get.put(ResourcesController());
     return SafeArea(
         child: Directionality(
@@ -75,26 +76,51 @@ class ResourcesScreen extends StatelessWidget {
 
                     // Search Text Input
                     SizedBox(
-                        width: Get.width,
-                        height: Get.height / 22,
-                        child: const SearchTextInput()),
+                      width: Get.width,
+                      height: Get.height / 22,
+                      child: SearchTextInput(
+                        onClick: () => onSearchClick.value = true,
+                        onFieldSubmitted: (value) =>
+                            value.isEmpty ? onSearchClick.value = false : {},
+                      ),
+                    ),
 
                     const SizedBox(
                       height: 30,
                     ),
-                    _controller.obx((state) => Column(
-                          children: [
-                            BookResources(
-                              resource: _controller.resourcesList[1].resources,
-                            ),
-                            PocastResources(
-                                resource:
-                                    _controller.resourcesList[2].resources),
-                            VideoResources(
-                                resource:
-                                    _controller.resourcesList[0].resources)
-                          ],
-                        ))
+
+                    Stack(
+                      children: [
+                        // Resources
+                        SizedBox(
+                          height: Get.height,
+                          width: Get.width,
+                          child: _controller.obx((state) => Column(
+                                children: [
+                                  BookResources(
+                                    resource:
+                                        _controller.resourcesList[0].resources,
+                                  ),
+                                  PocastResources(
+                                      resource: _controller
+                                          .resourcesList[2].resources),
+                                  VideoResources(
+                                      resource: _controller
+                                          .resourcesList[1].resources)
+                                ],
+                              )),
+                        ),
+
+                        // Search white space
+                        Obx(() => Visibility(
+                            visible: onSearchClick.value,
+                            child: Container(
+                              height: Get.height,
+                              width: Get.width,
+                              color: Colors.white,
+                            ))),
+                      ],
+                    )
                   ]),
                 ))));
   }

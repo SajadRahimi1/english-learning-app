@@ -2,13 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchTextInput extends StatelessWidget {
-  const SearchTextInput({
-    Key? key,
-  }) : super(key: key);
+  const SearchTextInput({Key? key, this.onClick, this.onFieldSubmitted})
+      : super(key: key);
+  final Function()? onClick;
+  final Function(String)? onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
         // onChanged: onChanged,
+        onTap: onClick,
+        onFieldSubmitted: onFieldSubmitted,
+        textInputAction: TextInputAction.search,
         style: const TextStyle(fontFamily: "Yekan", fontSize: 14),
         textAlignVertical: TextAlignVertical.top,
         textAlign: TextAlign.center,

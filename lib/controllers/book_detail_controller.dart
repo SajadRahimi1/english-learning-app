@@ -10,8 +10,7 @@ class BookController extends GetxController with StateMixin {
       getBookDetailUrl + bookId,
       headers: {
         'accept': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI'
+        'Authorization': 'Bearer $tokenConst'
       },
     );
 

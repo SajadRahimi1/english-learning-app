@@ -8,3 +8,8 @@ const profileInformationUrl = "$baseUrl/api/v1/user";
 const updateProfileUrl = "$baseUrl/api/v1/user";
 const getBookDetailUrl = "$baseUrl/api/v1/books/";
 const homeDataUrl = "$baseUrl/api/v1/home";
+const summaryTimeUrl = "$baseUrl/api/v1/statistics";
+const getPodcastDetailUrl = "$baseUrl/api/v1/podcasts/";
+
+const tokenConst =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg4NTYwMzgsImV4cCI6MTYzODg5MjAzOH0.jboORDjrBYGvhyWM5smGWXps4prlnbgXPjstFgMEb64";

@@ -8,7 +8,7 @@ class HomeDataController extends GetxController with StateMixin {
   void getData(String token) async {
     var request = await _getConnect.get(homeDataUrl, headers: {
       'accept': 'application/json',
-      'Authorization': 'Bearer $token'
+      'Authorization': 'Bearer $tokenConst'
     });
 
     if (request.statusCode == 200) {

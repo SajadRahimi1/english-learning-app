@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
                   builder: (context) {
                     switch (settings.name) {
                       case '/statics':
-                        return const StaticsScreen();
+                        return StaticsScreen();
                       case '/profile':
                         return ProfileScreen();
                     }
