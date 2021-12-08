@@ -54,10 +54,8 @@ class ProfileAccount extends StatelessWidget {
                       onTap: () => _controller.getImage(),
                       child: CircleAvatar(
                         radius: Get.width / 6.5,
-                        backgroundImage: NetworkImage(
-                            "http://192.168.1.15/media/thumbnails/618a18cec7fb1e865f2ca745file_example_MP4_640_3MG.mp4"),
-                        // backgroundImage: NetworkImage(baseUrl +
-                        //     _controller.profileInformation.avatarPath),
+                        backgroundImage: NetworkImage(baseUrl +
+                            _controller.profileInformation.avatarPath),
                       ),
                     ),
                     const Text(

@@ -49,7 +49,7 @@ class MainScreen extends StatelessWidget {
                       case '/bookScreen':
                         return BookScreen();
                       case "/podcast":
-                        return const PodcastScreen();
+                        return PodcastScreen();
                     }
                     return const ResourcesScreen();
                   },
