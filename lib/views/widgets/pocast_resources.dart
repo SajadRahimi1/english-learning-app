@@ -96,10 +96,15 @@ class PocastListTile extends StatelessWidget {
                     ),
                     fit: BoxFit.fill)),
           ),
-          Text(
-            title,
-            style: const TextStyle(
-                color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 4.2,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+            ),
           )
         ],
       ),

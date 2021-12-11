@@ -4,8 +4,14 @@ import 'package:zabaner/views/widgets/custom_switch.dart';
 
 class SettingCard extends StatelessWidget {
   final String title;
-
-  const SettingCard({Key? key, required this.title}) : super(key: key);
+  final bool enable;
+  final void Function(bool) onTap;
+  const SettingCard(
+      {Key? key,
+      required this.title,
+      required this.enable,
+      required this.onTap})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,9 +30,12 @@ class SettingCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontFamily: "Yekan", fontSize: 9),
+                  style: const TextStyle(fontFamily: "Yekan", fontSize: 12),
                 ),
-                CustomSwitch()
+                CustomSwitch(
+                  enableB: enable,
+                  onTap: onTap,
+                )
               ],
             ),
           )),

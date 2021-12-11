@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomSwitch extends StatelessWidget {
-  var enable = false.obs;
-
-  CustomSwitch({Key? key}) : super(key: key);
+  final bool enableB;
+  final void Function(bool) onTap;
+  CustomSwitch({Key? key, required this.enableB, required this.onTap})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    RxBool enable = enableB.obs;
+    enable.listen(onTap);
     return InkWell(
-      onTap: () => enable.value = !enable.value,
+      onTap: () {
+        enable.value = !enable.value;
+      },
       child: SizedBox(
           width: MediaQuery.of(context).size.width / 9,
           height: MediaQuery.of(context).size.height / 28,

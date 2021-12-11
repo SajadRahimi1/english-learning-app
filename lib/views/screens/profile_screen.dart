@@ -104,8 +104,11 @@ class ProfileScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                    child: SingleChildScrollView(
-                        child: Obx(() => tabWidget[tabIndex.value])))
+                    child: SizedBox(
+                  height: Get.height,
+                  child: SingleChildScrollView(
+                      child: Obx(() => tabWidget[tabIndex.value])),
+                ))
               ],
             ),
           ),

@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 token.txt
+page_that_not_in_UI.txt
