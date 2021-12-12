@@ -84,22 +84,30 @@ class BookListTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // image
           Container(
-            width: MediaQuery.of(context).size.width / 6,
-            height: MediaQuery.of(context).size.height / 7.4,
+            width: MediaQuery.of(context).size.width / 5.3,
+            height: MediaQuery.of(context).size.height / 7.6,
             decoration: BoxDecoration(
                 color: Colors.cyan,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
                 image: DecorationImage(
                     image: NetworkImage(
                       "$baseUrl$imagePath",
                     ),
                     fit: BoxFit.fill)),
           ),
-          Text(
-            title,
-            style: const TextStyle(
-                color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+
+          // title
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 5,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+            ),
           )
         ],
       ),

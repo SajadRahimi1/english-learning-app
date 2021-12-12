@@ -35,8 +35,8 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
                           radius: Get.width / 13,
-                          backgroundImage: const NetworkImage(
-                              "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                          backgroundImage:
+                              NetworkImage(_controller.getProfileImage),
                         ),
                       ),
 

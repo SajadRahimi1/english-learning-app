@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/views/screens/login_screen.dart';
 import 'package:zabaner/views/screens/profile_account_screen.dart';
 import 'package:zabaner/views/screens/profile_setting_screen.dart';
@@ -22,6 +23,8 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final GetStorage _getStorage = GetStorage();
+    GetStorage.init();
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -41,8 +44,8 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: Get.width / 13,
-                        backgroundImage: const NetworkImage(
-                            "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                        backgroundImage:
+                            NetworkImage(_getStorage.read('profile_image')),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: Get.width / 23),

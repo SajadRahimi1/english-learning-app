@@ -10,6 +10,8 @@ const getBookDetailUrl = "$baseUrl/api/v1/books/";
 const homeDataUrl = "$baseUrl/api/v1/home";
 const summaryTimeUrl = "$baseUrl/api/v1/statistics";
 const getPodcastDetailUrl = "$baseUrl/api/v1/podcasts/";
+const newsDetailUrl = "$baseUrl/api/v1/news/";
+const bookmarkToggleUrl = "$baseUrl/api/v1/bookmarks/toggle";
 
 const tokenConst =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2MzkyMDM1MTAsImV4cCI6MTYzOTIzOTUxMH0.3285jyemp3xLG8nFKFn8gBrOvtmSu7wjNcNDy-WPYl8";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2MzkyODkwNjMsImV4cCI6MTYzOTMyNTA2M30.bbWO-Y2ltINJ3j3bsgewj8VaEKiP9IBP6yXsz5KFMMI";

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
 
@@ -10,6 +11,7 @@ class ResourcesController extends GetxController with StateMixin {
   void onInit() async {
     super.onInit();
     getResources();
+    GetStorage.init();
   }
 
   Future<void> getResources() async {
@@ -20,5 +22,10 @@ class ResourcesController extends GetxController with StateMixin {
     } else {
       change(null, status: RxStatus.error());
     }
+  }
+
+  get getProfileImage {
+    final GetStorage _getStorage = GetStorage();
+    return _getStorage.read('profile_image');
   }
 }

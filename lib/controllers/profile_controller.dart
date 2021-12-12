@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/profile_information_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,10 +10,11 @@ class ProfileController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   late ProfileInformation profileInformation;
   final ImagePicker _picker = ImagePicker();
+  final GetStorage _getStorage = GetStorage();
   @override
   void onInit() {
     super.onInit();
-
+    GetStorage.init();
     getProfileInformation("token");
   }
 
@@ -26,6 +28,8 @@ class ProfileController extends GetxController with StateMixin {
       profileInformation =
           profileInformationFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
+      _getStorage.write(
+          'profile_image', baseUrl + profileInformation.avatarPath);
     }
   }
 

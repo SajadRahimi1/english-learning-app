@@ -30,8 +30,8 @@ class ResourcesScreen extends StatelessWidget {
                           // profile image
                           CircleAvatar(
                             radius: Get.width / 18,
-                            backgroundImage: const NetworkImage(
-                                "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                            backgroundImage:
+                                NetworkImage(_controller.getProfileImage),
                           ),
 
                           // Hello Text
@@ -99,14 +99,14 @@ class ResourcesScreen extends StatelessWidget {
                                 children: [
                                   BookResources(
                                     resource:
-                                        _controller.resourcesList[2].resources,
+                                        _controller.resourcesList[0].resources,
                                   ),
                                   PocastResources(
                                       resource: _controller
-                                          .resourcesList[0].resources),
+                                          .resourcesList[1].resources),
                                   VideoResources(
                                       resource: _controller
-                                          .resourcesList[1].resources)
+                                          .resourcesList[2].resources)
                                 ],
                               )),
                         ),

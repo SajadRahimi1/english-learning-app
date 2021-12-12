@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
@@ -14,6 +15,8 @@ class BookScreen extends StatelessWidget {
     _controller.getBookDetail(
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI",
         bookId);
+    final GetStorage _getStotage = GetStorage();
+    GetStorage.init();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -49,8 +52,8 @@ class BookScreen extends StatelessWidget {
                           // profile image
                           CircleAvatar(
                             radius: Get.width / 18,
-                            backgroundImage: const NetworkImage(
-                                "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                            backgroundImage:
+                                NetworkImage(_getStotage.read('profile_image')),
                           ),
 
                           // Hello Text

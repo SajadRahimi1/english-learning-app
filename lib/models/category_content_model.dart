@@ -11,12 +11,14 @@ List<CategoryContent> categoryContentFromJson(String str) =>
 class CategoryContent {
   CategoryContent({
     required this.title,
+    required this.id,
     required this.createdAt,
     required this.bookmark,
     required this.imagePath,
     required this.description,
   });
   final String title;
+  final String id;
   final DateTime createdAt;
   final bool bookmark;
   final String imagePath;
@@ -25,6 +27,7 @@ class CategoryContent {
   factory CategoryContent.fromJson(Map<String, dynamic> json) =>
       CategoryContent(
         title: json["title"],
+        id: json['_id'],
         createdAt: DateTime.parse(json["createdAt"]),
         bookmark: json["bookmark"],
         imagePath: json["imagePath"],

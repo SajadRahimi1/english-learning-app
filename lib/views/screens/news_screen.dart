@@ -10,31 +10,40 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsDataController newsDataController = Get.put(NewsDataController());
+    final NewsDataController _newsDataController =
+        Get.put(NewsDataController());
+    final NewsSearchController _searchController =
+        Get.put(NewsSearchController());
     var selectedCategory = 0.obs;
+    var onSearch = false.obs;
     return SafeArea(
       child: Scaffold(
           body: Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
+                  resizeToAvoidBottomInset: true,
                   backgroundColor: const Color(0xffffffff),
                   body: Padding(
                       padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
-                      child: Column(children: [
+                      child: ListView(children: [
                         // close this screen button
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.arrow_back,
-                                size: 18,
-                              ),
-                              Text("  بازگشت",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan", fontSize: 12)),
-                            ],
-                          ),
+                        Obx(
+                          () => Visibility(
+                              visible: onSearch.value,
+                              child: InkWell(
+                                  onTap: () => onSearch.value = false,
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.arrow_back,
+                                        size: 18,
+                                      ),
+                                      Text("  بازگشت",
+                                          style: TextStyle(
+                                              fontFamily: "Yekan",
+                                              fontSize: 12)),
+                                    ],
+                                  ))),
                         ),
 
                         // Top of screen
@@ -46,8 +55,8 @@ class NewsScreen extends StatelessWidget {
                               // profile image
                               CircleAvatar(
                                 radius: Get.width / 18,
-                                backgroundImage: const NetworkImage(
-                                    "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                                backgroundImage: NetworkImage(
+                                    _newsDataController.getProfileImage),
                               ),
 
                               // Hello Text
@@ -94,67 +103,166 @@ class NewsScreen extends StatelessWidget {
                         SizedBox(
                             width: Get.width,
                             height: Get.height / 22,
-                            child: const SearchTextInput()),
+                            child: SearchTextInput(
+                              onClick: () {
+                                onSearch.value = true;
+                              },
+                              onFieldSubmitted: (text) {
+                                if (text.isEmpty) {
+                                  onSearch.value = false;
+                                } else {
+                                  _searchController.search(text);
+                                }
+                              },
+                            )),
 
                         const SizedBox(
                           height: 10,
                         ),
 
-                        // Tabs
-                        Container(
-                            width: Get.width,
-                            height: Get.height / 12,
-                            decoration: BoxDecoration(
-                                color: const Color(0xffDBDBDB),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Obx(() => ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                reverse: true,
-                                itemCount: newsDataController.categories.length,
-                                itemBuilder: (context, index) =>
-                                    Obx(() => CategoryWidget(
-                                          title: newsDataController
-                                              .categories[index],
-                                          selected:
-                                              selectedCategory.value == index,
-                                          onTap: () {
-                                            selectedCategory.value = index;
-                                            newsDataController.getContent(
-                                                newsDataController
-                                                    .categories[index]);
-                                          },
-                                        ))))),
-                        SizedBox(
-                          height: Get.height / 30,
-                        ),
+                        // body of news screen
+                        Stack(
+                          children: [
+                            // normal items
+                            SizedBox(
+                                width: Get.width,
+                                height: Get.height / 1.5,
+                                child: Column(
+                                  children: [
+                                    // Tabs
+                                    Container(
+                                        width: Get.width,
+                                        height: Get.height / 12,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffDBDBDB),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Obx(() => ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            reverse: true,
+                                            itemCount: _newsDataController
+                                                .categories.length,
+                                            itemBuilder: (context, index) =>
+                                                Obx(() => CategoryWidget(
+                                                      title: _newsDataController
+                                                          .categories[index],
+                                                      selected: selectedCategory
+                                                              .value ==
+                                                          index,
+                                                      onTap: () {
+                                                        selectedCategory.value =
+                                                            index;
+                                                        _newsDataController.getContent(
+                                                            _newsDataController
+                                                                    .categories[
+                                                                index]);
+                                                      },
+                                                    ))))),
+                                    SizedBox(
+                                      height: Get.height / 30,
+                                    ),
 
-                        // body of tabs
-                        Expanded(
-                          child: newsDataController.obx(
-                              (status) => ListView.builder(
-                                    itemCount:
-                                        newsDataController.content.length,
-                                    itemBuilder: (context, index) => NewsWidget(
-                                      title: newsDataController
-                                          .content[index].title,
-                                      description: newsDataController
-                                          .content[index].description,
-                                      imagePath: newsDataController
-                                          .content[index].imagePath,
-                                    ),
-                                  ),
-                              onLoading: const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              onError: (message) => Center(
-                                    child: Text(
-                                      message.toString(),
-                                      style: const TextStyle(
-                                          color: Color(0xffff0000),
-                                          fontFamily: "Yekan",
-                                          fontSize: 18),
-                                    ),
-                                  )),
+                                    // body of tabs
+                                    Expanded(
+                                      child: _newsDataController.obx(
+                                          (status) => ListView.builder(
+                                                itemCount: _newsDataController
+                                                    .content.length,
+                                                itemBuilder: (context, index) =>
+                                                    NewsWidget(
+                                                  title: _newsDataController
+                                                      .content[index].title,
+                                                  id: _newsDataController
+                                                      .content[index].id,
+                                                  description:
+                                                      _newsDataController
+                                                          .content[index]
+                                                          .description,
+                                                  imagePath: _newsDataController
+                                                      .content[index].imagePath,
+                                                  bookmark: _newsDataController
+                                                      .content[index].bookmark,
+                                                  // onBookmarkTap: () => newsDataController
+                                                  //     .bookmarkToggle(newsDataController
+                                                  //         .content[index].id),
+                                                ),
+                                              ),
+                                          onLoading: const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                          onError: (message) => Center(
+                                                child: Text(
+                                                  message.toString(),
+                                                  style: const TextStyle(
+                                                      color: Color(0xffff0000),
+                                                      fontFamily: "Yekan",
+                                                      fontSize: 18),
+                                                ),
+                                              )),
+                                    )
+                                  ],
+                                )),
+
+                            // search items
+                            Obx(() => Visibility(
+                                visible: onSearch.value,
+                                child: Container(
+                                  height: Get.height / 1.5,
+                                  width: Get.width,
+                                  color: Colors.white,
+                                  child: Obx(() {
+                                    switch (
+                                        _searchController.searchState.value) {
+                                      case "success":
+                                        return ListView.builder(
+                                            itemCount: _searchController
+                                                .searchContent.length,
+                                            itemBuilder: (context, index) =>
+                                                NewsWidget(
+                                                  id: _searchController
+                                                      .searchContent[index].id,
+                                                  description: _searchController
+                                                      .searchContent[index]
+                                                      .description,
+                                                  imagePath: _searchController
+                                                      .searchContent[index]
+                                                      .imagePath,
+                                                  title: _searchController
+                                                      .searchContent[index]
+                                                      .title,
+                                                  bookmark: _searchController
+                                                      .searchContent[index]
+                                                      .bookmark,
+                                                ));
+                                      case "empty":
+                                        return Container(
+                                          height: Get.height / 1.5,
+                                          width: Get.width,
+                                          color: Colors.white,
+                                          child: const Center(
+                                            child: Text(
+                                                "نتیجه ای برای جستجوی شما یافت نشد"),
+                                          ),
+                                        );
+
+                                      case "loading":
+                                        return Container(
+                                          height: Get.height / 1.5,
+                                          width: Get.width,
+                                          color: Colors.white,
+                                          child: const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        );
+                                    }
+                                    return Container(
+                                      height: Get.height / 1.5,
+                                      width: Get.width,
+                                      color: Colors.white,
+                                    );
+                                  }),
+                                )))
+                          ],
                         )
                       ]))))),
     );

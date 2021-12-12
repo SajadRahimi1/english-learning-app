@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/podcast_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
@@ -12,6 +13,8 @@ class PodcastScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.getPodcastData(
         "token", ModalRoute.of(context)?.settings.arguments.toString() ?? "");
+    final GetStorage _getStorage = GetStorage();
+    GetStorage.init();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -49,8 +52,8 @@ class PodcastScreen extends StatelessWidget {
                           // profile image
                           CircleAvatar(
                             radius: Get.width / 18,
-                            backgroundImage: const NetworkImage(
-                                "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                            backgroundImage:
+                                NetworkImage(_getStorage.read('profile_image')),
                           ),
 
                           // Hello Text

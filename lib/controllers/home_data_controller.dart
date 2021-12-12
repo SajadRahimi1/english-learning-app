@@ -1,10 +1,19 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/home_model.dart';
 import 'package:zabaner/models/urls.dart';
 
 class HomeDataController extends GetxController with StateMixin {
   late HomeModel homeModel;
   final GetConnect _getConnect = GetConnect();
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    GetStorage.init();
+  }
+
   void getData(String token) async {
     var request = await _getConnect.get(homeDataUrl, headers: {
       'accept': 'application/json',
@@ -17,5 +26,10 @@ class HomeDataController extends GetxController with StateMixin {
     } else {
       change(null, status: RxStatus.error());
     }
+  }
+
+  get getProfileImage {
+    final GetStorage _getStorage = GetStorage();
+    return _getStorage.read('profile_image');
   }
 }

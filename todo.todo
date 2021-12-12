@@ -1,20 +1,41 @@
-- Splash Screen 
-    - UI @done
+- bottom navigation icon color  /done
 
-- Login Screen
-    - Login UI @done
-    - Connect to backend
-    - Send data to backend
-    - Login with gmail
+- update user stats 
 
-- Signup Screen
-    - UI @done
-    - Send data to backend
-    - Singup with gmail
+- search in news 
 
-- Reset Screen
-    - UI @done
-    - Send phone number to backend and get response
-    - Validate sms code screen
-        - UI @done
-        - validate sms code for reset password with backend
+- search in resources
+
+- search in book & podcast & video
+
+- UI of video screen
+
+- download podcast and play it when download completed
+
+- download podcast (on download & finished) UI
+
+- backup checkbox save to storage
+
+- statics screen UI & API
+
+- bookmark in all resources and news /problem to send data
+
+- Login Logic (connect to backed)   /need kavenegar
+
+- Signup logic (connect to backed)  /need kavenegar
+
+- forgot password logic (connect to backed)     /need kavenegar
+
+- validate code for recovery password and signup    /need kavenegar
+
+- reset password logic (connect to backed)  /need kavenegar
+
+- profile image that shown in every screen  /done
+
+- signup and signin with gmail (google)
+
+- tour for first time or login as guest
+
+- back button fix bug
+
+- double tap on back button to close app

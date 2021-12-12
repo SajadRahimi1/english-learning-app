@@ -5,6 +5,7 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/client_statics_screen.dart';
 import 'package:zabaner/views/screens/home_screen.dart';
+import 'package:zabaner/views/screens/news_detail_screen.dart';
 import 'package:zabaner/views/screens/news_screen.dart';
 import 'package:zabaner/views/screens/pocast_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
@@ -61,7 +62,8 @@ class MainScreen extends StatelessWidget {
                 onGenerateRoute: (settings) => MaterialPageRoute(
                   settings: settings,
                   builder: (context) {
-                    // switch (settings.name){}
+                    if (settings.name == '/newsDetail')
+                      return NewsDetailScreen();
                     return NewsScreen();
                   },
                 ),
@@ -73,7 +75,9 @@ class MainScreen extends StatelessWidget {
               items: [
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    "assets/images/home.png",
+                    _controller.currentIndex.value == 0
+                        ? "assets/images/homeS.png"
+                        : "assets/images/home.png",
                     width: Get.height / 6,
                     height: Get.height / 25,
                   ),
@@ -81,14 +85,18 @@ class MainScreen extends StatelessWidget {
                 ),
                 BottomNavigationBarItem(
                     icon: Image.asset(
-                      "assets/images/book.png",
+                      _controller.currentIndex.value == 1
+                          ? "assets/images/book_enable.png"
+                          : "assets/images/book.png",
                       width: Get.height / 6,
                       height: Get.height / 25,
                     ),
                     label: "Resources"),
                 BottomNavigationBarItem(
                     icon: Image.asset(
-                      "assets/images/news.png",
+                      _controller.currentIndex.value == 2
+                          ? "assets/images/news_enable.png"
+                          : "assets/images/news.png",
                       width: Get.height / 6,
                       height: Get.height / 25,
                     ),
