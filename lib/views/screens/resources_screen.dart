@@ -99,14 +99,14 @@ class ResourcesScreen extends StatelessWidget {
                                 children: [
                                   BookResources(
                                     resource:
-                                        _controller.resourcesList[0].resources,
+                                        _controller.resourcesList[2].resources,
                                   ),
                                   PocastResources(
                                       resource: _controller
                                           .resourcesList[1].resources),
                                   VideoResources(
                                       resource: _controller
-                                          .resourcesList[2].resources)
+                                          .resourcesList[0].resources)
                                 ],
                               )),
                         ),

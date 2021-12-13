@@ -25,6 +25,8 @@ class StaticController extends GetxController with StateMixin {
     if (_request.statusCode == 200) {
       summaryTime = summaryTimeSttaticFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error());
     }
   }
 }

@@ -1,16 +1,18 @@
-- bottom navigation icon color  /done
+        - bottom navigation icon color  /done
 
 - update user stats 
 
-- search in news 
+        - search in news /done
 
 - search in resources
+
+        - splash screen past in 3 second  /done
 
 - search in book & podcast & video
 
 - UI of video screen
 
-- download podcast and play it when download completed
+- download podcast and play it when download completed  / wrote download and play 
 
 - download podcast (on download & finished) UI
 
@@ -30,7 +32,7 @@
 
 - reset password logic (connect to backed)  /need kavenegar
 
-- profile image that shown in every screen  /done
+        - profile image that shown in every screen  /done
 
 - signup and signin with gmail (google)
 

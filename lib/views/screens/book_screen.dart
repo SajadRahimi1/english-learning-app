@@ -17,6 +17,7 @@ class BookScreen extends StatelessWidget {
         bookId);
     final GetStorage _getStotage = GetStorage();
     GetStorage.init();
+    _controller.onInit();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -29,6 +30,7 @@ class BookScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context, false);
+                        _controller.onClose();
                       },
                       child: Row(
                         children: const [

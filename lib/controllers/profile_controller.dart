@@ -30,6 +30,9 @@ class ProfileController extends GetxController with StateMixin {
       change(null, status: RxStatus.success());
       _getStorage.write(
           'profile_image', baseUrl + profileInformation.avatarPath);
+    } else {
+      print(_request.body);
+      change(null, status: RxStatus.error());
     }
   }
 

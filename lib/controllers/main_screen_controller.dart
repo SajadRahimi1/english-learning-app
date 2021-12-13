@@ -13,20 +13,11 @@ class MainScreenController extends GetxController {
     pageController = PageController();
   }
 
-  List pages = [
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.cyan,
-    ),
-    Container(
-      color: Colors.red,
-    ),
-  ];
-
-  void tt() {}
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
+    print("Dispose");
+  }
 }

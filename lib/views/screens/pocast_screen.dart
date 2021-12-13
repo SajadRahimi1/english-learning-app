@@ -228,6 +228,7 @@ class PodcastScreen extends StatelessWidget {
                                                 onTap: () {
                                                   _controller.player
                                                       .stopPlayer();
+
                                                   _controller.isPlaying.value =
                                                       false;
                                                 },
@@ -253,6 +254,13 @@ class PodcastScreen extends StatelessWidget {
                                                               .podcast
                                                               .items[index]
                                                               .podcastPath);
+                                                  _controller.download(
+                                                      _controller
+                                                          .podcast
+                                                          .items[index]
+                                                          .podcastPath,
+                                                      _controller.podcast.id +
+                                                          index.toString());
                                                 })),
 
                                         // title

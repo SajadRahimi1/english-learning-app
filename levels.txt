@@ -1,0 +1,6 @@
+level 1: 15min
+level 2: 25min
+level 3: 50min
+level 4: 85min
+level 5: 140min
+level 6: 270min
