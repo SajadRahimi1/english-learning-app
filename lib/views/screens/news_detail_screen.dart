@@ -10,6 +10,7 @@ class NewsDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.getData(tokenConst,
         ModalRoute.of(context)?.settings.arguments.toString() ?? "");
+    _controller.onInit();
     return SafeArea(
         child: Scaffold(
       body: _controller.obx(
@@ -30,6 +31,8 @@ class NewsDetailScreen extends StatelessWidget {
                         baseUrl + _controller.newsDetail.imagePath),
                     fit: BoxFit.fill),
               ),
+
+              // back button
               child: Padding(
                 padding: EdgeInsets.only(
                   right: Get.width / 80,
@@ -40,6 +43,7 @@ class NewsDetailScreen extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.pop(context);
+                      _controller.onClose();
                     },
                   ),
                 ),

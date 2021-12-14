@@ -6,7 +6,7 @@ import 'package:zabaner/models/urls.dart';
 class HomeDataController extends GetxController with StateMixin {
   late HomeModel homeModel;
   final GetConnect _getConnect = GetConnect();
-
+  final GetStorage _getStorage = GetStorage();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -31,5 +31,11 @@ class HomeDataController extends GetxController with StateMixin {
   get getProfileImage {
     final GetStorage _getStorage = GetStorage();
     return _getStorage.read('profile_image');
+  }
+
+  int get totallSecond {
+    var statics = _getStorage.read('timers');
+
+    return statics['totall'];
   }
 }

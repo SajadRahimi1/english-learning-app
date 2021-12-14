@@ -15,7 +15,8 @@ class ResourcesController extends GetxController with StateMixin {
   }
 
   Future<void> getResources() async {
-    var request = await _getConnect.get(resourcesUrl);
+    var request = await _getConnect
+        .get(resourcesUrl, headers: {'accept': 'application/json'});
     if (request.statusCode == 200) {
       resourcesList.addAll(resourcesFromJson(request.bodyString ?? ""));
       change(null, status: RxStatus.success());

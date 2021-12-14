@@ -4,8 +4,6 @@ import 'package:zabaner/controllers/setting_toggle_controller.dart';
 import 'package:zabaner/views/widgets/custom_setting_card.dart';
 
 class ProfileSetting extends StatelessWidget {
-  var backupOnServer = false.obs;
-
   ProfileSetting({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -118,9 +116,11 @@ class ProfileSetting extends StatelessWidget {
                                   ),
                                   side: const BorderSide(
                                       width: 0.5, color: Color(0xff707070)),
-                                  value: backupOnServer.value,
+                                  value: _controller.autoBackup.value,
                                   onChanged: (value) {
-                                    backupOnServer.value = value ?? true;
+                                    _controller.autoBackup.value =
+                                        value ?? true;
+                                    _controller.box.write('auto_backup', value);
                                   },
                                 ))
                           ],

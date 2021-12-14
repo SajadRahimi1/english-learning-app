@@ -1,6 +1,6 @@
-level 1: 15min
-level 2: 25min
-level 3: 50min
-level 4: 85min
-level 5: 140min
-level 6: 270min
+level 1: 15min = 900sec
+level 2: 25min = 1500sec
+level 3: 50min = 3000sec
+level 4: 85min = 5400sec
+level 5: 140min = 8400sec
+level 6: 270min = 16200sec

@@ -182,9 +182,13 @@ class NewsScreen extends StatelessWidget {
                                                       .content[index].imagePath,
                                                   bookmark: _newsDataController
                                                       .content[index].bookmark,
-                                                  // onBookmarkTap: () => newsDataController
-                                                  //     .bookmarkToggle(newsDataController
-                                                  //         .content[index].id),
+                                                  onBookmarkTap: () =>
+                                                      _newsDataController
+                                                          .bookmarkToggle(
+                                                              _newsDataController
+                                                                  .content[
+                                                                      index]
+                                                                  .id),
                                                 ),
                                               ),
                                           onLoading: const Center(

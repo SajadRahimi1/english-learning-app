@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:path_provider/path_provider.dart' as path;
@@ -8,11 +9,56 @@ import 'package:path_provider/path_provider.dart' as path;
 class PodcastDetailController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   late PodcastModel podcast;
+  late DateTime _dateTime;
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   final Dio dio = Dio();
+  final GetStorage _getStorage = GetStorage();
+
   var isPlaying = false.obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+    print("Init");
+    player.isOpen() ? {} : player.openAudioSession();
+    GetStorage.init();
+    _dateTime = DateTime.now();
+  }
+
+  void onClose() async {
+    // TODO: implement onClose
+    super.onClose();
+    Map times = _getStorage.read('timers') ?? {};
+    var lastTimer = times[
+            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ??
+        0;
+    if (times[
+            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
+        null) {
+      times.addAll({
+        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+      });
+    } else {
+      times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
+          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+    }
+    times['totall'] == null
+        ? times.addAll({
+            'totall':
+                (DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                    .toInt()
+          })
+        : times['totall'] = times['totall'] +
+            (DateTime.now().difference(_dateTime).inSeconds).toInt();
+
+    await _getStorage.write('timers', times);
+    print(_getStorage.read('timers'));
+  }
 
   void getPodcastData(String token, String id) async {
     var _request = await _getConnect.get(
@@ -57,13 +103,6 @@ class PodcastDetailController extends GetxController with StateMixin {
     //         event.position.inMilliseconds / event.duration.inMilliseconds;
     //   });
     // }
-  }
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    player.openAudioSession();
   }
 }
 

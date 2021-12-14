@@ -21,19 +21,37 @@ class BookController extends GetxController with StateMixin {
   }
 
   @override
-  void onClose() {
+  void onClose() async {
     // TODO: implement onClose
     super.onClose();
-    var lastTimer = _getStorage.read(
-            "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}") ??
-        0;
-    _getStorage.write(
-        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
-        DateTime.now().difference(_dateTime).inSeconds + lastTimer);
-    print(_getStorage.read(
-        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}"));
 
-    _getStorage.remove('timers');
+    Map times = _getStorage.read('timers') ?? {};
+    var lastTimer = times[
+            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ??
+        0;
+    if (times[
+            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
+        null) {
+      times.addAll({
+        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+      });
+    } else {
+      times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
+          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+    }
+    if (times['totall'] == null) {
+      times.addAll({
+        'totall':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+      });
+    } else {
+      times['totall'] = times['totall'] +
+          (DateTime.now().difference(_dateTime).inSeconds).toInt();
+    }
+    await _getStorage.write('timers', times);
+    print(_getStorage.read('timers'));
+    // _getStorage.remove('timers');
   }
 
   void getBookDetail(String token, String bookId) async {

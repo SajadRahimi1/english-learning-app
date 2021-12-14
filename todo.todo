@@ -8,7 +8,7 @@
 
         - splash screen past in 3 second  /done
 
-- search in book & podcast & video
+- search in book & podcast & video      
 
 - UI of video screen
 
@@ -16,11 +16,14 @@
 
 - download podcast (on download & finished) UI
 
-- backup checkbox save to storage
+        - backup checkbox save to storage  /done
 
 - statics screen UI & API
+{
+        save daily timer only in books
+}
 
-- bookmark in all resources and news /problem to send data
+        - bookmark in all resources and news /done
 
 - Login Logic (connect to backed)   /need kavenegar
 

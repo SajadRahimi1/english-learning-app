@@ -44,8 +44,9 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: Get.width / 13,
-                        backgroundImage:
-                            NetworkImage(_getStorage.read('profile_image')),
+                        backgroundImage: NetworkImage(_getStorage
+                                .read('profile_image') ??
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: Get.width / 23),

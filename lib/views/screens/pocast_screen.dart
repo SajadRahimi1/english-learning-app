@@ -15,6 +15,7 @@ class PodcastScreen extends StatelessWidget {
         "token", ModalRoute.of(context)?.settings.arguments.toString() ?? "");
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
+    _controller.onInit();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -29,6 +30,7 @@ class PodcastScreen extends StatelessWidget {
                         Navigator.pop(context);
                         _controller.player.closeAudioSession();
                         _controller.isPlaying.value = false;
+                        _controller.onClose();
                       },
                       child: Row(
                         children: const [
@@ -247,21 +249,7 @@ class PodcastScreen extends StatelessWidget {
                                             : InkWell(
                                                 child: Image.asset(
                                                     "assets/images/play.png"),
-                                                onTap: () {
-                                                  _controller.playAudio(
-                                                      baseUrl +
-                                                          _controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .podcastPath);
-                                                  _controller.download(
-                                                      _controller
-                                                          .podcast
-                                                          .items[index]
-                                                          .podcastPath,
-                                                      _controller.podcast.id +
-                                                          index.toString());
-                                                })),
+                                                onTap: () {})),
 
                                         // title
                                         Text(

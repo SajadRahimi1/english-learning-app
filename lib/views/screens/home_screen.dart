@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/controllers/home_data_controller.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/models/level.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,8 +36,9 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
                           radius: Get.width / 13,
-                          backgroundImage:
-                              NetworkImage(_controller.getProfileImage),
+                          backgroundImage: NetworkImage(_controller
+                                  .getProfileImage ??
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                         ),
                       ),
 
@@ -104,9 +106,9 @@ class HomeScreen extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: 8, bottom: Get.height / 100),
-                                      child: const Text(
-                                        "LEVEL 2",
-                                        style: TextStyle(
+                                      child: Text(
+                                        _controller.totallSecond.level(),
+                                        style: const TextStyle(
                                             fontFamily: "Aria",
                                             fontSize: 18,
                                             color: Color(0xff707070)),
@@ -125,18 +127,19 @@ class HomeScreen extends StatelessWidget {
                                             child: SizedBox(
                                               height: Get.height,
                                               width: Get.width,
-                                              child:
-                                                  const CircularProgressIndicator(
+                                              child: CircularProgressIndicator(
                                                 strokeWidth: 8,
-                                                color: Color(0xffFFC200),
-                                                value: 0.3,
+                                                color: const Color(0xffFFC200),
+                                                value: _controller.totallSecond
+                                                    .levelPercent(),
                                               ),
                                             ),
                                           ),
-                                          const Center(
+                                          Center(
                                             child: Text(
-                                              "8/20",
-                                              style: TextStyle(
+                                              _controller.totallSecond
+                                                  .showCurrent(),
+                                              style: const TextStyle(
                                                   fontFamily: "Arial",
                                                   fontSize: 15,
                                                   color: Color(0xff707070)),

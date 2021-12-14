@@ -18,6 +18,7 @@ class BookScreen extends StatelessWidget {
     final GetStorage _getStotage = GetStorage();
     GetStorage.init();
     _controller.onInit();
+
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
