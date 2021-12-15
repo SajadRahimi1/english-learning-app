@@ -94,6 +94,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                           child: const CustomTextInput(
                             hintText: "ایمیل یا شماره همراه",
                             iconPath: "key.png",
+                            error: false,
                           )),
 
                       //login button

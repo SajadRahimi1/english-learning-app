@@ -42,12 +42,11 @@ class NewsDataController extends GetxController with StateMixin {
   }
 
   void bookmarkToggle(String id) async {
-    var query = "type=news&bookmarkAbleId=$id";
     var _request = await _getConnect.post(
         bookmarkToggleUrl, {'type': 'news', 'bookmarkAbleId': id},
         headers: {
           'accept': 'application/json',
-          // 'Authorization': 'Bearer $tokenConst'
+          'Authorization': 'Bearer $tokenConst'
         },
         contentType: "application/json");
     print(_request.body);

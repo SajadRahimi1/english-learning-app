@@ -6,10 +6,12 @@ class CustomTextInput extends StatelessWidget {
       {Key? key,
       required this.hintText,
       required this.iconPath,
+      required this.error,
       this.onChanged})
       : super(key: key);
   final String hintText, iconPath;
   final void Function(String)? onChanged;
+  final bool error;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -36,11 +38,15 @@ class CustomTextInput extends StatelessWidget {
                 ),
               ),
             ),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: orange, width: 0.5),
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-            enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: orange, width: 0.5),
-                borderRadius: BorderRadius.all(Radius.circular(8)))));
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: error ? const Color(0xffff0000) : orange,
+                    width: 0.5),
+                borderRadius: const BorderRadius.all(Radius.circular(8))),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: error ? const Color(0xffff0000) : orange,
+                    width: 0.5),
+                borderRadius: const BorderRadius.all(Radius.circular(8)))));
   }
 }

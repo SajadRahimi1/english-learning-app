@@ -83,49 +83,63 @@ class LoginScreen extends StatelessWidget {
 
                             //login text input and remember me custom check box
                             Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
-                                      child: CustomTextInput(
-                                        hintText: textInputDetail[0][0],
-                                        iconPath: textInputDetail[1][0],
-                                        onChanged: (text) {
-                                          username = text;
-                                        },
-                                      ),
+                                      child: Obx(() => CustomTextInput(
+                                            hintText: textInputDetail[0][0],
+                                            iconPath: textInputDetail[1][0],
+                                            error: _controller.error.value,
+                                            onChanged: (text) {
+                                              username = text;
+                                            },
+                                          )),
                                       width: Get.width,
                                       height: Get.height / 23,
                                     ),
                                     SizedBox(
-                                      child: CustomTextInput(
-                                        hintText: textInputDetail[0][1],
-                                        iconPath: textInputDetail[1][1],
-                                        onChanged: (text) {
-                                          password = text;
-                                        },
-                                      ),
                                       width: Get.width,
                                       height: Get.height / 23,
+                                      child: Obx(() => CustomTextInput(
+                                            hintText: textInputDetail[0][1],
+                                            iconPath: textInputDetail[1][1],
+                                            error: _controller.error.value,
+                                            onChanged: (text) {
+                                              password = text;
+                                            },
+                                          )),
                                     ),
+                                    Obx(() => SizedBox(
+                                          width: Get.width,
+                                          child: Text(
+                                            _controller.errorMessage.value,
+                                            textAlign: TextAlign.right,
+                                            style: const TextStyle(
+                                                fontSize: 10,
+                                                fontFamily: "Yekan",
+                                                color: Color(0xffff0000)),
+                                          ),
+                                        )),
                                     customCheckBox(
                                         Get.width / 20,
                                         Get.height / 35,
-                                        "   ذخیره اطلاعات ورود")
+                                        "   ذخیره اطلاعات ورود",
+                                        (value) => _controller.remeberLogin)
                                   ],
                                 )),
 
                             //login button
                             Container(
                                 width: Get.width,
-                                height: Get.height / 10,
+                                height: Get.height / 10.2,
                                 padding: EdgeInsets.symmetric(
                                     vertical: Get.height / 32),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // _controller.login(username, password);
+                                    _controller.login(username, password);
                                   },
                                   child: const Text(
                                     "ورود",
@@ -138,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                                       shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(8)))),
+                                                  BorderRadius.circular(10)))),
                                 )),
 
                             // create account and forgot password text button

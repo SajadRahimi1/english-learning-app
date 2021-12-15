@@ -35,11 +35,13 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
-                          radius: Get.width / 13,
-                          backgroundImage: NetworkImage(_controller
-                                  .getProfileImage ??
-                              "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
-                        ),
+                            radius: Get.width / 13,
+                            backgroundImage: NetworkImage(
+                                _controller.homeModel.user.avatarPath)
+                            // _controller
+                            //       .getProfileImage ??
+                            //   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
+                            ),
                       ),
 
                       // Hello Text
@@ -245,17 +247,39 @@ class HomeScreen extends StatelessWidget {
                       itemCount: _controller.homeModel.histories.length,
                       reverse: true,
                       padding: EdgeInsets.symmetric(horizontal: Get.width / 30),
-                      itemBuilder: (context, index) => Container(
-                        width: Get.width / 2.6,
-                        decoration: BoxDecoration(
-                            color: Colors.cyan,
-                            image: DecorationImage(
-                                image: NetworkImage(baseUrl +
-                                    _controller
-                                        .homeModel.histories[index].imagePath),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(35)),
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          if (_controller.homeModel.histories[index].type ==
+                              "news") {
+                            Navigator.pushNamed(context, '/newsDetail',
+                                arguments:
+                                    _controller.homeModel.histories[index].id);
+                          }
+                          if (_controller.homeModel.histories[index].type ==
+                              "podcasts") {
+                            Navigator.pushNamed(context, '/podcast',
+                                arguments:
+                                    _controller.homeModel.histories[index].id);
+                          }
+                          if (_controller.homeModel.histories[index].type ==
+                              "books") {
+                            Navigator.pushNamed(context, '/bookScreen',
+                                arguments:
+                                    _controller.homeModel.histories[index].id);
+                          }
+                        },
+                        child: Container(
+                          width: Get.width / 2.6,
+                          decoration: BoxDecoration(
+                              color: Colors.cyan,
+                              image: DecorationImage(
+                                  image: NetworkImage(baseUrl +
+                                      _controller.homeModel.histories[index]
+                                          .imagePath),
+                                  fit: BoxFit.fill),
+                              borderRadius: BorderRadius.circular(35)),
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                        ),
                       ),
                     ),
                   ),

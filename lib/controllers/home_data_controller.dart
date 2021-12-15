@@ -34,8 +34,9 @@ class HomeDataController extends GetxController with StateMixin {
   }
 
   int get totallSecond {
-    var statics = _getStorage.read('timers');
+    var statics = _getStorage.read('timers') ?? {'totall': 0};
 
-    return statics['totall'];
+    return statics!['totall'];
+    // return 0;
   }
 }

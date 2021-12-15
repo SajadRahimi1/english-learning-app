@@ -96,6 +96,7 @@ class SetNewPasswordScreen extends StatelessWidget {
                                 height: Get.height / 23,
                                 child: const CustomTextInput(
                                   hintText: "رمز عبور جدید",
+                                  error: false,
                                   iconPath: "lock.png",
                                 ),
                               ),
@@ -104,6 +105,7 @@ class SetNewPasswordScreen extends StatelessWidget {
                                 child: const CustomTextInput(
                                   hintText: "تکرار رمز عبور",
                                   iconPath: "repassword.png",
+                                  error: false,
                                 ),
                               ),
                             ],

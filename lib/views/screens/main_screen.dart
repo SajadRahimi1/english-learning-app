@@ -35,6 +35,12 @@ class MainScreen extends StatelessWidget {
                         return StaticsScreen();
                       case '/profile':
                         return ProfileScreen();
+                      case '/bookScreen':
+                        return BookScreen();
+                      case "/podcast":
+                        return PodcastScreen();
+                      case "/newsDetail":
+                        return NewsDetailScreen();
                     }
                     return const HomeScreen();
                   },
@@ -64,7 +70,7 @@ class MainScreen extends StatelessWidget {
                   builder: (context) {
                     if (settings.name == '/newsDetail')
                       return NewsDetailScreen();
-                    return NewsScreen();
+                    return const NewsScreen();
                   },
                 ),
               )

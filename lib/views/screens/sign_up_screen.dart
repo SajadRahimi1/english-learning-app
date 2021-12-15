@@ -107,13 +107,15 @@ class SignupScreen extends StatelessWidget {
                                       ? customCheckBox(
                                           Get.width / 22,
                                           Get.height / 40,
-                                          "   استفاده از زبانر به معنی موافقت با قوانین می باشد")
+                                          "   استفاده از زبانر به معنی موافقت با قوانین می باشد",
+                                          (value) {})
                                       : SizedBox(
                                           width: Get.width,
                                           height: Get.height / 23,
                                           child: CustomTextInput(
                                             hintText: textInputDetail[0][index],
                                             iconPath: textInputDetail[1][index],
+                                            error: false,
                                             onChanged: (text) {
                                               signupParamerts[index] = text;
                                             },

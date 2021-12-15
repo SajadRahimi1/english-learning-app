@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:zabaner/models/urls.dart';
+
 HomeModel homeModelFromJson(String str) => HomeModel.fromJson(json.decode(str));
 
 String homeModelToJson(HomeModel data) => json.encode(data.toJson());
@@ -82,14 +84,22 @@ class Statistics {
 }
 
 class User {
-  User({
-    required this.fullName,
-  });
+  User(
+      {required this.fullName,
+      required this.avatarPath,
+      required this.currentLevelProgress,
+      required this.level});
 
   final String fullName;
+  final String avatarPath;
+  final int currentLevelProgress;
+  final int level;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         fullName: json["fullName"],
+        avatarPath: baseUrl + json["avatarPath"],
+        currentLevelProgress: json["currentLevelProgress"] ?? 0,
+        level: json["level"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

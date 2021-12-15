@@ -24,7 +24,7 @@ class PodcastDetailController extends GetxController with StateMixin {
     super.onInit();
 
     print("Init");
-    player.isOpen() ? {} : player.openAudioSession();
+    // player.isOpen() ? {} : player.openAudioSession();
     GetStorage.init();
     _dateTime = DateTime.now();
   }
