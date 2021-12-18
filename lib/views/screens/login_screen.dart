@@ -259,7 +259,7 @@ class LoginScreen extends StatelessWidget {
                             height: Get.height / 24,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(const MainScreen());
+                                Get.to(MainScreen());
                               },
                               child: const Text("ورود به عنوان میهمان",
                                   style: TextStyle(

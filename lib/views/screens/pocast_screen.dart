@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,8 +13,9 @@ class PodcastScreen extends StatelessWidget {
       Get.put(PodcastDetailController());
   @override
   Widget build(BuildContext context) {
-    _controller.getPodcastData(
-        "token", ModalRoute.of(context)?.settings.arguments.toString() ?? "");
+    final String id =
+        ModalRoute.of(context)?.settings.arguments.toString() ?? "";
+    _controller.getPodcastData("token", id);
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
     _controller.onInit();
@@ -108,7 +111,6 @@ class PodcastScreen extends StatelessWidget {
                     SizedBox(
                       height: Get.height / 30,
                     ),
-
                     _controller.obx((state) => Expanded(
                           child: Column(
                             children: [
@@ -224,32 +226,71 @@ class PodcastScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        // play botton
-                                        Obx(() => _controller.isPlaying.value
-                                            ? InkWell(
+                                        Obx(() => !_controller
+                                                .existFile[index].value
+                                            ?
+                                            // Download
+                                            InkWell(
                                                 onTap: () {
-                                                  _controller.player
-                                                      .stopPlayer();
-
-                                                  _controller.isPlaying.value =
-                                                      false;
+                                                  _controller.download(
+                                                      _controller
+                                                          .podcast
+                                                          .items[index]
+                                                          .podcastPath,
+                                                      id,
+                                                      _controller.podcast
+                                                          .items[index].title);
                                                 },
-                                                child: CircleAvatar(
-                                                  child: Obx(() =>
-                                                      CircularProgressIndicator(
-                                                        value: _controller
-                                                            .percentPlayed
-                                                            .value,
-                                                        strokeWidth: 2,
-                                                      )),
-                                                  backgroundColor:
-                                                      const Color(0xffffffff),
+                                                child: const Icon(
+                                                  Icons.cloud_download,
+                                                  size: 28,
                                                 ),
                                               )
-                                            : InkWell(
-                                                child: Image.asset(
-                                                    "assets/images/play.png"),
-                                                onTap: () {})),
+                                            :
+                                            // play botton
+                                            Obx(() => _controller
+                                                    .isPlaying.value
+                                                ?
+                                                // stop aduio
+                                                InkWell(
+                                                    onTap: () {
+                                                      _controller.player
+                                                          .stopPlayer();
+
+                                                      _controller.isPlaying
+                                                          .value = false;
+                                                    },
+                                                    child: CircleAvatar(
+                                                      child: Obx(() =>
+                                                          CircularProgressIndicator(
+                                                            value: _controller
+                                                                .percentPlayed
+                                                                .value,
+                                                            strokeWidth: 2,
+                                                          )),
+                                                      backgroundImage:
+                                                          const AssetImage(
+                                                              "assets/images/stop.png"),
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xffffffff),
+                                                    ),
+                                                  )
+                                                :
+                                                // play audio
+                                                InkWell(
+                                                    child: Image.asset(
+                                                        "assets/images/play.png"),
+                                                    onTap: () {
+                                                      _controller.playAudio(
+                                                          _controller
+                                                                  .appDoc.path +
+                                                              id +
+                                                              _controller
+                                                                  .podcast
+                                                                  .items[index]
+                                                                  .title);
+                                                    }))),
 
                                         // title
                                         Text(

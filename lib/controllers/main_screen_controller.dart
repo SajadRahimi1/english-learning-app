@@ -6,6 +6,11 @@ class MainScreenController extends GetxController {
   var currentIndex = 0.obs;
   late void Function()? onPressed;
   var first = 0.obs;
+  List<GlobalKey<NavigatorState>> navigationKey = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+  ];
   @override
   void onInit() {
     // TODO: implement onInit

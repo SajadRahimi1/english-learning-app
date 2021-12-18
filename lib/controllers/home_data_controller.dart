@@ -22,6 +22,7 @@ class HomeDataController extends GetxController with StateMixin {
 
     if (request.statusCode == 200) {
       homeModel = homeModelFromJson(request.bodyString ?? "");
+      _getStorage.write('profile_image', homeModel.user.avatarPath);
       change(null, status: RxStatus.success());
     } else {
       change(null, status: RxStatus.error());

@@ -30,7 +30,7 @@ class NewsDetailController extends GetxController with StateMixin {
     if (times[
             '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
         null) {
-      times.addAll({
+      times.addAll(<String, dynamic>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
             (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
@@ -39,7 +39,7 @@ class NewsDetailController extends GetxController with StateMixin {
           (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
     }
     if (times['totall'] == null) {
-      times.addAll({
+      times.addAll(<String, dynamic>{
         'totall':
             (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });

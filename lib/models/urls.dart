@@ -14,4 +14,4 @@ const newsDetailUrl = "$baseUrl/api/v1/news/";
 const bookmarkToggleUrl = "$baseUrl/api/v1/bookmarks/toggle";
 
 const tokenConst =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk1NDc0NjYsImV4cCI6MTYzOTU4MzQ2Nn0.Rg4qogLCWtkU1EI4dZNdecloKalcDp18ogA3o7uHIRo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk4MDcxNDEsImV4cCI6MTYzOTg0MzE0MX0.NAwyqLo8hd_Unr_bmWIXmyqELL7aeszzispZ5wb-UMM";

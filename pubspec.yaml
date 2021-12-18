@@ -39,7 +39,6 @@ dependencies:
   flutter_sound_lite: ^8.4.2
   image_picker: ^0.8.4+4
   get_storage: ^2.0.3
-  cron: ^0.4.0
 
 dev_dependencies:
   flutter_test:

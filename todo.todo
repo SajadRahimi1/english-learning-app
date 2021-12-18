@@ -12,7 +12,7 @@
 
 - UI of video screen
 
-- download podcast and play it when download completed  / wrote download and play 
+- download podcast and play it when download completed  / wrote download and play function
 
 - download podcast (on download & finished) UI
 
@@ -28,6 +28,7 @@
 - Login Logic (connect to backed)   /need kavenegar
 
 - Signup logic (connect to backed)  /need kavenegar
+
 
 - forgot password logic (connect to backed)     /need kavenegar
 

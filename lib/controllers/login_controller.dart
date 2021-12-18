@@ -18,9 +18,9 @@ class LoginController extends GetConnect {
         GetStorage.init();
         final GetStorage _getStorage = GetStorage();
         _getStorage.write("token", _response.body['accessToken']);
-        Get.offAll(() => const MainScreen());
+        Get.offAll(() => MainScreen());
       } else {
-        Get.offAll(() => const MainScreen());
+        Get.offAll(() => MainScreen());
       }
     }
     if (_response.statusCode == 400) {
