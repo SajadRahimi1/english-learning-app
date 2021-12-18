@@ -1,47 +1,58 @@
-        - bottom navigation icon color  /done
-
-- update user stats 
-
-        - search in news /done
-
-- search in resources
-
-        - splash screen past in 3 second  /done
-
-- search in book & podcast & video      
-
-- UI of video screen
-
-- download podcast and play it when download completed  / wrote download and play function
-
-- download podcast (on download & finished) UI
-
-        - backup checkbox save to storage  /done
-
-- statics screen UI & API
-{
-        save daily timer only in books
-}
-
-        - bookmark in all resources and news /done
-
-- Login Logic (connect to backed)   /need kavenegar
-
-- Signup logic (connect to backed)  /need kavenegar
+                Login and Register
+=====================================================================║
+- Login Logic (connect to backed)   /need kavenegar                  ║
+                                                                     ║
+- Signup logic (connect to backed)  /need kavenegar                  ║
+                                                                     ║
+- forgot password logic (connect to backed)     /need kavenegar      ║ 
+                                                                     ║
+- validate code for recovery password and signup    /need kavenegar  ║ 
+                                                                     ║
+- reset password logic (connect to backed)  /need kavenegar          ║
+                                                                     ║
+- signup and signin with gmail (google)     /need keytool            ║
+=====================================================================║
 
 
-- forgot password logic (connect to backed)     /need kavenegar
+                UI and Logic
+==================================================║
+- update user stats                               ║
+                                                  ║
+- search in book & podcast & video                ║
+                                                  ║
+- UI of video screen                              ║
+                                                  ║
+- statics screen UI & API                         ║
+{                                                 ║
+check if data in local empty get from server      ║
+        ******************************            ║
+}                                                 ║
+                                                  ║
+- tour for first time or login as guest           ║
+                                                  ║
+- double tap on back button to close app          ║
+==================================================║
 
-- validate code for recovery password and signup    /need kavenegar
 
-- reset password logic (connect to backed)  /need kavenegar
-
-        - profile image that shown in every screen  /done
-
-- signup and signin with gmail (google)
-
-- tour for first time or login as guest
-
-- back button fix bug
-
-- double tap on back button to close app
+                DONE
+============================================================║
+- search in news /done                                      ║
+                                                            ║
+- splash screen past in 3 second  /done                     ║
+                                                            ║
+- backup checkbox save to storage  /done                    ║
+                                                            ║
+- bookmark in all resources and news /done                  ║
+                                                            ║
+- profile image that shown in every screen  /done           ║
+                                                            ║
+- back button fix bug  /done                                ║
+                                                            ║
+- bottom navigation icon color  /done                       ║
+                                                            ║
+- download podcast and play it when download completed      ║
+                                                            ║
+- download podcast (on download & finished) UI              ║
+                                                            ║
+- search in resources                                       ║
+============================================================║

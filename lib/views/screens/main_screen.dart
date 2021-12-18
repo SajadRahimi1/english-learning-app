@@ -32,7 +32,6 @@ class MainScreen extends StatelessWidget {
                     .currentContext);
           } else {
             // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
-            print("c");
           }
           return false;
         },

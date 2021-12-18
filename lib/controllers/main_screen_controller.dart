@@ -6,6 +6,7 @@ class MainScreenController extends GetxController {
   var currentIndex = 0.obs;
   late void Function()? onPressed;
   var first = 0.obs;
+  late DateTime currentBackPressTime;
   List<GlobalKey<NavigatorState>> navigationKey = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
