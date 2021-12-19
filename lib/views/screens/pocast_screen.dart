@@ -55,10 +55,13 @@ class PodcastScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // profile image
-                          CircleAvatar(
-                            radius: Get.width / 18,
-                            backgroundImage:
-                                NetworkImage(_getStorage.read('profile_image')),
+                          InkWell(
+                            onTap: ()=>Navigator.pushNamed(context, '/profile'),
+                            child: CircleAvatar(
+                              radius: Get.width / 18,
+                              backgroundImage:
+                                  NetworkImage(_getStorage.read('profile_image')),
+                            ),
                           ),
 
                           // Hello Text
@@ -228,24 +231,39 @@ class PodcastScreen extends StatelessWidget {
                                       children: [
                                         Obx(() => !_controller
                                                 .existFile[index].value
-                                            ?
-                                            // Download
-                                            InkWell(
-                                                onTap: () {
-                                                  _controller.download(
-                                                      _controller
-                                                          .podcast
-                                                          .items[index]
-                                                          .podcastPath,
-                                                      id,
-                                                      _controller.podcast
-                                                          .items[index].title);
-                                                },
-                                                child: const Icon(
-                                                  Icons.cloud_download,
-                                                  size: 28,
-                                                ),
-                                              )
+                                            ? _controller.downloadingState
+                                                        .value ==
+                                                    "downloading"
+                                                ? CircleAvatar(
+                                                    child: Obx(() =>
+                                                        CircularProgressIndicator(
+                                                          value: _controller
+                                                              .downloadingPercent
+                                                              .value,
+                                                          strokeWidth: 2,
+                                                        )),
+                                                    backgroundColor:
+                                                        const Color(0xffDBDBDB))
+                                                :
+                                                // Download
+                                                InkWell(
+                                                    onTap: () {
+                                                      _controller.download(
+                                                          _controller
+                                                              .podcast
+                                                              .items[index]
+                                                              .podcastPath,
+                                                          id,
+                                                          _controller
+                                                              .podcast
+                                                              .items[index]
+                                                              .title);
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.cloud_download,
+                                                      size: 28,
+                                                    ),
+                                                  )
                                             :
                                             // play botton
                                             Obx(() => _controller

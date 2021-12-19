@@ -44,10 +44,13 @@ class StaticsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // profile image
-                    CircleAvatar(
-                      radius: Get.width / 18,
-                      backgroundImage: const NetworkImage(
-                          "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                    InkWell(
+                      onTap: () => Navigator.pushNamed(context, '/profile'),
+                      child: CircleAvatar(
+                        radius: Get.width / 18,
+                        backgroundImage: const NetworkImage(
+                            "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                      ),
                     ),
 
                     // Hello Text
@@ -238,7 +241,7 @@ class StaticsScreen extends StatelessWidget {
                 child: Card(
                   elevation: 2,
                   margin: EdgeInsets.symmetric(
-                      horizontal: Get.height / 40, vertical: Get.height / 30),
+                      horizontal: Get.height / 40, vertical: Get.height / 35),
                   color: const Color(0xffF9F9F9),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
@@ -252,7 +255,7 @@ class StaticsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // ============ Lines in backforund of charts ============
+                              // ============ Lines in backgorund of charts ============
                               Divider(
                                 thickness: 1,
                                 height: Get.height / 22,
@@ -278,10 +281,11 @@ class StaticsScreen extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // max height is Get.height / 6.5
                             children: [
                               barChart(
                                   width: Get.width / 70,
-                                  height: Get.height / 8 / 1.6,
+                                  height: Get.height / 6.5,
                                   color: const Color(0xffFFE14D),
                                   topText: "00:03:01",
                                   bottomText: "امروز"),

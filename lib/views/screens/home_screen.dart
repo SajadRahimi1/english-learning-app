@@ -12,12 +12,7 @@ class HomeScreen extends StatelessWidget {
     final HomeDataController _controller = Get.put(HomeDataController());
     _controller.getData(
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI");
-    const links = [
-      "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/5210/9780521013338.jpg",
-      "https://images-na.ssl-images-amazon.com/images/I/91oc6Hcx1ML.jpg",
-      "https://m.media-amazon.com/images/I/51OuwYNHD2L.jpg",
-      "https://kbimages1-a.akamaihd.net/3647e5c0-34ee-4340-b056-056e844cfefe/1200/1200/False/ielts-academic-module-book-1.jpg"
-    ];
+    _controller.sendStatics();
     return SafeArea(
       child: Scaffold(
           backgroundColor: const Color(0xffffffff),
@@ -84,6 +79,18 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
+                SizedBox(
+                  width: Get.width / 1.22,
+                  child: Text(
+                    _controller.homeModel.statistics.durationSum,
+                    style: const TextStyle(
+                      color: Color(0xff5A5A5A),
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+
                 // charts in middle of screen
                 Expanded(
                   child: SizedBox(
@@ -130,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                                               height: Get.height,
                                               width: Get.width,
                                               child: CircularProgressIndicator(
-                                                strokeWidth: 8,
+                                                strokeWidth: 6,
                                                 color: const Color(0xffFFC200),
                                                 value: _controller.totallSecond
                                                     .levelPercent(),

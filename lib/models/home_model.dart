@@ -92,7 +92,7 @@ class User {
 
   final String fullName;
   final String avatarPath;
-  final int currentLevelProgress;
+  final double currentLevelProgress;
   final int level;
 
   factory User.fromJson(Map<String, dynamic> json) => User(

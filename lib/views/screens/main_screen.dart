@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
@@ -15,8 +14,8 @@ import 'package:zabaner/views/screens/resources_screen.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
-
   final MainScreenController _controller = Get.put(MainScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -75,6 +74,8 @@ class MainScreen extends StatelessWidget {
                       switch (settings.name) {
                         case '/bookScreen':
                           return BookScreen();
+                        case '/profile':
+                          return ProfileScreen();
                         case "/podcast":
                           return PodcastScreen();
                         case "/resource":
@@ -96,6 +97,9 @@ class MainScreen extends StatelessWidget {
                       }
                       if (settings.name == '/news') {
                         return const NewsScreen();
+                      }
+                      if (settings.name == '/profile') {
+                        return ProfileScreen();
                       }
                       return const NewsScreen();
                     },

@@ -41,7 +41,7 @@ class BookController extends GetxController with StateMixin {
           (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
     }
     if (times['totall'] == null) {
-      times.addAll({
+      times.addAll(<String, dynamic>{
         'totall':
             (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
@@ -51,7 +51,6 @@ class BookController extends GetxController with StateMixin {
     }
     await _getStorage.write('timers', times);
     print(_getStorage.read('timers'));
-    // _getStorage.remove('timers');
   }
 
   void getBookDetail(String token, String bookId) async {

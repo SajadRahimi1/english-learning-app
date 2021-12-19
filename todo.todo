@@ -22,6 +22,7 @@
                                                   ║
 - UI of video screen                              ║
                                                   ║
+                                                  ║
 - statics screen UI & API                         ║
 {                                                 ║
 check if data in local empty get from server      ║
@@ -53,6 +54,8 @@ check if data in local empty get from server      ║
 - download podcast and play it when download completed      ║
                                                             ║
 - download podcast (on download & finished) UI              ║
+                                                            ║
+- Click profile image redirect to profile screen            ║ 
                                                             ║
 - search in resources                                       ║
 ============================================================║

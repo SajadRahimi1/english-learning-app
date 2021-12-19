@@ -4,7 +4,7 @@ import 'package:zabaner/models/urls.dart';
 
 class StaticController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
-  late SummaryTimeStatic summaryTime;
+  late StaticsModel summaryTime;
 
   @override
   void onInit() {
@@ -23,7 +23,7 @@ class StaticController extends GetxController with StateMixin {
     );
 
     if (_request.statusCode == 200) {
-      summaryTime = summaryTimeSttaticFromJson(_request.bodyString ?? "");
+      summaryTime = staticsModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
     } else {
       change(null, status: RxStatus.error());

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/home_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/models/level.dart';
 
 class HomeDataController extends GetxController with StateMixin {
   late HomeModel homeModel;
@@ -12,6 +13,35 @@ class HomeDataController extends GetxController with StateMixin {
     // TODO: implement onInit
     super.onInit();
     GetStorage.init();
+  }
+
+  Future<void> sendStatics() async {
+    Map<String, dynamic> times = _getStorage.read('timers') ?? {};
+    if (times.isNotEmpty) {
+      var stats = [];
+      times.forEach((key, value) {
+        if (key != 'totall') {
+          stats.add({
+            "date": key,
+            "duration":
+                ((int.parse(value.toString()) / 3) * 2).toInt().formatSecond()
+          });
+        }
+      });
+      var bodyRequest = {
+        "stats": stats,
+        "level": totallSecond.levelNumber(),
+        "currentLevelProgress": totallSecond.levelPercent() * 100
+      };
+
+      var request = await _getConnect.post(updateStaticsUrl, bodyRequest,
+          headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $tokenConst'
+          });
+
+      print(request.body);
+    }
   }
 
   void getData(String token) async {
@@ -39,5 +69,10 @@ class HomeDataController extends GetxController with StateMixin {
 
     return statics!['totall'];
     // return 0;
+  }
+
+  Map<String, dynamic> get timersLocal {
+    var statics = _getStorage.read('timers') ?? {};
+    return statics;
   }
 }

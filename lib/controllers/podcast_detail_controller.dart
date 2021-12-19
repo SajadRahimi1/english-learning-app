@@ -19,7 +19,7 @@ class PodcastDetailController extends GetxController with StateMixin {
   var isPlaying = false.obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
-
+  var downloadingState = "".obs;
   @override
   void onInit() async {
     super.onInit();
@@ -28,6 +28,8 @@ class PodcastDetailController extends GetxController with StateMixin {
     // player.isOpen() ? {} : player.openAudioSession();
     GetStorage.init();
     _dateTime = DateTime.now();
+    var ss = await path.getTemporaryDirectory();
+    print(ss.path);
   }
 
   @override
@@ -89,9 +91,11 @@ class PodcastDetailController extends GetxController with StateMixin {
     var _downloadRequest = await dio.download(
         "https://zabaner-dev.herokuapp.com/podcasts/resource/podcast/temp.mp3",
         appDoc.path + id + title, onReceiveProgress: (recive, total) {
+      downloadingState.value = "downloading";
       downloadingPercent.value = recive / total;
       print(downloadingPercent);
     });
+    Get.closeAllSnackbars();
 
     if (_downloadRequest.statusCode == 200) {
       print("Completed");

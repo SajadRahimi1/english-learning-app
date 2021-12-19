@@ -9,6 +9,27 @@ extension Level on int {
     if (input > 8400) return "Level 6";
     return "";
   }
+
+  int levelNumber() {
+    int input = this;
+    if (input < 901) return 1;
+    if (input < 1500) return 2;
+    if (input < 3000) return 3;
+    if (input < 5400) return 4;
+    if (input < 8400) return 5;
+    if (input > 8400) return 6;
+    return 0;
+  }
+}
+
+extension Timer on int {
+  String formatSecond() {
+    Duration duration = Duration(seconds: this);
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
 }
 
 extension Percent on int {

@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final summaryTimeSttatic = summaryTimeSttaticFromJson(jsonString);
+//     final staticsModel = staticsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SummaryTimeStatic summaryTimeSttaticFromJson(String str) =>
-    SummaryTimeStatic.fromJson(json.decode(str));
+StaticsModel staticsModelFromJson(String str) =>
+    StaticsModel.fromJson(json.decode(str));
 
-class SummaryTimeStatic {
-  SummaryTimeStatic({
+class StaticsModel {
+  StaticsModel({
     required this.minDuration,
     required this.maxDuration,
     required this.avgDuration,
@@ -20,14 +20,34 @@ class SummaryTimeStatic {
   final String maxDuration;
   final String avgDuration;
   final String sumDuration;
-  final List<dynamic> lastDaysStats;
+  final List<LastDaysStat> lastDaysStats;
 
-  factory SummaryTimeStatic.fromJson(Map<String, dynamic> json) =>
-      SummaryTimeStatic(
+  factory StaticsModel.fromJson(Map<String, dynamic> json) => StaticsModel(
         minDuration: json["minDuration"],
         maxDuration: json["maxDuration"],
         avgDuration: json["avgDuration"],
         sumDuration: json["sumDuration"],
-        lastDaysStats: List<dynamic>.from(json["lastDaysStats"].map((x) => x)),
+        lastDaysStats: List<LastDaysStat>.from(
+            json["lastDaysStats"].map((x) => LastDaysStat.fromJson(x))),
       );
+}
+
+class LastDaysStat {
+  LastDaysStat({
+    required this.duration,
+    required this.date,
+  });
+
+  final String duration;
+  final DateTime date;
+
+  factory LastDaysStat.fromJson(Map<String, dynamic> json) => LastDaysStat(
+        duration: json["duration"],
+        date: DateTime.parse(json["date"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "duration": duration,
+        "date": date.toIso8601String(),
+      };
 }

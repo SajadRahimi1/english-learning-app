@@ -53,10 +53,14 @@ class NewsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // profile image
-                              CircleAvatar(
-                                radius: Get.width / 18,
-                                backgroundImage: NetworkImage(
-                                    _newsDataController.getProfileImage),
+                              InkWell(
+                                onTap: () =>
+                                    Navigator.pushNamed(context, '/profile'),
+                                child: CircleAvatar(
+                                  radius: Get.width / 18,
+                                  backgroundImage: NetworkImage(
+                                      _newsDataController.getProfileImage),
+                                ),
                               ),
 
                               // Hello Text
