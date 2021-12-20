@@ -108,7 +108,8 @@ class SignupScreen extends StatelessWidget {
                                           Get.width / 22,
                                           Get.height / 40,
                                           "   استفاده از زبانر به معنی موافقت با قوانین می باشد",
-                                          (value) {})
+                                          (value) {},
+                                          false)
                                       : SizedBox(
                                           width: Get.width,
                                           height: Get.height / 23,

@@ -8,8 +8,8 @@ class NewsDetailScreen extends StatelessWidget {
   final NewsDetailController _controller = Get.put(NewsDetailController());
   @override
   Widget build(BuildContext context) {
-    _controller.getData(tokenConst,
-        ModalRoute.of(context)?.settings.arguments.toString() ?? "");
+    _controller
+        .getData(ModalRoute.of(context)?.settings.arguments.toString() ?? "");
     _controller.onInit();
     return SafeArea(
         child: Scaffold(

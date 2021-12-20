@@ -58,7 +58,7 @@ class BookController extends GetxController with StateMixin {
       getBookDetailUrl + bookId,
       headers: {
         'accept': 'application/json',
-        'Authorization': 'Bearer $tokenConst'
+        'Authorization': 'Bearer ${_getStorage.read('token')}'
       },
     );
 

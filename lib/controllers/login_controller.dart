@@ -8,19 +8,25 @@ import 'package:zabaner/views/screens/main_screen.dart';
 class LoginController extends GetConnect {
   var error = false.obs;
   var errorMessage = "".obs;
-  bool remeberLogin = false;
-  Future<void> login(String username, String password) async {
+
+  final GetStorage _getStorage = GetStorage();
+  @override
+  void onInit() {
+    super.onInit();
+    GetStorage.init();
+  }
+
+  Future<void> login(String username, String password, bool rememberMe) async {
     var _response =
         await post(signinUrl, {"username": username, "password": password});
 
     if (_response.statusCode == 201) {
-      if (remeberLogin) {
-        GetStorage.init();
-        final GetStorage _getStorage = GetStorage();
-        _getStorage.write("token", _response.body['accessToken']);
+      if (rememberMe) {
+        print(_response.body['accessToken']);
+        _getStorage.write('token', _response.body['accessToken'].toString());
         Get.offAll(() => MainScreen());
       } else {
-        Get.offAll(() => MainScreen());
+        // Get.offAll(() => MainScreen());
       }
     }
     if (_response.statusCode == 400) {

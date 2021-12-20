@@ -16,38 +16,42 @@ class HomeDataController extends GetxController with StateMixin {
   }
 
   Future<void> sendStatics() async {
-    Map<String, dynamic> times = _getStorage.read('timers') ?? {};
-    if (times.isNotEmpty) {
-      var stats = [];
-      times.forEach((key, value) {
-        if (key != 'totall') {
-          stats.add({
-            "date": key,
-            "duration":
-                ((int.parse(value.toString()) / 3) * 2).toInt().formatSecond()
-          });
-        }
-      });
-      var bodyRequest = {
-        "stats": stats,
-        "level": totallSecond.levelNumber(),
-        "currentLevelProgress": totallSecond.levelPercent() * 100
-      };
+    try {
+      Map<String, dynamic> times = _getStorage.read('timers') ?? {};
 
-      var request = await _getConnect.post(updateStaticsUrl, bodyRequest,
-          headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer $tokenConst'
-          });
+      if (times.isNotEmpty) {
+        var stats = [];
+        times.forEach((key, value) {
+          if (key != 'totall') {
+            stats.add({
+              "date": key,
+              "duration":
+                  ((int.parse(value.toString()) / 3) * 2).toInt().formatSecond()
+            });
+          }
+        });
+        var bodyRequest = {
+          "stats": stats,
+          "level": totallSecond.levelNumber(),
+          "currentLevelProgress": totallSecond.levelPercent() * 100
+        };
 
-      print(request.body);
-    }
+        var request =
+            await _getConnect.post(updateStaticsUrl, bodyRequest, headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer ${_getStorage.read('token')}'
+        });
+
+        print(request.body);
+      }
+    } catch (e) {}
   }
 
   void getData(String token) async {
+    print(_getStorage.read('token'));
     var request = await _getConnect.get(homeDataUrl, headers: {
       'accept': 'application/json',
-      'Authorization': 'Bearer $tokenConst'
+      'Authorization': 'Bearer ${_getStorage.read('token')}'
     });
 
     if (request.statusCode == 200) {

@@ -22,7 +22,7 @@ class ProfileController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     final _request = await _getConnect.get(profileInformationUrl, headers: {
       'accept': 'application/json',
-      'Authorization': 'Bearer $tokenConst'
+      'Authorization': 'Bearer ${_getStorage.read('token')}'
     });
     if (_request.statusCode == 200) {
       profileInformation =
@@ -42,7 +42,7 @@ class ProfileController extends GetxController with StateMixin {
 
     var request = http.MultipartRequest("PATCH", Uri.parse(updateProfileUrl));
 
-    request.headers["Authorization"] = "Bearer $tokenConst";
+    request.headers["Authorization"] = "Bearer ${_getStorage.read('token')}";
 
     try {
       var pic = await http.MultipartFile.fromPath('avatar', _image!.path);
@@ -66,7 +66,7 @@ class ProfileController extends GetxController with StateMixin {
       'bDay': birthday
     }, headers: {
       'accept': 'application/json',
-      'Authorization': 'Bearer $tokenConst'
+      'Authorization': 'Bearer ${_getStorage.read('token')}'
     });
 
     if (_request.statusCode == 200) {

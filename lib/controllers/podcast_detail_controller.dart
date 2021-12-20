@@ -25,7 +25,9 @@ class PodcastDetailController extends GetxController with StateMixin {
     super.onInit();
     appDoc = await path.getApplicationDocumentsDirectory();
     print("Init");
-    // player.isOpen() ? {} : player.openAudioSession();
+    percentPlayed = 0.0.obs;
+    downloadingPercent = 0.0.obs;
+    downloadingState = "".obs;
     GetStorage.init();
     _dateTime = DateTime.now();
     var ss = await path.getTemporaryDirectory();
@@ -68,7 +70,7 @@ class PodcastDetailController extends GetxController with StateMixin {
       getPodcastDetailUrl + id,
       headers: {
         'accept': 'application/json',
-        'Authorization': 'Bearer $tokenConst'
+        'Authorization': 'Bearer ${_getStorage.read('token')}'
       },
     );
 
@@ -80,29 +82,42 @@ class PodcastDetailController extends GetxController with StateMixin {
           existFile[i].value = true;
         }
       }
-
       change(null, status: RxStatus.success());
+      if (_getStorage.read("auto_download") ?? false) {
+        for (var item in podcast.items) {
+          download(item.podcastPath, id, item.title);
+        }
+      }
     } else {
       change(null, status: RxStatus.error());
     }
   }
 
   void download(String urlPath, String id, String title) async {
-    var _downloadRequest = await dio.download(
-        "https://zabaner-dev.herokuapp.com/podcasts/resource/podcast/temp.mp3",
-        appDoc.path + id + title, onReceiveProgress: (recive, total) {
-      downloadingState.value = "downloading";
-      downloadingPercent.value = recive / total;
-      print(downloadingPercent);
-    });
-    Get.closeAllSnackbars();
+    io.File _checkFile = io.File(appDoc.path + id + title);
+    if (!_checkFile.existsSync()) {
+      var _downloadRequest = await dio.download(
+          "https://zabaner-dev.herokuapp.com/podcasts/resource/podcast/temp.mp3",
+          appDoc.path + id + title, onReceiveProgress: (recive, total) {
+        downloadingState.value = "downloading";
+        downloadingPercent.value = recive / total;
+        print(downloadingPercent);
+      });
+      Get.closeAllSnackbars();
 
-    if (_downloadRequest.statusCode == 200) {
-      print("Completed");
-      print(io.File(appDoc.path + id + title).existsSync());
-      for (var i = 0; i < podcast.items.length; i++) {
-        if (io.File(appDoc.path + id + title).existsSync()) {
-          existFile[i].value = true;
+      if (_downloadRequest.statusCode == 200) {
+        print("Completed");
+        print(io.File(appDoc.path + id + title).existsSync());
+        for (var i = 0; i < podcast.items.length; i++) {
+          if (io.File(appDoc.path + id + title).existsSync()) {
+            existFile[i].value = true;
+          }
+        }
+      } else {
+        for (var i = 0; i < podcast.items.length; i++) {
+          if (io.File(appDoc.path + id + title).existsSync()) {
+            existFile[i].value = true;
+          }
         }
       }
     }

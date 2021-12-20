@@ -32,11 +32,7 @@ class HomeScreen extends StatelessWidget {
                         child: CircleAvatar(
                             radius: Get.width / 13,
                             backgroundImage: NetworkImage(
-                                _controller.homeModel.user.avatarPath)
-                            // _controller
-                            //       .getProfileImage ??
-                            //   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
-                            ),
+                                _controller.homeModel.user.avatarPath)),
                       ),
 
                       // Hello Text

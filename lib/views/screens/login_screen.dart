@@ -19,6 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginController _controller = Get.put(LoginController());
     String username = "", password = "";
+    bool rememberMe = false;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -127,7 +128,8 @@ class LoginScreen extends StatelessWidget {
                                         Get.width / 20,
                                         Get.height / 35,
                                         "   ذخیره اطلاعات ورود",
-                                        (value) => _controller.remeberLogin)
+                                        (value) => rememberMe = value,
+                                        rememberMe)
                                   ],
                                 )),
 
@@ -139,7 +141,9 @@ class LoginScreen extends StatelessWidget {
                                     vertical: Get.height / 32),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    _controller.login(username, password);
+                                    _controller.login(
+                                        username, password, rememberMe);
+                                    print(rememberMe);
                                   },
                                   child: const Text(
                                     "ورود",

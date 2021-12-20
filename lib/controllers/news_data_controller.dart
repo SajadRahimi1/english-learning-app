@@ -8,6 +8,7 @@ import 'package:zabaner/models/urls.dart';
 
 class NewsDataController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
+  final GetStorage _getStorage = GetStorage();
   var categories = [].obs;
 
   RxList<CategoryContent> content = [
@@ -46,7 +47,7 @@ class NewsDataController extends GetxController with StateMixin {
         bookmarkToggleUrl, {'type': 'news', 'bookmarkAbleId': id},
         headers: {
           'accept': 'application/json',
-          'Authorization': 'Bearer $tokenConst'
+          'Authorization': 'Bearer ${_getStorage.read('token')}'
         },
         contentType: "application/json");
     print(_request.body);

@@ -51,10 +51,10 @@ class NewsDetailController extends GetxController with StateMixin {
     print(_getStorage.read('timers'));
   }
 
-  Future<void> getData(String token, String id) async {
+  Future<void> getData(String id) async {
     var _request = await _getConnect.get(newsDetailUrl + id, headers: {
       'accept': 'application/json',
-      'Authorization': 'Bearer $token'
+      'Authorization': 'Bearer ${_getStorage.read('token')}'
     });
 
     if (_request.statusCode == 200) {

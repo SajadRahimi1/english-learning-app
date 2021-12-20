@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/controllers/static_screen_controller.dart';
 import 'package:zabaner/views/widgets/bar_chart_widget.dart';
+import '../../models/level.dart';
 
 class StaticsScreen extends StatelessWidget {
   StaticsScreen({Key? key}) : super(key: key);
@@ -241,7 +242,7 @@ class StaticsScreen extends StatelessWidget {
                 child: Card(
                   elevation: 2,
                   margin: EdgeInsets.symmetric(
-                      horizontal: Get.height / 40, vertical: Get.height / 35),
+                      horizontal: Get.height / 40, vertical: Get.height / 40),
                   color: const Color(0xffF9F9F9),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
@@ -272,50 +273,74 @@ class StaticsScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          width: Get.width,
-                          height: Get.height,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: Get.height / 35,
-                              vertical: Get.height / 40),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // max height is Get.height / 6.5
-                            children: [
-                              barChart(
-                                  width: Get.width / 70,
-                                  height: Get.height / 6.5,
-                                  color: const Color(0xffFFE14D),
-                                  topText: "00:03:01",
-                                  bottomText: "امروز"),
-                              barChart(
-                                  width: Get.width / 70,
-                                  height: Get.height / 8 / 2.5,
-                                  color: const Color(0xffAEE908),
-                                  topText: "00:02:24",
-                                  bottomText: "دیروز"),
-                              barChart(
-                                  width: Get.width / 70,
-                                  height: Get.height / 8,
-                                  color: const Color(0xffE90827),
-                                  topText: "00:10:20",
-                                  bottomText: "00/07/01"),
-                              barChart(
-                                  width: Get.width / 70,
-                                  height: Get.height / 8 / 1.2,
-                                  color: const Color(0xffFFA4AA),
-                                  topText: "00:07:44",
-                                  bottomText: "00/06/31"),
-                              barChart(
-                                  width: Get.width / 70,
-                                  height: Get.height / 8 / 1.6,
-                                  color: const Color(0xffA4A7FF),
-                                  topText: "00:05:01",
-                                  bottomText: "00/06/30"),
-                            ],
-                          ),
-                        )
+                        _controller.obx((status) => Container(
+                              width: Get.width,
+                              height: Get.height,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: Get.height / 35,
+                                  vertical: Get.height / 40),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                // max height is Get.height / 6.61
+                                // children: [
+                                //   barChart(
+                                //       width: Get.width / 70,
+                                //       height: Get.height / 6.5,
+                                //       color: const Color(0xffFFE14D),
+                                //       topText: "00:03:01",
+                                //       bottomText: "امروز"),
+                                //   barChart(
+                                //       width: Get.width / 70,
+                                //       height: Get.height / 8 / 2.5,
+                                //       color: const Color(0xffAEE908),
+                                //       topText: "00:02:24",
+                                //       bottomText: "دیروز"),
+                                //   barChart(
+                                //       width: Get.width / 70,
+                                //       height: Get.height / 8,
+                                //       color: const Color(0xffE90827),
+                                //       topText: "00:10:20",
+                                //       bottomText: "00/07/01"),
+                                //   barChart(
+                                //       width: Get.width / 70,
+                                //       height: Get.height / 8 / 1.2,
+                                //       color: const Color(0xffFFA4AA),
+                                //       topText: "00:07:44",
+                                //       bottomText: "00/06/31"),
+                                //   barChart(
+                                //       width: Get.width / 70,
+                                //       height: Get.height / 8 / 1.6,
+                                //       color: const Color(0xffA4A7FF),
+                                //       topText: "00:05:01",
+                                //       bottomText: "00/06/30"),
+                                // ],
+
+                                children: List.generate(
+                                  _controller.summaryTime.lastDaysStats.length,
+                                  (index) => barChart(
+                                      width: Get.width / 70,
+                                      height: (Get.height / 6.61) *
+                                          (_controller
+                                                  .summaryTime
+                                                  .lastDaysStats[index]
+                                                  .duration
+                                                  .inSeconds /
+                                              _controller.sumDuration),
+                                      color: const Color(0xffFFE14D),
+                                      topText: _controller
+                                              .summaryTime
+                                              .lastDaysStats[index]
+                                              .duration
+                                              .inSeconds
+                                              .formatSecond() +
+                                          "\n ",
+                                      bottomText:
+                                          "${_controller.summaryTime.lastDaysStats[index].date.year}/${_controller.summaryTime.lastDaysStats[index].date.month}/${_controller.summaryTime.lastDaysStats[index].date.day}"),
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                   ),

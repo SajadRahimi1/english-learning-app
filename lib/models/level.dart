@@ -32,6 +32,17 @@ extension Timer on int {
   }
 }
 
+extension StringToDuration on String {
+  Duration toDuration() {
+    String input = this;
+    List times = input.split(':');
+    return Duration(
+        hours: int.parse(times[0]),
+        minutes: int.parse(times[1]),
+        seconds: int.parse(times[2]));
+  }
+}
+
 extension Percent on int {
   double levelPercent() {
     int input = this;

@@ -1,7 +1,7 @@
 // To parse this JSON data, do
 //
 //     final staticsModel = staticsModelFromJson(jsonString);
-
+import 'level.dart';
 import 'dart:convert';
 
 StaticsModel staticsModelFromJson(String str) =>
@@ -38,11 +38,11 @@ class LastDaysStat {
     required this.date,
   });
 
-  final String duration;
+  final Duration duration;
   final DateTime date;
 
   factory LastDaysStat.fromJson(Map<String, dynamic> json) => LastDaysStat(
-        duration: json["duration"],
+        duration: json["duration"].toString().toDuration(),
         date: DateTime.parse(json["date"]),
       );
 

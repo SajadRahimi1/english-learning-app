@@ -3,12 +3,16 @@ import 'package:get/get.dart';
 
 import '../colors.dart';
 
-Widget customCheckBox(
-    double width, double height, String text, void Function(bool) onData) {
+Widget customCheckBox(double width, double height, String text,
+    void Function(bool) onData, bool check) {
   var checked = false.obs;
   checked.listen(onData);
+
   return InkWell(
-    onTap: () => checked.value = !checked.value,
+    onTap: () {
+      checked.value = !checked.value;
+      check = checked.value;
+    },
     child: Row(
       children: [
         Obx(() => Container(

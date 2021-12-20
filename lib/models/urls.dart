@@ -16,4 +16,4 @@ const resourcesSearchUrl = "$baseUrl/api/v1/resources/search";
 const updateStaticsUrl = "$baseUrl/api/v1/statistics";
 
 const tokenConst =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk4OTE4ODMsImV4cCI6MTYzOTkyNzg4M30.G7inO6R2Fh8IBsMf0WoM_pE_ukNGnT4kesjUZED-Iig";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk5Nzg0NDYsImV4cCI6MTY0MDAxNDQ0Nn0.WKftB3SDzdutTLkgnqUbhs03WegnzAkmZ3JjYtk3BdQ";
