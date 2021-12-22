@@ -5,15 +5,15 @@ import 'package:zabaner/models/urls.dart';
 
 class NewsDetailScreen extends StatelessWidget {
   NewsDetailScreen({Key? key}) : super(key: key);
-  final NewsDetailController _controller = Get.put(NewsDetailController());
+  final NewsDetailController controller = Get.put(NewsDetailController());
   @override
   Widget build(BuildContext context) {
-    _controller
+    controller
         .getData(ModalRoute.of(context)?.settings.arguments.toString() ?? "");
-    _controller.onInit();
+    controller.customeInit();
     return SafeArea(
         child: Scaffold(
-      body: _controller.obx(
+      body: controller.obx(
         (status) => Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -27,8 +27,8 @@ class NewsDetailScreen extends StatelessWidget {
                 color: Colors.cyan,
                 borderRadius: BorderRadius.circular(40),
                 image: DecorationImage(
-                    image: NetworkImage(
-                        baseUrl + _controller.newsDetail.imagePath),
+                    image:
+                        NetworkImage(baseUrl + controller.newsDetail.imagePath),
                     fit: BoxFit.fill),
               ),
 
@@ -43,7 +43,7 @@ class NewsDetailScreen extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.pop(context);
-                      _controller.onClose();
+                      controller.onClose();
                     },
                   ),
                 ),
@@ -104,12 +104,12 @@ class NewsDetailScreen extends StatelessWidget {
               height: Get.height / 3,
               width: Get.width / 1.15,
               child: ListView.builder(
-                  itemCount: _controller.newsDetail.paragraphs.length + 1,
+                  itemCount: controller.newsDetail.paragraphs.length + 1,
                   itemBuilder: (context, index) => index == 0
                       ?
                       // titile text
                       Text(
-                          _controller.newsDetail.title,
+                          controller.newsDetail.title,
                           textAlign: TextAlign.left,
                           style: const TextStyle(fontSize: 21),
                         )
@@ -118,7 +118,7 @@ class NewsDetailScreen extends StatelessWidget {
                             // english text
                             Text(
                               "\n" +
-                                  _controller
+                                  controller
                                       .newsDetail.paragraphs[index - 1].en +
                                   "\n",
                               textAlign: TextAlign.left,

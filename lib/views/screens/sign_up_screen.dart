@@ -17,7 +17,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignupController _controller = Get.put(SignupController());
-    List signupParamerts = ["", "", "", "", ""];
+    List signupParamerts = ["", " ", "", "", ""];
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -66,7 +66,7 @@ class SignupScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(36)),
                 child: Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: Get.width / 10, vertical: Get.height / 35),
+                      horizontal: Get.width / 10, vertical: Get.height / 45),
                   child: Column(
                     children: [
                       // top widget texts
@@ -113,53 +113,78 @@ class SignupScreen extends StatelessWidget {
                                       : SizedBox(
                                           width: Get.width,
                                           height: Get.height / 23,
-                                          child: CustomTextInput(
-                                            hintText: textInputDetail[0][index],
-                                            iconPath: textInputDetail[1][index],
-                                            error: false,
-                                            onChanged: (text) {
-                                              signupParamerts[index] = text;
-                                            },
-                                          ),
+                                          child: Obx(() => CustomTextInput(
+                                                hintText: textInputDetail[0]
+                                                    [index],
+                                                iconPath: textInputDetail[1]
+                                                    [index],
+                                                error: _controller.error.value,
+                                                keyboardType: index == 3
+                                                    ? TextInputType.phone
+                                                    : TextInputType
+                                                        .emailAddress,
+                                                onChanged: (text) {
+                                                  signupParamerts[index] = text;
+                                                },
+                                              )),
                                         )))),
 
                       //login button
-                      Container(
+                      InkWell(
+                        onTap: () {
+                          if (signupParamerts[1] == signupParamerts[2] &&
+                              signupParamerts[0].toString().isNotEmpty &&
+                              signupParamerts[3].toString().isNotEmpty) {
+                            _controller.signup(
+                                signupParamerts[0],
+                                signupParamerts[1],
+                                signupParamerts[3],
+                                signupParamerts[4]);
+                          } else {
+                            if (signupParamerts[1] != signupParamerts[2]) {
+                              Get.snackbar("", "",
+                                  messageText: Text(
+                                    "رمز عبور با تکرار رمز عبور یکسان نیست",
+                                    textAlign: TextAlign.right,
+                                  ));
+                            } else {
+                              Get.snackbar("", "",
+                                  messageText: Text(
+                                    "لطفا تمام فیلد ها را پر کنید",
+                                    textAlign: TextAlign.right,
+                                  ));
+                            }
+                          }
+                        },
+                        child: Container(
                           width: Get.width,
-                          height: Get.height / 12,
-                          padding:
-                              EdgeInsets.symmetric(vertical: Get.height / 45),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _controller.signup(
-                                  signupParamerts[0],
-                                  signupParamerts[1],
-                                  signupParamerts[3],
-                                  signupParamerts[4]);
-                            },
-                            child: const Text(
+                          height: Get.height / 26,
+                          margin:
+                              EdgeInsets.symmetric(vertical: Get.height / 60),
+                          decoration: BoxDecoration(
+                              color: orange,
+                              borderRadius: BorderRadius.circular(11)),
+                          child: const Center(
+                            child: Text(
                               "ثبت نام",
-                              style:
-                                  TextStyle(fontSize: 12, fontFamily: "Yekan"),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: "Yekan",
+                                  color: Color(0xffffffff)),
                             ),
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(orange),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8)))),
-                          )),
+                          ),
+                        ),
+                      ),
 
                       // login with gmail button
                       Container(
                         height: Get.height / 23,
                         margin: EdgeInsets.symmetric(
                             horizontal: Get.width / 10,
-                            vertical: Get.height / 90),
+                            vertical: Get.height / 50),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: orange, width: 0.5)),
+                            border: Border.all(color: orange, width: 0.8)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

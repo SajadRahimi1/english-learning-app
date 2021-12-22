@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/validate_code_controller.dart';
 import 'package:zabaner/views/screens/set_new_password.dart';
 import 'package:zabaner/views/widgets/reset_password_code.dart';
 
 import '../colors.dart';
 
 class ValidateResetPasswordCode extends StatelessWidget {
-  const ValidateResetPasswordCode({Key? key}) : super(key: key);
-
+  const ValidateResetPasswordCode(
+      {Key? key, required this.recovery, required this.phoneNumber})
+      : super(key: key);
+  final bool recovery;
+  final String phoneNumber;
   @override
   Widget build(BuildContext context) {
+    final ValidateController _controller = Get.put(ValidateController());
+    List code = ["", "", "", ""];
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -67,19 +73,19 @@ class ValidateResetPasswordCode extends StatelessWidget {
                         height: Get.height / 16,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: 6),
+                              padding: const EdgeInsets.only(bottom: 6),
                               child: Text(
-                                "بازیابی",
-                                style: TextStyle(
+                                recovery ? "بازیابی" : "اعتبار سنجی",
+                                style: const TextStyle(
                                     fontSize: 13, fontFamily: "Yekan"),
                               ),
                             ),
                             Text(
-                              "کد ارسال شده برای شماره همراه 09121234567 را وارد کنید",
-                              style: TextStyle(
-                                  fontSize: 8,
+                              "کد ارسال شده برای شماره همراه $phoneNumber را وارد کنید",
+                              style: const TextStyle(
+                                  fontSize: 9,
                                   fontFamily: "Yekan",
                                   color: Color(0xff9F9F9F)),
                             ),
@@ -94,8 +100,13 @@ class ValidateResetPasswordCode extends StatelessWidget {
                             textDirection: TextDirection.ltr,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List.generate(4,
-                                  (index) => ResetPasswordCode(index: index)),
+                              children: List.generate(
+                                  4,
+                                  (index) => ResetPasswordCode(
+                                        index: index,
+                                        onChanged: (value) =>
+                                            code[index] = value,
+                                      )),
                             ),
                           )),
 
@@ -122,7 +133,13 @@ class ValidateResetPasswordCode extends StatelessWidget {
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => const SetNewPasswordScreen());
+                              // Get.to(() => const SetNewPasswordScreen());
+                              recovery
+                                  ? {}
+                                  : {
+                                      _controller.validateSignup(phoneNumber,
+                                          code[0] + code[1] + code[2] + code[3])
+                                    };
                             },
                             child: const Text(
                               "اعتبار سنجی",

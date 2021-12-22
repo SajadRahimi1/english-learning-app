@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/profile_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/custom_text_input_profile.dart';
 
 class ProfileAccount extends StatelessWidget {
+  const ProfileAccount({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
   static const List textHint = [
     "نام",
     "نام خانوادگی",
@@ -13,10 +16,11 @@ class ProfileAccount extends StatelessWidget {
     "موبایل"
   ];
 
-  const ProfileAccount({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final ProfileController _controller = Get.put(ProfileController());
+    final ProfileController _controller = Get.put(ProfileController(isGuest));
+    final GetStorage _getStorage = GetStorage();
+    GetStorage.init();
     return Column(
       children: [
         // text
@@ -51,11 +55,12 @@ class ProfileAccount extends StatelessWidget {
                   children: [
                     // Profile Image
                     InkWell(
-                      onTap: () => _controller.getImage(),
+                      onTap: () => isGuest ? {} : _controller.getImage(),
                       child: CircleAvatar(
                         radius: Get.width / 6.5,
-                        backgroundImage: NetworkImage(baseUrl +
-                            _controller.profileInformation.avatarPath),
+                        backgroundImage: NetworkImage(_getStorage
+                                .read('profile_image') ??
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                       ),
                     ),
                     const Text(
@@ -71,6 +76,7 @@ class ProfileAccount extends StatelessWidget {
                         child: CustomTextInputProfile(
                           hintText: _controller.profileInformation.firstName,
                           iconPath: "username.png",
+                          isEnabled: !isGuest,
                           onChanged: (text) => information[0] = text,
                         )),
 
@@ -82,6 +88,7 @@ class ProfileAccount extends StatelessWidget {
                         child: CustomTextInputProfile(
                           hintText: _controller.profileInformation.lastName,
                           iconPath: "username.png",
+                          isEnabled: !isGuest,
                           onChanged: (text) => information[1] = text,
                         )),
 
@@ -94,6 +101,7 @@ class ProfileAccount extends StatelessWidget {
                             hintText: _controller.profileInformation.bDay.year
                                 .toString(),
                             iconPath: "birthday.png",
+                            isEnabled: !isGuest,
                             onChanged: (text) => information[2] =
                                 DateTime(int.parse(text)).toString())),
 

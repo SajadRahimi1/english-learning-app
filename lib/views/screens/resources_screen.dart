@@ -9,7 +9,6 @@ import 'package:zabaner/views/widgets/video_resources.dart';
 
 class ResourcesScreen extends StatelessWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var onSearchClick = false.obs;
@@ -31,11 +30,13 @@ class ResourcesScreen extends StatelessWidget {
                         children: [
                           // profile image
                           InkWell(
-                            onTap: ()=>Navigator.pushNamed(context, '/profile'),
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/profile'),
                             child: CircleAvatar(
                               radius: Get.width / 18,
-                              backgroundImage:
-                                  NetworkImage(_controller.getProfileImage),
+                              backgroundImage: NetworkImage(_controller
+                                      .getProfileImage ??
+                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                             ),
                           ),
 

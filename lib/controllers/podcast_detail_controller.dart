@@ -24,14 +24,17 @@ class PodcastDetailController extends GetxController with StateMixin {
   void onInit() async {
     super.onInit();
     appDoc = await path.getApplicationDocumentsDirectory();
+    GetStorage.init();
     print("Init");
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
     downloadingState = "".obs;
-    GetStorage.init();
-    _dateTime = DateTime.now();
     var ss = await path.getTemporaryDirectory();
     print(ss.path);
+  }
+
+  void customeInit() {
+    _dateTime = DateTime.now();
   }
 
   @override
@@ -44,35 +47,53 @@ class PodcastDetailController extends GetxController with StateMixin {
     if (times[
             '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
         null) {
-      times.addAll(<String, dynamic>{
+      times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+            (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                            .toInt() /
+                        3) *
+                    2)
+                .toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+          (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                          .toInt() /
+                      3) *
+                  2)
+              .toInt();
     }
-    times['totall'] == null
-        ? times.addAll(<String, dynamic>{
-            'totall':
-                (DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                    .toInt()
-          })
-        : times['totall'] = times['totall'] +
-            (DateTime.now().difference(_dateTime).inSeconds).toInt();
+    if (times['totall'] == null) {
+      times.addAll(<String, dynamic>{
+        'totall': (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                        .toInt() /
+                    3) *
+                2)
+            .toInt()
+      });
+    } else {
+      var n = DateTime.now();
+      print(n.second);
+      print(_dateTime.second);
+      var add = n.difference(_dateTime);
+      print(add.inSeconds);
+      times['totall'] = times['totall'] + (add.inSeconds / 3 * 2).toInt();
+    }
 
     await _getStorage.write('timers', times);
     print(_getStorage.read('timers'));
   }
 
-  void getPodcastData(String token, String id) async {
-    var _request = await _getConnect.get(
-      getPodcastDetailUrl + id,
-      headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer ${_getStorage.read('token')}'
-      },
-    );
+  void getPodcastData(String id, bool isGuest) async {
+    var _request = isGuest
+        ? await _getConnect.get(getPodcastDetailUrl + id)
+        : await _getConnect.get(
+            getPodcastDetailUrl + id,
+            headers: {
+              'accept': 'application/json',
+              'Authorization': 'Bearer ${_getStorage.read('token')}'
+            },
+          );
 
     if (_request.statusCode == 200) {
       podcast = podcastModelFromJson(_request.bodyString ?? "");

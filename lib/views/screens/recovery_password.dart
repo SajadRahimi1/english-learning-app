@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/recovery_password_controller.dart';
 import 'package:zabaner/views/screens/validate_reset_password_screen.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
@@ -10,6 +11,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String phoneMail = "";
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -91,10 +93,12 @@ class RecoveryPasswordScreen extends StatelessWidget {
                       SizedBox(
                           height: Get.height / 23,
                           // color: Colors.red,
-                          child: const CustomTextInput(
+                          child: CustomTextInput(
                             hintText: "ایمیل یا شماره همراه",
                             iconPath: "key.png",
                             error: false,
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (value) => phoneMail = value,
                           )),
 
                       //login button
@@ -105,7 +109,11 @@ class RecoveryPasswordScreen extends StatelessWidget {
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => const ValidateResetPasswordCode());
+                              // Get.to(() => ValidateResetPasswordCode(
+                              //       recovery: true,
+                              //       phoneNumber: phoneMail,
+                              //     ));
+                              RecoveryPasswordController().SendCode(phoneMail);
                             },
                             child: const Text(
                               "بازیابی",

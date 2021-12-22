@@ -8,8 +8,6 @@ import 'package:zabaner/models/urls.dart';
 
 HomeModel homeModelFromJson(String str) => HomeModel.fromJson(json.decode(str));
 
-String homeModelToJson(HomeModel data) => json.encode(data.toJson());
-
 class HomeModel {
   HomeModel({
     required this.user,
@@ -27,12 +25,6 @@ class HomeModel {
         histories: List<History>.from(
             json["histories"].map((x) => History.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "user": user.toJson(),
-        "statistics": statistics.toJson(),
-        "histories": List<dynamic>.from(histories.map((x) => x.toJson())),
-      };
 }
 
 class History {
@@ -54,13 +46,6 @@ class History {
         type: json["type"],
         imagePath: json["imagePath"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "title": title,
-        "type": type,
-        "imagePath": imagePath,
-      };
 }
 
 class Statistics {
@@ -76,22 +61,17 @@ class Statistics {
         durationSum: json["durationSum"],
         last4Days: List<dynamic>.from(json["last4Days"].map((x) => x)),
       );
-
-  Map<String, dynamic> toJson() => {
-        "durationSum": durationSum,
-        "last4Days": List<dynamic>.from(last4Days.map((x) => x)),
-      };
 }
 
 class User {
   User(
       {required this.fullName,
-      required this.avatarPath,
+      this.avatarPath,
       required this.currentLevelProgress,
       required this.level});
 
   final String fullName;
-  final String avatarPath;
+  final String? avatarPath;
   final double currentLevelProgress;
   final int level;
 
@@ -101,8 +81,4 @@ class User {
         currentLevelProgress: json["currentLevelProgress"] ?? 0,
         level: json["level"] ?? 0,
       );
-
-  Map<String, dynamic> toJson() => {
-        "fullName": fullName,
-      };
 }

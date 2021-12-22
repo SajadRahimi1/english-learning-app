@@ -5,14 +5,13 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/level.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
+  const HomeScreen({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     final HomeDataController _controller = Get.put(HomeDataController());
-    _controller.getData(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI");
-    _controller.sendStatics();
+    _controller.getData(isGuest);
+    isGuest ? {} : _controller.sendStatics();
     return SafeArea(
       child: Scaffold(
           backgroundColor: const Color(0xffffffff),
@@ -31,8 +30,9 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
                             radius: Get.width / 13,
-                            backgroundImage: NetworkImage(
-                                _controller.homeModel.user.avatarPath)),
+                            backgroundImage: NetworkImage(_controller
+                                    .homeModel.user.avatarPath ??
+                                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png")),
                       ),
 
                       // Hello Text
@@ -78,7 +78,16 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   width: Get.width / 1.22,
                   child: Text(
-                    _controller.homeModel.statistics.durationSum,
+                    _controller.homeModel.statistics.durationSum.split(":")[0] +
+                        "D" +
+                        ":" +
+                        _controller.homeModel.statistics.durationSum
+                            .split(":")[1] +
+                        "H" +
+                        ":" +
+                        _controller.homeModel.statistics.durationSum
+                            .split(":")[2] +
+                        "M",
                     style: const TextStyle(
                       color: Color(0xff5A5A5A),
                       fontSize: 18,

@@ -14,6 +14,7 @@ const newsDetailUrl = "$baseUrl/api/v1/news/";
 const bookmarkToggleUrl = "$baseUrl/api/v1/bookmarks/toggle";
 const resourcesSearchUrl = "$baseUrl/api/v1/resources/search";
 const updateStaticsUrl = "$baseUrl/api/v1/statistics";
-
+const validateCodeUrl = "$baseUrl/api/v1/auth/validate-auth-code";
+const forgotPasswordUrl = "$baseUrl/api/v1/auth/forgot-password";
 const tokenConst =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk5Nzg0NDYsImV4cCI6MTY0MDAxNDQ0Nn0.WKftB3SDzdutTLkgnqUbhs03WegnzAkmZ3JjYtk3BdQ";

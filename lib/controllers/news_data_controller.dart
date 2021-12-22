@@ -7,9 +7,11 @@ import 'package:zabaner/models/category_content_model.dart';
 import 'package:zabaner/models/urls.dart';
 
 class NewsDataController extends GetxController with StateMixin {
+  NewsDataController(this.isGuest);
   final GetConnect _getConnect = GetConnect();
   final GetStorage _getStorage = GetStorage();
   var categories = [].obs;
+  final bool isGuest;
 
   RxList<CategoryContent> content = [
     CategoryContent(
@@ -20,6 +22,7 @@ class NewsDataController extends GetxController with StateMixin {
         id: "",
         title: "")
   ].obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -27,13 +30,25 @@ class NewsDataController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     var response = await _getConnect.get(newsCagetoryUrl);
     categories.addAll(jsonDecode(response.bodyString ?? "[]"));
-    getContent(categories[0]);
+    getContent(categories[0], isGuest);
   }
 
-  void getContent(String category) async {
+  void getContent(String category, bool isGuest) async {
     content.clear();
-    var req = await _getConnect
-        .get(newsCategoryContentUrl, query: {'category': category});
+
+    var req = isGuest
+        ? await _getConnect.get(
+            newsCategoryContentUrl,
+            query: {'category': category},
+          )
+        : await _getConnect.get(
+            newsCategoryContentUrl,
+            query: {'category': category},
+            headers: {
+              'accept': 'application/json',
+              'Authorization': 'Bearer ${_getStorage.read('token')}'
+            },
+          );
     if (req.statusCode == 200) {
       content.addAll(categoryContentFromJson(req.bodyString ?? ""));
       change(null, status: RxStatus.success());

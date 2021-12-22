@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginController _controller = Get.put(LoginController());
     String username = "", password = "";
-    bool rememberMe = false;
+    bool rememberMe = true;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -180,7 +180,7 @@ class LoginScreen extends StatelessWidget {
                                             () => const SignupScreen(),
                                           ),
                                           child: const Text(
-                                            "ایجاد کنید",
+                                            " ایجاد کنید",
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 color: orange,
@@ -193,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                                       onTap: () => Get.to(
                                           () => const RecoveryPasswordScreen()),
                                       child: const Text(
-                                        "رمز عبور خود را فرموش کرده ام",
+                                        "\nرمز عبور خود را فرموش کرده ام",
                                         style: TextStyle(
                                             fontSize: 9,
                                             color: orange,
@@ -263,7 +263,9 @@ class LoginScreen extends StatelessWidget {
                             height: Get.height / 24,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(MainScreen());
+                                Get.to(MainScreen(
+                                  isGuest: true,
+                                ));
                               },
                               child: const Text("ورود به عنوان میهمان",
                                   style: TextStyle(

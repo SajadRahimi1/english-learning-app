@@ -6,19 +6,17 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 
 class BookScreen extends StatelessWidget {
-  BookScreen({Key? key}) : super(key: key);
-  final BookController _controller = Get.put(BookController());
-
+  BookScreen({Key? key, required this.isGuest}) : super(key: key);
+  final BookController controller = Get.put(BookController());
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     final String bookId = ModalRoute.of(context)?.settings.arguments as String;
-    _controller.getBookDetail(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzg3NzIzODksImV4cCI6MTYzODgwODM4OX0.G58g83TMQPC2-GtdparASJu9Ys9n-F8e8aXGJy4ZsnI",
-        bookId);
+    controller.getBookDetail(bookId, isGuest);
     final GetStorage _getStotage = GetStorage();
     GetStorage.init();
-    _controller.onInit();
-
+    controller.customeInit();
+    print(controller.initialized);
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -31,7 +29,7 @@ class BookScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context, false);
-                        _controller.onClose();
+                        controller.onClose();
                       },
                       child: Row(
                         children: const [
@@ -54,11 +52,13 @@ class BookScreen extends StatelessWidget {
                         children: [
                           // profile image
                           InkWell(
-                            onTap: ()=>Navigator.pushNamed(context, '/profile'),
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/profile'),
                             child: CircleAvatar(
                               radius: Get.width / 18,
-                              backgroundImage:
-                                  NetworkImage(_getStotage.read('profile_image')),
+                              backgroundImage: NetworkImage(_getStotage
+                                      .read('profile_image') ??
+                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png"),
                             ),
                           ),
 
@@ -113,7 +113,7 @@ class BookScreen extends StatelessWidget {
                       height: Get.height / 30,
                     ),
 
-                    _controller.obx(
+                    controller.obx(
                       (state) => SizedBox(
                           width: Get.width,
                           height: Get.height / 4,
@@ -139,7 +139,7 @@ class BookScreen extends StatelessWidget {
                                             width: Get.width / 2,
                                             height: Get.height / 22,
                                             child: Text(
-                                              "   ${_controller.bookDetail.title}",
+                                              "   ${controller.bookDetail.title}",
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                   fontFamily: "Yekan",
@@ -164,7 +164,7 @@ class BookScreen extends StatelessWidget {
                                   SizedBox(
                                     width: Get.width / 1.7,
                                     child: Text(
-                                      _controller.bookDetail.faTitle,
+                                      controller.bookDetail.faTitle,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                           fontFamily: "Yekan",
@@ -191,7 +191,7 @@ class BookScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
                                         image: NetworkImage(baseUrl +
-                                            _controller.bookDetail.imagePath),
+                                            controller.bookDetail.imagePath),
                                         fit: BoxFit.fill)),
                               )
                             ],

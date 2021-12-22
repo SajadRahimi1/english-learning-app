@@ -7,17 +7,20 @@ class CustomTextInput extends StatelessWidget {
       required this.hintText,
       required this.iconPath,
       required this.error,
+      this.keyboardType,
       this.onChanged})
       : super(key: key);
   final String hintText, iconPath;
   final void Function(String)? onChanged;
   final bool error;
+  final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
         onChanged: onChanged,
         style: const TextStyle(fontFamily: "Yekan", fontSize: 14),
         textAlignVertical: TextAlignVertical.top,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
             filled: true,
             hintText: hintText,
@@ -41,12 +44,12 @@ class CustomTextInput extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: error ? const Color(0xffff0000) : orange,
-                    width: 0.5),
+                    width: 0.8),
                 borderRadius: const BorderRadius.all(Radius.circular(8))),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: error ? const Color(0xffff0000) : orange,
-                    width: 0.5),
+                    width: 0.8),
                 borderRadius: const BorderRadius.all(Radius.circular(8)))));
   }
 }

@@ -6,12 +6,12 @@ import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:get/get.dart';
 
 class NewsScreen extends StatelessWidget {
-  const NewsScreen({Key? key}) : super(key: key);
-
+  const NewsScreen({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     final NewsDataController _newsDataController =
-        Get.put(NewsDataController());
+        Get.put(NewsDataController(isGuest));
     final NewsSearchController _searchController =
         Get.put(NewsSearchController());
     var selectedCategory = 0.obs;
@@ -58,8 +58,9 @@ class NewsScreen extends StatelessWidget {
                                     Navigator.pushNamed(context, '/profile'),
                                 child: CircleAvatar(
                                   radius: Get.width / 18,
-                                  backgroundImage: NetworkImage(
-                                      _newsDataController.getProfileImage),
+                                  backgroundImage: NetworkImage(_newsDataController
+                                          .getProfileImage ??
+                                      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                                 ),
                               ),
 
@@ -159,7 +160,8 @@ class NewsScreen extends StatelessWidget {
                                                         _newsDataController.getContent(
                                                             _newsDataController
                                                                     .categories[
-                                                                index]);
+                                                                index],
+                                                            isGuest);
                                                       },
                                                     ))))),
                                     SizedBox(
@@ -186,13 +188,16 @@ class NewsScreen extends StatelessWidget {
                                                       .content[index].imagePath,
                                                   bookmark: _newsDataController
                                                       .content[index].bookmark,
-                                                  onBookmarkTap: () =>
+                                                  onBookmarkTap: () {
+                                                    if (!isGuest) {
                                                       _newsDataController
                                                           .bookmarkToggle(
                                                               _newsDataController
                                                                   .content[
                                                                       index]
-                                                                  .id),
+                                                                  .id);
+                                                    }
+                                                  },
                                                 ),
                                               ),
                                           onLoading: const Center(

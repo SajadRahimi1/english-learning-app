@@ -5,7 +5,7 @@ import '../colors.dart';
 
 Widget customCheckBox(double width, double height, String text,
     void Function(bool) onData, bool check) {
-  var checked = false.obs;
+  var checked = true.obs;
   checked.listen(onData);
 
   return InkWell(
@@ -32,7 +32,7 @@ Widget customCheckBox(double width, double height, String text,
         Text(
           text,
           style: const TextStyle(
-              fontSize: 9, color: Color(0xff9F9F9F), fontFamily: "Yekan"),
+              fontSize: 10, color: Color(0xff9F9F9F), fontFamily: "Yekan"),
         )
       ],
     ),

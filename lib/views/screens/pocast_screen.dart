@@ -8,17 +8,17 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 
 class PodcastScreen extends StatelessWidget {
-  PodcastScreen({Key? key}) : super(key: key);
-  final PodcastDetailController _controller =
-      Get.put(PodcastDetailController());
+  PodcastScreen({Key? key, required this.isGuest}) : super(key: key);
+  final PodcastDetailController controller = Get.put(PodcastDetailController());
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     final String id =
         ModalRoute.of(context)?.settings.arguments.toString() ?? "";
-    _controller.getPodcastData("token", id);
+    controller.getPodcastData(id, isGuest);
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
-    _controller.onInit();
+    controller.customeInit();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -31,9 +31,9 @@ class PodcastScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        _controller.player.closeAudioSession();
-                        _controller.isPlaying.value = false;
-                        _controller.onClose();
+                        controller.player.closeAudioSession();
+                        controller.isPlaying.value = false;
+                        controller.onClose();
                       },
                       child: Row(
                         children: const [
@@ -56,11 +56,13 @@ class PodcastScreen extends StatelessWidget {
                         children: [
                           // profile image
                           InkWell(
-                            onTap: ()=>Navigator.pushNamed(context, '/profile'),
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/profile'),
                             child: CircleAvatar(
                               radius: Get.width / 18,
-                              backgroundImage:
-                                  NetworkImage(_getStorage.read('profile_image')),
+                              backgroundImage: NetworkImage(_getStorage
+                                      .read('profile_image') ??
+                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                             ),
                           ),
 
@@ -114,7 +116,7 @@ class PodcastScreen extends StatelessWidget {
                     SizedBox(
                       height: Get.height / 30,
                     ),
-                    _controller.obx((state) => Expanded(
+                    controller.obx((state) => Expanded(
                           child: Column(
                             children: [
                               // Image and Title
@@ -146,7 +148,7 @@ class PodcastScreen extends StatelessWidget {
                                                   width: Get.width / 2.5,
                                                   height: Get.height / 24,
                                                   child: Text(
-                                                    "   ${_controller.podcast.title}",
+                                                    "   ${controller.podcast.title}",
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: const TextStyle(
@@ -173,7 +175,7 @@ class PodcastScreen extends StatelessWidget {
                                         SizedBox(
                                           width: Get.width / 2.1,
                                           child: Text(
-                                            _controller.podcast.faTitle,
+                                            controller.podcast.faTitle,
                                             overflow: TextOverflow.ellipsis,
                                             textDirection: TextDirection.rtl,
                                             style: const TextStyle(
@@ -202,8 +204,7 @@ class PodcastScreen extends StatelessWidget {
                                               BorderRadius.circular(20),
                                           image: DecorationImage(
                                               image: NetworkImage(baseUrl +
-                                                  _controller
-                                                      .podcast.imagePath),
+                                                  controller.podcast.imagePath),
                                               fit: BoxFit.fill)),
                                     )
                                   ],
@@ -213,7 +214,7 @@ class PodcastScreen extends StatelessWidget {
                               // Episodes
                               Expanded(
                                   child: ListView.builder(
-                                itemCount: _controller.podcast.items.length,
+                                itemCount: controller.podcast.items.length,
                                 itemBuilder: (context, index) => Container(
                                   margin: EdgeInsets.only(top: Get.height / 50),
                                   width: Get.width,
@@ -229,15 +230,15 @@ class PodcastScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Obx(() => !_controller
+                                        Obx(() => !controller
                                                 .existFile[index].value
-                                            ? _controller.downloadingState
+                                            ? controller.downloadingState
                                                         .value ==
                                                     "downloading"
                                                 ? CircleAvatar(
                                                     child: Obx(() =>
                                                         CircularProgressIndicator(
-                                                          value: _controller
+                                                          value: controller
                                                               .downloadingPercent
                                                               .value,
                                                           strokeWidth: 2,
@@ -248,13 +249,13 @@ class PodcastScreen extends StatelessWidget {
                                                 // Download
                                                 InkWell(
                                                     onTap: () {
-                                                      _controller.download(
-                                                          _controller
+                                                      controller.download(
+                                                          controller
                                                               .podcast
                                                               .items[index]
                                                               .podcastPath,
                                                           id,
-                                                          _controller
+                                                          controller
                                                               .podcast
                                                               .items[index]
                                                               .title);
@@ -266,22 +267,21 @@ class PodcastScreen extends StatelessWidget {
                                                   )
                                             :
                                             // play botton
-                                            Obx(() => _controller
-                                                    .isPlaying.value
+                                            Obx(() => controller.isPlaying.value
                                                 ?
                                                 // stop aduio
                                                 InkWell(
                                                     onTap: () {
-                                                      _controller.player
+                                                      controller.player
                                                           .stopPlayer();
 
-                                                      _controller.isPlaying
+                                                      controller.isPlaying
                                                           .value = false;
                                                     },
                                                     child: CircleAvatar(
                                                       child: Obx(() =>
                                                           CircularProgressIndicator(
-                                                            value: _controller
+                                                            value: controller
                                                                 .percentPlayed
                                                                 .value,
                                                             strokeWidth: 2,
@@ -300,11 +300,11 @@ class PodcastScreen extends StatelessWidget {
                                                     child: Image.asset(
                                                         "assets/images/play.png"),
                                                     onTap: () {
-                                                      _controller.playAudio(
-                                                          _controller
+                                                      controller.playAudio(
+                                                          controller
                                                                   .appDoc.path +
                                                               id +
-                                                              _controller
+                                                              controller
                                                                   .podcast
                                                                   .items[index]
                                                                   .title);
@@ -312,7 +312,7 @@ class PodcastScreen extends StatelessWidget {
 
                                         // title
                                         Text(
-                                            _controller
+                                            controller
                                                 .podcast.items[index].title,
                                             textDirection: TextDirection.ltr,
                                             style: const TextStyle(

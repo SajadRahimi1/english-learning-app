@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
@@ -13,11 +14,15 @@ import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key, required this.isGuest}) : super(key: key);
   final MainScreenController _controller = Get.put(MainScreenController());
-
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
+    late BookScreen bookScreen;
+    late NewsDetailScreen newsDetailScreen;
+    late PodcastScreen podcastScreen;
+    // _controller.intro.s;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
@@ -29,6 +34,11 @@ class MainScreen extends StatelessWidget {
                 .navigationKey[_controller.currentIndex.value].currentState!
                 .pop(_controller.navigationKey[_controller.currentIndex.value]
                     .currentContext);
+            podcastScreen.controller.isClosed
+                ? {}
+                : podcastScreen.controller.onClose();
+            bookScreen.controller.onClose();
+            newsDetailScreen.controller.onClose();
           } else {
             // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
           }
@@ -50,17 +60,27 @@ class MainScreen extends StatelessWidget {
                         case '/statics':
                           return StaticsScreen();
                         case '/profile':
-                          return ProfileScreen();
+                          return ProfileScreen(
+                            isGuest: isGuest,
+                          );
                         case '/bookScreen':
-                          return BookScreen();
+                          return BookScreen(
+                            isGuest: isGuest,
+                          );
                         case "/podcast":
-                          return PodcastScreen();
+                          return PodcastScreen(
+                            isGuest: isGuest,
+                          );
                         case "/newsDetail":
                           return NewsDetailScreen();
                         case "/home":
-                          return const HomeScreen();
+                          return HomeScreen(
+                            isGuest: isGuest,
+                          );
                       }
-                      return const HomeScreen();
+                      return HomeScreen(
+                        isGuest: isGuest,
+                      );
                     },
                   ),
                 ),
@@ -73,11 +93,17 @@ class MainScreen extends StatelessWidget {
                     builder: (context) {
                       switch (settings.name) {
                         case '/bookScreen':
-                          return BookScreen();
+                          return bookScreen = BookScreen(
+                            isGuest: isGuest,
+                          );
                         case '/profile':
-                          return ProfileScreen();
+                          return ProfileScreen(
+                            isGuest: isGuest,
+                          );
                         case "/podcast":
-                          return PodcastScreen();
+                          return podcastScreen = PodcastScreen(
+                            isGuest: isGuest,
+                          );
                         case "/resource":
                           return const ResourcesScreen();
                       }
@@ -93,15 +119,22 @@ class MainScreen extends StatelessWidget {
                     settings: settings,
                     builder: (context) {
                       if (settings.name == '/newsDetail') {
-                        return NewsDetailScreen();
+                        newsDetailScreen = NewsDetailScreen();
+                        return newsDetailScreen;
                       }
                       if (settings.name == '/news') {
-                        return const NewsScreen();
+                        return NewsScreen(
+                          isGuest: isGuest,
+                        );
                       }
                       if (settings.name == '/profile') {
-                        return ProfileScreen();
+                        return ProfileScreen(
+                          isGuest: isGuest,
+                        );
                       }
-                      return const NewsScreen();
+                      return NewsScreen(
+                        isGuest: isGuest,
+                      );
                     },
                   ),
                 )
@@ -116,6 +149,7 @@ class MainScreen extends StatelessWidget {
                           ? "assets/images/homeS.png"
                           : "assets/images/home.png",
                       width: Get.height / 6,
+                      key: _controller.intro.keys[0],
                       height: Get.height / 25,
                     ),
                     label: "Home",
@@ -126,6 +160,7 @@ class MainScreen extends StatelessWidget {
                             ? "assets/images/book_enable.png"
                             : "assets/images/book.png",
                         width: Get.height / 6,
+                        key: _controller.intro.keys[1],
                         height: Get.height / 25,
                       ),
                       label: "Resources"),
@@ -135,6 +170,7 @@ class MainScreen extends StatelessWidget {
                             ? "assets/images/news_enable.png"
                             : "assets/images/news.png",
                         width: Get.height / 6,
+                        key: _controller.intro.keys[2],
                         height: Get.height / 25,
                       ),
                       label: "News"),

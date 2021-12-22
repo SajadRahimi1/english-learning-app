@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:zabaner/views/colors.dart';
 
 class ResetPasswordCode extends StatelessWidget {
+  const ResetPasswordCode({Key? key, required this.index, this.onChanged})
+      : super(key: key);
   final int index;
-
-  const ResetPasswordCode({Key? key, required this.index}) : super(key: key);
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class ResetPasswordCode extends StatelessWidget {
                 ? FocusScope.of(context).unfocus()
                 : FocusScope.of(context).nextFocus();
           }
+          onChanged!(value);
         },
         decoration: const InputDecoration(
             contentPadding: EdgeInsets.zero,

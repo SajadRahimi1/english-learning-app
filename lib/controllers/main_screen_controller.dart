@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 
 class MainScreenController extends GetxController {
   late PageController pageController;
@@ -12,6 +13,14 @@ class MainScreenController extends GetxController {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
   ];
+
+  Intro intro = Intro(
+      widgetBuilder: StepWidgetBuilder.useDefaultTheme(
+          texts: ['Home', 'Resources', 'News'],
+          buttonTextBuilder: (current, totall) =>
+              current < totall - 1 ? 'Next' : 'Finish'),
+      stepCount: 3);
+
   @override
   void onInit() {
     // TODO: implement onInit

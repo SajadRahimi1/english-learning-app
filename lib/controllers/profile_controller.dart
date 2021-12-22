@@ -7,32 +7,46 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController with StateMixin {
+  ProfileController(this.isGuest);
   final GetConnect _getConnect = GetConnect();
   late ProfileInformation profileInformation;
   final ImagePicker _picker = ImagePicker();
   final GetStorage _getStorage = GetStorage();
+  final bool isGuest;
+
   @override
   void onInit() {
     super.onInit();
     GetStorage.init();
-    getProfileInformation("token");
+    getProfileInformation(isGuest);
   }
 
-  Future<void> getProfileInformation(String token) async {
-    change(null, status: RxStatus.loading());
-    final _request = await _getConnect.get(profileInformationUrl, headers: {
-      'accept': 'application/json',
-      'Authorization': 'Bearer ${_getStorage.read('token')}'
-    });
-    if (_request.statusCode == 200) {
-      profileInformation =
-          profileInformationFromJson(_request.bodyString ?? "");
-      change(null, status: RxStatus.success());
-      _getStorage.write(
-          'profile_image', baseUrl + profileInformation.avatarPath);
+  Future<void> getProfileInformation(bool isGuest) async {
+    if (!isGuest) {
+      change(null, status: RxStatus.loading());
+      final _request = await _getConnect.get(profileInformationUrl, headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer ${_getStorage.read('token')}'
+      });
+      if (_request.statusCode == 200) {
+        profileInformation =
+            profileInformationFromJson(_request.bodyString ?? "");
+        change(null, status: RxStatus.success());
+        _getStorage.write('profile_image', profileInformation.avatarPath);
+      } else {
+        print(_request.body);
+        change(null, status: RxStatus.error());
+      }
     } else {
-      print(_request.body);
-      change(null, status: RxStatus.error());
+      profileInformation = ProfileInformation(
+          email: "Guest@zabaner.com",
+          mobile: "",
+          firstName: "Guest",
+          lastName: "",
+          bDay: DateTime.now(),
+          username: "Guest",
+          registerMethod: "Guest");
+      change(null, status: RxStatus.success());
     }
   }
 
@@ -53,7 +67,7 @@ class ProfileController extends GetxController with StateMixin {
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
       if (response.statusCode == 200) {
-        getProfileInformation("token");
+        getProfileInformation(isGuest);
       }
       print(responseString);
     } catch (e) {}
@@ -70,7 +84,7 @@ class ProfileController extends GetxController with StateMixin {
     });
 
     if (_request.statusCode == 200) {
-      getProfileInformation("");
+      getProfileInformation(isGuest);
     } else {
       change(null, status: RxStatus.error());
     }

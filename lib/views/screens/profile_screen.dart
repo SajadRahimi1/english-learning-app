@@ -8,21 +8,24 @@ import 'package:zabaner/views/screens/profile_support_screen.dart';
 import 'package:zabaner/views/widgets/profile_tab_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
+  ProfileScreen({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
   var tab = [
     true,
     false,
     false,
   ].obs;
-  final tabWidget = [
-    const ProfileAccount(),
-    const ProfileSupport(),
-    ProfileSetting()
-  ];
   var tabIndex = 0.obs;
 
-  ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final tabWidget = [
+      ProfileAccount(
+        isGuest: isGuest,
+      ),
+      const ProfileSupport(),
+      ProfileSetting()
+    ];
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
     return SafeArea(
@@ -92,7 +95,11 @@ class ProfileScreen extends StatelessWidget {
                               ProfileTab(
                                 image: "exit.png",
                                 title: "Log Out",
-                                onTap: () => Get.offAll(const LoginScreen()),
+                                onTap: () {
+                                  _getStorage.remove('timers');
+                                  _getStorage.remove('token');
+                                  Get.offAll(const LoginScreen());
+                                },
                               ),
                             ],
                           ),

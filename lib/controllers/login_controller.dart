@@ -24,7 +24,9 @@ class LoginController extends GetConnect {
       if (rememberMe) {
         print(_response.body['accessToken']);
         _getStorage.write('token', _response.body['accessToken'].toString());
-        Get.offAll(() => MainScreen());
+        Get.offAll(() => MainScreen(
+              isGuest: false,
+            ));
       } else {
         // Get.offAll(() => MainScreen());
       }

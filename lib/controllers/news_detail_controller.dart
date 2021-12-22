@@ -14,6 +14,9 @@ class NewsDetailController extends GetxController with StateMixin {
     // TODO: implement onInit
     super.onInit();
     print("Init");
+  }
+
+  void customeInit() {
     GetStorage.init();
     _dateTime = DateTime.now();
   }
@@ -30,22 +33,34 @@ class NewsDetailController extends GetxController with StateMixin {
     if (times[
             '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
         null) {
-      times.addAll(<String, dynamic>{
+      times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+            (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                            .toInt() /
+                        3) *
+                    2)
+                .toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+          (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                          .toInt() /
+                      3) *
+                  2)
+              .toInt();
     }
     if (times['totall'] == null) {
       times.addAll(<String, dynamic>{
-        'totall':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+        'totall': (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
+                        .toInt() /
+                    3) *
+                2)
+            .toInt()
       });
     } else {
       times['totall'] = times['totall'] +
-          (DateTime.now().difference(_dateTime).inSeconds).toInt();
+          (((DateTime.now().difference(_dateTime).inSeconds).toInt() / 3) * 2)
+              .toInt();
     }
     await _getStorage.write('timers', times);
     print(_getStorage.read('timers'));

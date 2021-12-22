@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:zabaner/models/urls.dart';
+
 ProfileInformation profileInformationFromJson(String str) =>
     ProfileInformation.fromJson(json.decode(str));
 
@@ -13,7 +15,7 @@ class ProfileInformation {
     required this.mobile,
     required this.firstName,
     required this.lastName,
-    required this.avatarPath,
+    this.avatarPath,
     required this.bDay,
     required this.username,
     required this.registerMethod,
@@ -23,7 +25,7 @@ class ProfileInformation {
   final String mobile;
   final String firstName;
   final String lastName;
-  final String avatarPath;
+  final String? avatarPath;
   final DateTime bDay;
   final String username;
   final String registerMethod;
@@ -34,7 +36,9 @@ class ProfileInformation {
         mobile: json["mobile"] ?? "",
         firstName: json["firstName"] ?? "",
         lastName: json["lastName"] ?? "",
-        avatarPath: json["avatarPath"] ?? "",
+        avatarPath: json["avatarPath"].toString().isEmpty
+            ? "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png"
+            : baseUrl + json["avatarPath"],
         bDay: DateTime.parse(json["bDay"] ?? "2020-07-10 15:00:00.000"),
         username: json["username"] ?? "",
         registerMethod: json["registerMethod"] ?? "",

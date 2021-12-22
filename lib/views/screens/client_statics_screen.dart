@@ -48,7 +48,7 @@ class StaticsScreen extends StatelessWidget {
                     InkWell(
                       onTap: () => Navigator.pushNamed(context, '/profile'),
                       child: CircleAvatar(
-                        radius: Get.width / 18,
+                        radius: Get.width / 16,
                         backgroundImage: const NetworkImage(
                             "https://randomuser.me/api/portraits/med/men/40.jpg"),
                       ),
@@ -63,16 +63,16 @@ class StaticsScreen extends StatelessWidget {
                         children: const [
                           Text(
                             "سلام سامان!",
-                            style: TextStyle(fontFamily: "Yekan", fontSize: 16),
+                            style: TextStyle(fontFamily: "Yekan", fontSize: 18),
                           ),
                           SizedBox(
                             height: 3,
                           ),
                           Text(
-                            "اخبار متنوع به زبان انگلیسی",
+                            "آمار مطالعه منابع توسط شما",
                             style: TextStyle(
                                 fontFamily: "Yekan",
-                                fontSize: 8,
+                                fontSize: 10,
                                 color: Color(0xff919191)),
                           )
                         ],
