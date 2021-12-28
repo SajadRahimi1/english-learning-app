@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/splash_timer_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/login_screen.dart';
@@ -10,6 +11,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SplashScreenTimer(context));
+
     return Scaffold(
       body: Stack(
         children: [
@@ -32,7 +34,7 @@ class SplashScreen extends StatelessWidget {
                     SizedBox(
                       width: Get.width / 1.8,
                       child: ElevatedButton(
-                        onPressed: () => Get.offAll(() => const LoginScreen()),
+                        onPressed: () => Get.offAll(() => LoginScreen()),
                         child: const Text(
                           "Get Started",
                           style: TextStyle(

@@ -36,7 +36,7 @@ class ProfileInformation {
         mobile: json["mobile"] ?? "",
         firstName: json["firstName"] ?? "",
         lastName: json["lastName"] ?? "",
-        avatarPath: json["avatarPath"].toString().isEmpty
+        avatarPath: json["avatarPath"] == null
             ? "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png"
             : baseUrl + json["avatarPath"],
         bDay: DateTime.parse(json["bDay"] ?? "2020-07-10 15:00:00.000"),

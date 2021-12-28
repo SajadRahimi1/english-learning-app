@@ -98,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
                                 onTap: () {
                                   _getStorage.remove('timers');
                                   _getStorage.remove('token');
-                                  Get.offAll(const LoginScreen());
+                                  Get.offAll(LoginScreen());
                                 },
                               ),
                             ],

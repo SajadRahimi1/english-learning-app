@@ -66,19 +66,22 @@ class Statistics {
 class User {
   User(
       {required this.fullName,
-      this.avatarPath,
+      required this.avatarPath,
       required this.currentLevelProgress,
       required this.level});
 
   final String fullName;
-  final String? avatarPath;
+  final String avatarPath;
   final double currentLevelProgress;
   final int level;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         fullName: json["fullName"],
-        avatarPath: baseUrl + json["avatarPath"],
-        currentLevelProgress: json["currentLevelProgress"] ?? 0,
+        avatarPath: json["avatarPath"] != null
+            ? baseUrl + json["avatarPath"]
+            : "https://htmlcolorcodes.com/assets/images/colors/bright-blue-color-solid-background-1920x1080.png",
+        currentLevelProgress:
+            double.parse(json["currentLevelProgress"]?.toString() ?? "0.0"),
         level: json["level"] ?? 0,
       );
 }

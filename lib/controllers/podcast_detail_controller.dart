@@ -117,9 +117,9 @@ class PodcastDetailController extends GetxController with StateMixin {
   void download(String urlPath, String id, String title) async {
     io.File _checkFile = io.File(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
-      var _downloadRequest = await dio.download(
-          "https://zabaner-dev.herokuapp.com/podcasts/resource/podcast/temp.mp3",
-          appDoc.path + id + title, onReceiveProgress: (recive, total) {
+      var _downloadRequest = await dio
+          .download(baseUrl + urlPath, appDoc.path + id + title,
+              onReceiveProgress: (recive, total) {
         downloadingState.value = "downloading";
         downloadingPercent.value = recive / total;
         print(downloadingPercent);

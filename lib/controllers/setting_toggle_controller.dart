@@ -15,6 +15,6 @@ class SettingToggle extends GetxController {
     autoDownload.value = box.read('auto_download') ?? false;
     saveStorage.value = box.read('save_storage') ?? false;
     darkTheme.value = box.read('dark_theme') ?? false;
-    autoBackup.value = box.read('auto_backup')??true;
+    autoBackup.value = box.read('auto_backup') ?? true;
   }
 }

@@ -5,10 +5,10 @@ import 'package:zabaner/views/widgets/custom_setting_card.dart';
 
 class ProfileSetting extends StatelessWidget {
   ProfileSetting({Key? key}) : super(key: key);
+  final SettingToggle _controller = Get.put(SettingToggle());
   @override
   Widget build(BuildContext context) {
-    final SettingToggle _controller = Get.put(SettingToggle());
-
+    _controller.onInit();
     return SizedBox(
       width: Get.width,
       height: Get.height / 1.4,

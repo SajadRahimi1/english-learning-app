@@ -30,9 +30,8 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
                             radius: Get.width / 13,
-                            backgroundImage: NetworkImage(_controller
-                                    .homeModel.user.avatarPath ??
-                                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png")),
+                            backgroundImage: NetworkImage(
+                                _controller.homeModel.user.avatarPath)),
                       ),
 
                       // Hello Text
@@ -146,6 +145,7 @@ class HomeScreen extends StatelessWidget {
                                                 color: const Color(0xffFFC200),
                                                 value: _controller.totallSecond
                                                     .levelPercent(),
+                                                    
                                               ),
                                             ),
                                           ),

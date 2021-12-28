@@ -14,7 +14,6 @@ class ValidateController extends GetConnect {
   Future<void> validateSignup(String phoneNumber, String code) async {
     var _request =
         await post(validateCodeUrl, {"mobile": phoneNumber, "code": code});
-
     if (_request.statusCode == 201) {
       print(_request.body['accessToken'].toString());
       Get.offAll(() => MainScreen(

@@ -20,7 +20,6 @@ class MainScreenController extends GetxController {
           buttonTextBuilder: (current, totall) =>
               current < totall - 1 ? 'Next' : 'Finish'),
       stepCount: 3);
-
   @override
   void onInit() {
     // TODO: implement onInit

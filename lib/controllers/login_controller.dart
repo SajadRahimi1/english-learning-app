@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/urls.dart';
@@ -8,12 +6,27 @@ import 'package:zabaner/views/screens/main_screen.dart';
 class LoginController extends GetConnect {
   var error = false.obs;
   var errorMessage = "".obs;
-
+  var loginCheck = false.obs;
   final GetStorage _getStorage = GetStorage();
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    GetStorage.init();
+    await GetStorage.init();
+    if (_getStorage.read('token') != null) {
+      final _request = await get(profileInformationUrl, headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer ${_getStorage.read('token')}'
+      });
+      if (_request.statusCode == 200) {
+        Get.offAll(() => MainScreen(
+              isGuest: false,
+            ));
+      } else {
+        loginCheck.value = true;
+      }
+    } else {
+      loginCheck.value = true;
+    }
   }
 
   Future<void> login(String username, String password, bool rememberMe) async {
