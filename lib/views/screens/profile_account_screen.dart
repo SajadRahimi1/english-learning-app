@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/profile_controller.dart';
-import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/custom_text_input_profile.dart';
 
 class ProfileAccount extends StatelessWidget {

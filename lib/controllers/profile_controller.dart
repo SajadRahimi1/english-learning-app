@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/profile_information_model.dart';
@@ -10,7 +9,6 @@ class ProfileController extends GetxController with StateMixin {
   ProfileController(this.isGuest);
   final GetConnect _getConnect = GetConnect();
   late ProfileInformation profileInformation;
-  final ImagePicker _picker = ImagePicker();
   final GetStorage _getStorage = GetStorage();
   final bool isGuest;
 

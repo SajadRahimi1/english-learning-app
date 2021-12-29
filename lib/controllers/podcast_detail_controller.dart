@@ -25,6 +25,7 @@ class PodcastDetailController extends GetxController with StateMixin {
     super.onInit();
     appDoc = await path.getApplicationDocumentsDirectory();
     GetStorage.init();
+    _dateTime = DateTime.now();
     print("Init");
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;

@@ -143,13 +143,13 @@ class SignupScreen extends StatelessWidget {
                           } else {
                             if (signupParamerts[1] != signupParamerts[2]) {
                               Get.snackbar("", "",
-                                  messageText: Text(
+                                  messageText: const Text(
                                     "رمز عبور با تکرار رمز عبور یکسان نیست",
                                     textAlign: TextAlign.right,
                                   ));
                             } else {
                               Get.snackbar("", "",
-                                  messageText: Text(
+                                  messageText: const Text(
                                     "لطفا تمام فیلد ها را پر کنید",
                                     textAlign: TextAlign.right,
                                   ));

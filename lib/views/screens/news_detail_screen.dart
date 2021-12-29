@@ -129,8 +129,7 @@ class NewsDetailScreen extends StatelessWidget {
                             // persian text
                             const Text(
                               // _controller.newsDetail.paragraphs[index-1].fa
-                              "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان  که لازم است،" +
-                                  "\n",
+                              "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان  که لازم است،\n",
                               style: TextStyle(fontFamily: "Yekan", height: 2),
                             ),
                           ],

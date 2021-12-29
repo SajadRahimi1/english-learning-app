@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/login_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/main_screen.dart';

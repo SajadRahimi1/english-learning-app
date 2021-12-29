@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
@@ -17,12 +16,15 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key, required this.isGuest}) : super(key: key);
   final MainScreenController _controller = Get.put(MainScreenController());
   final bool isGuest;
+  late BookScreen bookScreen;
+  late NewsDetailScreen newsDetailScreen;
+  late PodcastScreen podcastScreen;
+  bool bookScreenBool = false;
+  bool newsDetailScreenBool = false;
+  bool podcastScreenBool = false;
   @override
   Widget build(BuildContext context) {
-    late BookScreen bookScreen;
-    late NewsDetailScreen newsDetailScreen;
-    late PodcastScreen podcastScreen;
-    // _controller.intro.s;
+    bool doubleTap = false;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
@@ -34,13 +36,37 @@ class MainScreen extends StatelessWidget {
                 .navigationKey[_controller.currentIndex.value].currentState!
                 .pop(_controller.navigationKey[_controller.currentIndex.value]
                     .currentContext);
-            podcastScreen.controller.isClosed
-                ? {}
-                : podcastScreen.controller.onClose();
-            bookScreen.controller.onClose();
-            newsDetailScreen.controller.onClose();
+            if (podcastScreenBool) {
+              podcastScreen.controller.isClosed
+                  ? () {}
+                  : podcastScreen.controller.onClose();
+              podcastScreenBool = false;
+            }
+
+            if (bookScreenBool) {
+              bookScreen.controller.isClosed
+                  ? () {}
+                  : bookScreen.controller.onClose();
+              bookScreenBool = false;
+            }
+
+            if (newsDetailScreenBool) {
+              newsDetailScreen.controller.isClosed
+                  ? () {}
+                  : newsDetailScreen.controller.onClose();
+              newsDetailScreenBool = false;
+            }
           } else {
-            // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
+            if (!doubleTap) {
+              doubleTap = true;
+              var s = ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("برای خروج دوباره کلیک کنید"),
+                duration: Duration(milliseconds: 1500),
+              ));
+              s.closed.then((value) => doubleTap = false);
+            } else {
+              SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
+            }
           }
           return false;
         },
@@ -93,6 +119,7 @@ class MainScreen extends StatelessWidget {
                     builder: (context) {
                       switch (settings.name) {
                         case '/bookScreen':
+                          bookScreenBool = true;
                           return bookScreen = BookScreen(
                             isGuest: isGuest,
                           );
@@ -101,6 +128,7 @@ class MainScreen extends StatelessWidget {
                             isGuest: isGuest,
                           );
                         case "/podcast":
+                          podcastScreenBool = true;
                           return podcastScreen = PodcastScreen(
                             isGuest: isGuest,
                           );
@@ -120,6 +148,7 @@ class MainScreen extends StatelessWidget {
                     builder: (context) {
                       if (settings.name == '/newsDetail') {
                         newsDetailScreen = NewsDetailScreen();
+                        newsDetailScreenBool = true;
                         return newsDetailScreen;
                       }
                       if (settings.name == '/news') {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/splash_timer_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/login_screen.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/controllers/validate_code_controller.dart';
-import 'package:zabaner/views/screens/set_new_password.dart';
 import 'package:zabaner/views/widgets/reset_password_code.dart';
 
 import '../colors.dart';

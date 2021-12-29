@@ -42,12 +42,12 @@ class NewsWidget extends StatelessWidget {
                       onBookmarkTap!();
                     },
                     child: Obx(() => rxBookmark.value
-                        ? Icon(
+                        ? const Icon(
                             Icons.bookmark,
                             size: 35,
                             color: Color(0xff707070),
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.bookmark_outline,
                             size: 35,
                             color: Color(0xff707070),
