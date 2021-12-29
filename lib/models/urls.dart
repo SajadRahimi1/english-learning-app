@@ -16,5 +16,6 @@ const resourcesSearchUrl = "$baseUrl/api/v1/resources/search";
 const updateStaticsUrl = "$baseUrl/api/v1/statistics";
 const validateCodeUrl = "$baseUrl/api/v1/auth/validate-auth-code";
 const forgotPasswordUrl = "$baseUrl/api/v1/auth/forgot-password";
+const setNewPasswordUrl = "$baseUrl/api/v1/auth/reset-password";
 const tokenConst =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk5Nzg0NDYsImV4cCI6MTY0MDAxNDQ0Nn0.WKftB3SDzdutTLkgnqUbhs03WegnzAkmZ3JjYtk3BdQ";

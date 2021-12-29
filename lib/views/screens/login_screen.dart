@@ -20,6 +20,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String username = "", password = "";
     bool rememberMe = true;
+    _controller.customInit();
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -322,7 +323,7 @@ class LoginScreen extends StatelessWidget {
                             )),
                       ],
                     ))
-                : Center(child: CircularProgressIndicator()),
+                : const Center(child: CircularProgressIndicator()),
           ),
         ));
   }

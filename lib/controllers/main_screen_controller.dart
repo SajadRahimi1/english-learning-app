@@ -13,13 +13,14 @@ class MainScreenController extends GetxController {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
   ];
-
   Intro intro = Intro(
-      widgetBuilder: StepWidgetBuilder.useDefaultTheme(
-          texts: ['Home', 'Resources', 'News'],
-          buttonTextBuilder: (current, totall) =>
-              current < totall - 1 ? 'Next' : 'Finish'),
-      stepCount: 3);
+    widgetBuilder: StepWidgetBuilder.useDefaultTheme(
+        texts: ['Home', 'Resources', 'News'],
+        buttonTextBuilder: (current, totall) =>
+            current < totall - 1 ? 'بعدی' : 'تمام'),
+    stepCount: 3,
+  );
+
   @override
   void onInit() {
     // TODO: implement onInit

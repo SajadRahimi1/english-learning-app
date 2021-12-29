@@ -1,14 +1,6 @@
                 Login and Register
 =====================================================================║
                                                                      ║
-- Signup logic (connect to backed)  /need kavenegar                  ║
-                                                                     ║
-- forgot password logic (connect to backed)     /need kavenegar      ║ 
-                                                                     ║
-- validate code for recovery password and signup    /need kavenegar  ║ 
-                                                                     ║
-- reset password logic (connect to backed)  /need kavenegar          ║
-                                                                     ║
 - signup and signin with gmail (google)     /need keytool            ║
 =====================================================================║
 
@@ -20,9 +12,5 @@
                                                   ║
 - UI of video screen                              ║
                                                   ║
-- tour for first time or login as guest           ║
-                                                  ║
-- stop timer when back button press /done         ║                                        
-                                                  ║
-- double tap on back button to close app          ║
+- dark theme                                      ║                                                  
 ==================================================║

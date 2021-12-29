@@ -18,6 +18,7 @@ class ValidateController extends GetConnect {
       print(_request.body['accessToken'].toString());
       Get.offAll(() => MainScreen(
             isGuest: false,
+            firstTime: true,
           ));
       _getStorage.write('token', _request.body['accessToken'].toString());
     }

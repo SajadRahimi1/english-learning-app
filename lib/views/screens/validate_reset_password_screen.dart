@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/controllers/validate_code_controller.dart';
+import 'package:zabaner/views/screens/set_new_password.dart';
 import 'package:zabaner/views/widgets/reset_password_code.dart';
 
 import '../colors.dart';
@@ -134,7 +135,17 @@ class ValidateResetPasswordCode extends StatelessWidget {
                             onPressed: () {
                               // Get.to(() => const SetNewPasswordScreen());
                               recovery
-                                  ? {}
+                                  ? {
+                                      Get.to(
+                                        () => SetNewPasswordScreen(
+                                          code: code[0] +
+                                              code[1] +
+                                              code[2] +
+                                              code[3],
+                                          mobail: phoneNumber,
+                                        ),
+                                      )
+                                    }
                                   : {
                                       _controller.validateSignup(phoneNumber,
                                           code[0] + code[1] + code[2] + code[3])

@@ -9,7 +9,6 @@ class SettingToggle extends GetxController {
   RxBool autoBackup = false.obs;
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     await GetStorage.init();
     autoDownload.value = box.read('auto_download') ?? false;

@@ -12,6 +12,9 @@ class LoginController extends GetConnect {
   void onInit() async {
     super.onInit();
     await GetStorage.init();
+  }
+
+  void customInit() async {
     if (_getStorage.read('token') != null) {
       final _request = await get(profileInformationUrl, headers: {
         'accept': 'application/json',

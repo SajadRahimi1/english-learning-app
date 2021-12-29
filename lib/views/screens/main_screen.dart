@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,9 +15,11 @@ import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key, required this.isGuest}) : super(key: key);
+  MainScreen({Key? key, required this.isGuest, this.firstTime = false})
+      : super(key: key);
   final MainScreenController _controller = Get.put(MainScreenController());
   final bool isGuest;
+  final bool firstTime;
   late BookScreen bookScreen;
   late NewsDetailScreen newsDetailScreen;
   late PodcastScreen podcastScreen;
@@ -25,6 +29,10 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool doubleTap = false;
+    isGuest || firstTime
+        ? Timer(const Duration(milliseconds: 500),
+            () => _controller.intro.start(context))
+        : () {};
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(

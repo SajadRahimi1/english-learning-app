@@ -145,7 +145,6 @@ class HomeScreen extends StatelessWidget {
                                                 color: const Color(0xffFFC200),
                                                 value: _controller.totallSecond
                                                     .levelPercent(),
-                                                    
                                               ),
                                             ),
                                           ),

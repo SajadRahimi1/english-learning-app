@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/set_new_password_controller.dart';
 import 'package:zabaner/views/widgets/custom_text_input.dart';
 
 import '../colors.dart';
 
 class SetNewPasswordScreen extends StatelessWidget {
-  const SetNewPasswordScreen({Key? key}) : super(key: key);
+  const SetNewPasswordScreen({Key? key, required this.code,required this.mobail}) : super(key: key);
+  final String code;
+  final String mobail;
 
   @override
   Widget build(BuildContext context) {
+    final SetNewPasswordController _controller =
+        Get.put(SetNewPasswordController());
+    String password = "", repassword = "";
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -94,18 +100,20 @@ class SetNewPasswordScreen extends StatelessWidget {
                             children: [
                               SizedBox(
                                 height: Get.height / 23,
-                                child: const CustomTextInput(
+                                child: CustomTextInput(
                                   hintText: "رمز عبور جدید",
                                   error: false,
                                   iconPath: "lock.png",
+                                  onChanged: (value) => password = value,
                                 ),
                               ),
                               SizedBox(
                                 height: Get.height / 23,
-                                child: const CustomTextInput(
+                                child: CustomTextInput(
                                   hintText: "تکرار رمز عبور",
                                   iconPath: "repassword.png",
                                   error: false,
+                                  onChanged: (value) => repassword = value,
                                 ),
                               ),
                             ],
@@ -133,7 +141,10 @@ class SetNewPasswordScreen extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if(password==repassword){
+                              _controller.sendData(code, mobail, password);}
+                            },
                             child: const Text(
                               "تغییر رمز عبور",
                               style:
