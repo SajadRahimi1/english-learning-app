@@ -13,6 +13,7 @@ import 'package:zabaner/views/screens/news_screen.dart';
 import 'package:zabaner/views/screens/pocast_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
+import 'package:zabaner/views/screens/video_detailt_screen.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key, required this.isGuest, this.firstTime = false})
@@ -142,6 +143,8 @@ class MainScreen extends StatelessWidget {
                           );
                         case "/resource":
                           return const ResourcesScreen();
+                        case "/video":
+                          return VideoDetailScreen();
                       }
                       return const ResourcesScreen();
                     },

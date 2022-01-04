@@ -1,4 +1,4 @@
-package com.example.zabaner
+package com.ir.zabaner
 
 import io.flutter.embedding.android.FlutterActivity
 

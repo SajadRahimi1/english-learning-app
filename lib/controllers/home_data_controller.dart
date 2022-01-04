@@ -24,6 +24,14 @@ class HomeDataController extends GetxController with StateMixin {
           var stats = [];
           times.forEach((key, value) {
             if (key != 'totall') {
+              key.split("-")[1].length > 3
+                  ? {}
+                  : key =
+                      "${key.split("-")[0]}-0${key.split("-")[1]}-${key.split("-")[2]}";
+              key.split("-")[2].length > 3
+                  ? {}
+                  : key =
+                      "${key.split("-")[0]}-${key.split("-")[1]}-0${key.split("-")[2]}";
               stats.add({
                 "date": key,
                 "duration": ((int.parse(value.toString()) / 3) * 2)
@@ -37,6 +45,7 @@ class HomeDataController extends GetxController with StateMixin {
             "level": totallSecond.levelNumber(),
             "currentLevelProgress": totallSecond.levelPercent() * 100
           };
+          print(bodyRequest);
 
           var request =
               await _getConnect.post(updateStaticsUrl, bodyRequest, headers: {

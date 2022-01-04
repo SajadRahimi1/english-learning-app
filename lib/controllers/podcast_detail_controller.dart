@@ -96,6 +96,7 @@ class PodcastDetailController extends GetxController with StateMixin {
             },
           );
 
+    print(_request.body);
     if (_request.statusCode == 200) {
       podcast = podcastModelFromJson(_request.bodyString ?? "");
       existFile = List.generate(podcast.items.length, (index) => RxBool(false));

@@ -10,6 +10,7 @@ class StaticsScreen extends StatelessWidget {
   final StaticController _controller = Get.put(StaticController());
   @override
   Widget build(BuildContext context) {
+    _controller.getSummaryData();
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,

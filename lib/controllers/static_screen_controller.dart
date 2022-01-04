@@ -12,11 +12,11 @@ class StaticController extends GetxController with StateMixin {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getSummaryData("token");
+
     GetStorage.init();
   }
 
-  void getSummaryData(String token) async {
+  void getSummaryData() async {
     var _request = await _getConnect.get(
       summaryTimeUrl,
       headers: {

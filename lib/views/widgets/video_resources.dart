@@ -79,32 +79,35 @@ class VideoListTile extends StatelessWidget {
   final String imagePath, title, id;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 4,
-          height: MediaQuery.of(context).size.height / 7.3,
-          decoration: BoxDecoration(
-              color: Colors.cyan,
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                  image: NetworkImage(
-                    baseUrl + imagePath,
-                  ),
-                  fit: BoxFit.fill)),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width / 3.8,
-          child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+    return InkWell(
+      onTap: () => Navigator.pushNamed(context, '/video', arguments: id),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width / 4,
+            height: MediaQuery.of(context).size.height / 7.3,
+            decoration: BoxDecoration(
+                color: Colors.cyan,
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                    image: NetworkImage(
+                      baseUrl + imagePath,
+                    ),
+                    fit: BoxFit.fill)),
           ),
-        )
-      ],
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 3.8,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

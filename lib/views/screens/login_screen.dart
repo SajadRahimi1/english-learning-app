@@ -221,31 +221,34 @@ class LoginScreen extends StatelessWidget {
                                     // login with gmail button
                                     Expanded(
                                         flex: 1,
-                                        child: Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: Get.width / 8,
-                                              vertical: Get.height / 90),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                  color: orange, width: 0.5)),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                  "ورود با حساب کاربری گوگل ",
-                                                  style: TextStyle(
-                                                      color: Color(0xff616161),
-                                                      fontFamily: "Yekan",
-                                                      fontSize: 9)),
-                                              Image.asset(
-                                                "assets/images/gmail.png",
-                                                width: Get.width / 12,
-                                                height: Get.height / 45,
-                                              )
-                                            ],
+                                        child: InkWell(                                          
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: Get.width / 8,
+                                                vertical: Get.height / 90),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: orange, width: 0.5)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Text(
+                                                    "ورود با حساب کاربری گوگل ",
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff616161),
+                                                        fontFamily: "Yekan",
+                                                        fontSize: 9)),
+                                                Image.asset(
+                                                  "assets/images/gmail.png",
+                                                  width: Get.width / 12,
+                                                  height: Get.height / 45,
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         )),
                                   ],

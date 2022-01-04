@@ -1,4 +1,4 @@
-const baseUrl = "http://138.201.100.200:85";
+const baseUrl = "http://138.201.100.200";
 const signinUrl = "$baseUrl/api/v1/auth/signin";
 const signupUrl = "$baseUrl/api/v1/auth/signup";
 const newsCagetoryUrl = "$baseUrl/api/v1/news-categories";
@@ -17,5 +17,6 @@ const updateStaticsUrl = "$baseUrl/api/v1/statistics";
 const validateCodeUrl = "$baseUrl/api/v1/auth/validate-auth-code";
 const forgotPasswordUrl = "$baseUrl/api/v1/auth/forgot-password";
 const setNewPasswordUrl = "$baseUrl/api/v1/auth/reset-password";
+const getVideoDataUrl = "$baseUrl/api/v1/videos/";
 const tokenConst =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiMjdmOGY4OGEwYjEyZjUwMzBiMTUiLCJpYXQiOjE2Mzk5Nzg0NDYsImV4cCI6MTY0MDAxNDQ0Nn0.WKftB3SDzdutTLkgnqUbhs03WegnzAkmZ3JjYtk3BdQ";
