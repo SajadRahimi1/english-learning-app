@@ -52,7 +52,7 @@ class VideoDetailScreen extends StatelessWidget {
               ),
 
           // bootom of image
-          Container(
+          SizedBox(
             width: Get.width / 1.15,
             height: Get.height / 20,
             child:

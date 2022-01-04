@@ -33,7 +33,7 @@ class ProfileSetting extends StatelessWidget {
           // Setting Switches
           SizedBox(
             width: Get.width,
-            height: Get.height / 5,
+            height: Get.height / 8,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -51,16 +51,16 @@ class ProfileSetting extends StatelessWidget {
                         _controller.box.write('save_storage', value);
                       },
                     )),
-                Obx(() => SettingCard(
-                      title: "رنگ پوسته تیره شود",
-                      enable: _controller.darkTheme.value,
-                      onTap: (value) {
-                        _controller.box.write('dark_theme', value);
-                        // value
-                        //     ? Get.changeTheme(ThemeData.dark())
-                        //     : Get.changeTheme(ThemeData.light());
-                      },
-                    )),
+                // Obx(() => SettingCard(
+                //       title: "رنگ پوسته تیره شود",
+                //       enable: _controller.darkTheme.value,
+                //       onTap: (value) {
+                //         _controller.box.write('dark_theme', value);
+                //         value
+                //             ? Get.changeTheme(ThemeData.dark())
+                //             : Get.changeTheme(ThemeData.light());
+                //       },
+                //     )),
               ],
             ),
           ),
