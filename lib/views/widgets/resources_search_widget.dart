@@ -23,6 +23,9 @@ class ResourcesSearchWidget extends StatelessWidget {
         if (type == "books") {
           Navigator.pushNamed(context, '/bookScreen', arguments: id);
         }
+        if (type == "videos") {
+          Navigator.pushNamed(context, '/video', arguments: id);
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

@@ -25,7 +25,6 @@ class PodcastDetailController extends GetxController with StateMixin {
     super.onInit();
     appDoc = await path.getApplicationDocumentsDirectory();
     GetStorage.init();
-    _dateTime = DateTime.now();
     print("Init");
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
@@ -40,7 +39,9 @@ class PodcastDetailController extends GetxController with StateMixin {
 
   @override
   void onClose() async {
+    // TODO: implement onClose
     super.onClose();
+
     Map times = _getStorage.read('timers') ?? {};
     var lastTimer = times[
             '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ??
@@ -50,38 +51,27 @@ class PodcastDetailController extends GetxController with StateMixin {
         null) {
       times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                            .toInt() /
-                        3) *
-                    2)
-                .toInt()
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                          .toInt() /
-                      3) *
-                  2)
-              .toInt();
+          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
     }
     if (times['totall'] == null) {
       times.addAll(<String, dynamic>{
-        'totall': (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                        .toInt() /
-                    3) *
-                2)
-            .toInt()
+        'totall':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       var n = DateTime.now();
-      print(n.second);
-      print(_dateTime.second);
+      print(_dateTime);
+      print(n);
       var add = n.difference(_dateTime);
       print(add.inSeconds);
-      times['totall'] = times['totall'] + (add.inSeconds / 3 * 2).toInt();
+      times['totall'] = times['totall'] + (add.inSeconds).toInt();
     }
-
     await _getStorage.write('timers', times);
+    // _getStorage.remove('timers');
     print(_getStorage.read('timers'));
   }
 

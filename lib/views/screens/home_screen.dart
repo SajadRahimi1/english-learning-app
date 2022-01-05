@@ -278,6 +278,12 @@ class HomeScreen extends StatelessWidget {
                                 arguments:
                                     _controller.homeModel.histories[index].id);
                           }
+                          if (_controller.homeModel.histories[index].type ==
+                              "videos") {
+                            Navigator.pushNamed(context, '/video',
+                                arguments:
+                                    _controller.homeModel.histories[index].id);
+                          }
                         },
                         child: Container(
                           width: Get.width / 2.6,

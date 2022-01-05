@@ -18,7 +18,7 @@ class PodcastScreen extends StatelessWidget {
     controller.getPodcastData(id, isGuest);
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
-    // controller.customeInit();
+    controller.customeInit();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,

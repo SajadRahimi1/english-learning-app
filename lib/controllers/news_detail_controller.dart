@@ -35,32 +35,20 @@ class NewsDetailController extends GetxController with StateMixin {
         null) {
       times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                            .toInt() /
-                        3) *
-                    2)
-                .toInt()
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                          .toInt() /
-                      3) *
-                  2)
-              .toInt();
+          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
     }
     if (times['totall'] == null) {
       times.addAll(<String, dynamic>{
-        'totall': (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                        .toInt() /
-                    3) *
-                2)
-            .toInt()
+        'totall':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       times['totall'] = times['totall'] +
-          (((DateTime.now().difference(_dateTime).inSeconds).toInt() / 3) * 2)
-              .toInt();
+          (DateTime.now().difference(_dateTime).inSeconds).toInt();
     }
     await _getStorage.write('timers', times);
     print(_getStorage.read('timers'));

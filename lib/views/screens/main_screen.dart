@@ -112,6 +112,8 @@ class MainScreen extends StatelessWidget {
                           return HomeScreen(
                             isGuest: isGuest,
                           );
+                        case "/video":
+                          return VideoDetailScreen();
                       }
                       return HomeScreen(
                         isGuest: isGuest,

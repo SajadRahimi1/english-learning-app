@@ -35,11 +35,7 @@ class BookController extends GetxController with StateMixin {
         null) {
       times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                            .toInt() /
-                        3) *
-                    2)
-                .toInt()
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
@@ -47,11 +43,8 @@ class BookController extends GetxController with StateMixin {
     }
     if (times['totall'] == null) {
       times.addAll(<String, dynamic>{
-        'totall': (((DateTime.now().difference(_dateTime).inSeconds + lastTimer)
-                        .toInt() /
-                    3) *
-                2)
-            .toInt()
+        'totall':
+            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
       });
     } else {
       var n = DateTime.now();
@@ -59,7 +52,7 @@ class BookController extends GetxController with StateMixin {
       print(n);
       var add = n.difference(_dateTime);
       print(add.inSeconds);
-      times['totall'] = times['totall'] + (add.inSeconds / 3 * 2).toInt();
+      times['totall'] = times['totall'] + (add.inSeconds).toInt();
     }
     await _getStorage.write('timers', times);
     // _getStorage.remove('timers');
