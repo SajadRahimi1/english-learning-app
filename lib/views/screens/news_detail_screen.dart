@@ -8,8 +8,9 @@ class NewsDetailScreen extends StatelessWidget {
   final NewsDetailController controller = Get.put(NewsDetailController());
   @override
   Widget build(BuildContext context) {
-    controller
-        .getData(ModalRoute.of(context)?.settings.arguments.toString() ?? "");
+    final String id =
+        ModalRoute.of(context)?.settings.arguments.toString() ?? "";
+    controller.getData(id);
     controller.customeInit();
     return SafeArea(
         child: Scaffold(
@@ -65,13 +66,17 @@ class NewsDetailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // bookmark icon
-                            SizedBox(
-                                width: Get.width / 16,
-                                height: Get.height,
-                                child: Image.asset(
-                                  "assets/images/bookmark.png",
-                                  fit: BoxFit.fill,
-                                )),
+                            InkWell(
+                              onTap: () async {
+                                await controller.bookmarkToggle(id);
+                              },
+                              child: Obx(() => Icon(
+                                    controller.bookmark.value
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_outline,
+                                    size: Get.width / 11,
+                                  )),
+                            ),
                             // share icon
                             SizedBox(
                               width: Get.width / 14,

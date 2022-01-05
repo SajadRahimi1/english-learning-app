@@ -24,9 +24,11 @@ class MainScreen extends StatelessWidget {
   late BookScreen bookScreen;
   late NewsDetailScreen newsDetailScreen;
   late PodcastScreen podcastScreen;
+  late VideoDetailScreen videoScreen;
   bool bookScreenBool = false;
   bool newsDetailScreenBool = false;
   bool podcastScreenBool = false;
+  bool videoScreenBool = false;
   @override
   Widget build(BuildContext context) {
     bool doubleTap = false;
@@ -64,6 +66,12 @@ class MainScreen extends StatelessWidget {
                   ? () {}
                   : newsDetailScreen.controller.onClose();
               newsDetailScreenBool = false;
+            }
+            if (videoScreenBool) {
+              videoScreen.controller.isClosed
+                  ? () {}
+                  : videoScreen.controller.onClose();
+              videoScreenBool = false;
             }
           } else {
             if (!doubleTap) {
@@ -146,7 +154,8 @@ class MainScreen extends StatelessWidget {
                         case "/resource":
                           return const ResourcesScreen();
                         case "/video":
-                          return VideoDetailScreen();
+                          videoScreenBool = true;
+                          return videoScreen = VideoDetailScreen();
                       }
                       return const ResourcesScreen();
                     },

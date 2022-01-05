@@ -282,41 +282,9 @@ class StaticsScreen extends StatelessWidget {
                                   vertical: Get.height / 40),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceBetween,
                                 // max height is Get.height / 6.61
-                                // children: [
-                                //   barChart(
-                                //       width: Get.width / 70,
-                                //       height: Get.height / 6.5,
-                                //       color: const Color(0xffFFE14D),
-                                //       topText: "00:03:01",
-                                //       bottomText: "امروز"),
-                                //   barChart(
-                                //       width: Get.width / 70,
-                                //       height: Get.height / 8 / 2.5,
-                                //       color: const Color(0xffAEE908),
-                                //       topText: "00:02:24",
-                                //       bottomText: "دیروز"),
-                                //   barChart(
-                                //       width: Get.width / 70,
-                                //       height: Get.height / 8,
-                                //       color: const Color(0xffE90827),
-                                //       topText: "00:10:20",
-                                //       bottomText: "00/07/01"),
-                                //   barChart(
-                                //       width: Get.width / 70,
-                                //       height: Get.height / 8 / 1.2,
-                                //       color: const Color(0xffFFA4AA),
-                                //       topText: "00:07:44",
-                                //       bottomText: "00/06/31"),
-                                //   barChart(
-                                //       width: Get.width / 70,
-                                //       height: Get.height / 8 / 1.6,
-                                //       color: const Color(0xffA4A7FF),
-                                //       topText: "00:05:01",
-                                //       bottomText: "00/06/30"),
-                                // ],
 
                                 children: List.generate(
                                   _controller.summaryTime.lastDaysStats.length,

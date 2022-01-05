@@ -20,6 +20,7 @@ class PodcastDetailController extends GetxController with StateMixin {
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
   var downloadingState = "".obs;
+  var textPlay = "".obs;
   @override
   void onInit() async {
     super.onInit();
@@ -150,6 +151,9 @@ class PodcastDetailController extends GetxController with StateMixin {
       player.onProgress!.listen((event) {
         percentPlayed.value =
             event.position.inMilliseconds / event.duration.inMilliseconds;
+
+        if (event.position.inSeconds == 3) textPlay.value = "Sajad";
+        if (event.position.inSeconds == 15) textPlay.value = "Rahimi";
       });
     } catch (e) {
       Get.snackbar("Error", "Error in play audio");

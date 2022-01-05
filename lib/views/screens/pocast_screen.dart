@@ -212,117 +212,125 @@ class PodcastScreen extends StatelessWidget {
                               ),
 
                               // Episodes
-                              Expanded(
-                                  child: ListView.builder(
-                                itemCount: controller.podcast.items.length,
-                                itemBuilder: (context, index) => Container(
-                                  margin: EdgeInsets.only(top: Get.height / 50),
+                              SizedBox(
+                                  height: Get.height / 5,
                                   width: Get.width,
-                                  height: Get.height / 18,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xffDBDBDB),
-                                      borderRadius: BorderRadius.circular(25)),
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: Get.height / 150,
-                                        horizontal: Get.width / 18),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Obx(() => !controller
-                                                .existFile[index].value
-                                            ? controller.downloadingState
-                                                        .value ==
-                                                    "downloading"
-                                                ? CircleAvatar(
-                                                    child: Obx(() =>
-                                                        CircularProgressIndicator(
-                                                          value: controller
-                                                              .downloadingPercent
-                                                              .value,
-                                                          strokeWidth: 2,
-                                                        )),
-                                                    backgroundColor:
-                                                        const Color(0xffDBDBDB))
-                                                :
-                                                // Download
-                                                InkWell(
-                                                    onTap: () {
-                                                      controller.download(
-                                                          controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .podcastPath,
-                                                          id,
-                                                          controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .title);
-                                                    },
-                                                    child: const Icon(
-                                                      Icons.cloud_download,
-                                                      size: 28,
-                                                    ),
-                                                  )
-                                            :
-                                            // play botton
-                                            Obx(() => controller.isPlaying.value
-                                                ?
-                                                // stop aduio
-                                                InkWell(
-                                                    onTap: () {
-                                                      controller.player
-                                                          .stopPlayer();
-
-                                                      controller.isPlaying
-                                                          .value = false;
-                                                    },
-                                                    child: CircleAvatar(
-                                                      child: Obx(() =>
-                                                          CircularProgressIndicator(
-                                                            value: controller
-                                                                .percentPlayed
-                                                                .value,
-                                                            strokeWidth: 2,
-                                                          )),
-                                                      backgroundImage:
-                                                          const AssetImage(
-                                                              "assets/images/stop.png"),
-                                                      backgroundColor:
-                                                          const Color(
-                                                              0xffffffff),
-                                                    ),
-                                                  )
-                                                :
-                                                // play audio
-                                                InkWell(
-                                                    child: Image.asset(
-                                                        "assets/images/play.png"),
-                                                    onTap: () {
-                                                      controller.playAudio(
-                                                          controller
-                                                                  .appDoc.path +
-                                                              id +
+                                  child: ListView.builder(
+                                    itemCount: controller.podcast.items.length,
+                                    itemBuilder: (context, index) => Container(
+                                      margin:
+                                          EdgeInsets.only(top: Get.height / 50),
+                                      width: Get.width,
+                                      height: Get.height / 18,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xffDBDBDB),
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: Get.height / 150,
+                                            horizontal: Get.width / 18),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Obx(() => !controller
+                                                    .existFile[index].value
+                                                ? controller.downloadingState
+                                                            .value ==
+                                                        "downloading"
+                                                    ? CircleAvatar(
+                                                        child: Obx(() =>
+                                                            CircularProgressIndicator(
+                                                              value: controller
+                                                                  .downloadingPercent
+                                                                  .value,
+                                                              strokeWidth: 2,
+                                                            )),
+                                                        backgroundColor:
+                                                            const Color(
+                                                                0xffDBDBDB))
+                                                    :
+                                                    // Download
+                                                    InkWell(
+                                                        onTap: () {
+                                                          controller.download(
+                                                              controller
+                                                                  .podcast
+                                                                  .items[index]
+                                                                  .podcastPath,
+                                                              id,
                                                               controller
                                                                   .podcast
                                                                   .items[index]
                                                                   .title);
-                                                    }))),
+                                                        },
+                                                        child: const Icon(
+                                                          Icons.cloud_download,
+                                                          size: 28,
+                                                        ),
+                                                      )
+                                                :
+                                                // play botton
+                                                Obx(() => controller
+                                                        .isPlaying.value
+                                                    ?
+                                                    // stop aduio
+                                                    InkWell(
+                                                        onTap: () {
+                                                          controller.player
+                                                              .stopPlayer();
 
-                                        // title
-                                        Text(
-                                            controller
-                                                .podcast.items[index].title,
-                                            textDirection: TextDirection.ltr,
-                                            style: const TextStyle(
-                                                fontFamily: "Arial",
-                                                color: Color(0xff777777)))
-                                      ],
+                                                          controller.isPlaying
+                                                              .value = false;
+                                                        },
+                                                        child: CircleAvatar(
+                                                          child: Obx(() =>
+                                                              CircularProgressIndicator(
+                                                                value: controller
+                                                                    .percentPlayed
+                                                                    .value,
+                                                                strokeWidth: 2,
+                                                              )),
+                                                          backgroundImage:
+                                                              const AssetImage(
+                                                                  "assets/images/stop.png"),
+                                                          backgroundColor:
+                                                              const Color(
+                                                                  0xffffffff),
+                                                        ),
+                                                      )
+                                                    :
+                                                    // play audio
+                                                    InkWell(
+                                                        child: Image.asset(
+                                                            "assets/images/play.png"),
+                                                        onTap: () {
+                                                          controller.playAudio(
+                                                              controller.appDoc
+                                                                      .path +
+                                                                  id +
+                                                                  controller
+                                                                      .podcast
+                                                                      .items[
+                                                                          index]
+                                                                      .title);
+                                                        }))),
+
+                                            // title
+                                            Text(
+                                                controller
+                                                    .podcast.items[index].title,
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                style: const TextStyle(
+                                                    fontFamily: "Arial",
+                                                    color: Color(0xff777777)))
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ))
+                                  )),
                             ],
                           ),
                         ))

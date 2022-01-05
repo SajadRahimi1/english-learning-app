@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import 'package:zabaner/controllers/news_detail_controller.dart';
 import 'package:zabaner/controllers/video_controller.dart';
-import 'package:zabaner/models/urls.dart';
 
 class VideoDetailScreen extends StatelessWidget {
   VideoDetailScreen({Key? key}) : super(key: key);
+  final VideoController controller = Get.put(VideoController());
   @override
   Widget build(BuildContext context) {
     final String id =
         ModalRoute.of(context)?.settings.arguments.toString() ?? "";
-    final VideoController _controller = Get.put(VideoController());
-    _controller.getData(id);
+
+    controller.customeInit();
+    controller.getData(id);
     var isPlaying = false.obs;
     return SafeArea(
         child: Scaffold(
-            body: _controller.obx(
+            body: controller.obx(
       (status) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -26,11 +26,10 @@ class VideoDetailScreen extends StatelessWidget {
                   EdgeInsets.symmetric(horizontal: Get.width / 50, vertical: 5),
               height: Get.height / 2.2,
               width: Get.width,
-              child: _controller.videoController.value.isInitialized
+              child: controller.videoController.value.isInitialized
                   ? AspectRatio(
-                      aspectRatio:
-                          _controller.videoController.value.aspectRatio,
-                      child: VideoPlayer(_controller.videoController),
+                      aspectRatio: controller.videoController.value.aspectRatio,
+                      child: VideoPlayer(controller.videoController),
                     )
                   : Container()
 
@@ -61,20 +60,24 @@ class VideoDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                   // bookmark icon
-                  SizedBox(
-                      width: Get.width / 16,
-                      height: Get.height,
-                      child: Image.asset(
-                        "assets/images/bookmark.png",
-                        fit: BoxFit.fill,
-                      )),
+                  InkWell(
+                    onTap: () async {
+                      controller.bookmarkToggle(id);
+                    },
+                    child: Obx(() => Icon(
+                          controller.bookmark.value
+                              ? Icons.bookmark
+                              : Icons.bookmark_outline,
+                          size: Get.width / 11,
+                        )),
+                  ),
                   InkWell(
                       onTap: () {
-                        _controller.videoController.value.isPlaying
-                            ? _controller.videoController.pause()
-                            : _controller.videoController.play();
+                        controller.videoController.value.isPlaying
+                            ? controller.videoController.pause()
+                            : controller.videoController.play();
                         isPlaying.value =
-                            _controller.videoController.value.isPlaying;
+                            controller.videoController.value.isPlaying;
                       },
                       child: Obx(() => Image.asset(isPlaying.value
                           ? "assets/images/pause.png"

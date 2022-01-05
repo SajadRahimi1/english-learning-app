@@ -8,6 +8,7 @@ class NewsDetailController extends GetxController with StateMixin {
   late NewsDetailModel newsDetail;
   final GetStorage _getStorage = GetStorage();
   late DateTime _dateTime;
+  var bookmark = false.obs;
 
   @override
   void onInit() {
@@ -16,8 +17,8 @@ class NewsDetailController extends GetxController with StateMixin {
     print("Init");
   }
 
-  void customeInit() {
-    GetStorage.init();
+  void customeInit() async {
+    await GetStorage.init();
     _dateTime = DateTime.now();
   }
 
@@ -59,13 +60,34 @@ class NewsDetailController extends GetxController with StateMixin {
       'accept': 'application/json',
       'Authorization': 'Bearer ${_getStorage.read('token')}'
     });
-
+    print(_request.body);
     if (_request.statusCode == 200) {
       newsDetail = newsDetailModelFromJson(_request.bodyString ?? "");
+      bookmark.value = newsDetail.bookmark;
       change(null, status: RxStatus.success());
       print(_request.body);
     } else {
       change(null, status: RxStatus.error());
     }
+  }
+
+  Future<bool> bookmarkToggle(String id) async {
+    var _request = await _getConnect.post(
+        bookmarkToggleUrl, {'type': 'news', 'bookmarkAbleId': id},
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer ${_getStorage.read('token')}'
+        },
+        contentType: "application/json");
+    print(_request.body);
+    if (_request.statusCode == 201) {
+      _request.body['action'] == "created"
+          ? bookmark.value = true
+          : bookmark.value = false;
+      return true;
+    } else {
+      Get.snackbar("Error", _request.statusText.toString());
+    }
+    return false;
   }
 }
