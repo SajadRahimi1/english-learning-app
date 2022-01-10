@@ -4,6 +4,7 @@ import 'package:zabaner/views/screens/login_screen.dart';
 
 class SetNewPasswordController extends GetConnect {
   Future<void> sendData(String code, String mobail, String password) async {
+    allowAutoSignedCert = true;
     var _request = await post(
       setNewPasswordUrl,
       mobail.isPhoneNumber

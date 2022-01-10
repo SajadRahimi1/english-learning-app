@@ -38,13 +38,16 @@ class Item {
   Item({
     required this.title,
     required this.podcastPath,
+    required this.id
   });
 
   final String title;
   final String podcastPath;
+  final String id;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         title: json["title"],
+        id: json["_id"],
         podcastPath: json["podcastPath"],
       );
 }

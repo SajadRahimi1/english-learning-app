@@ -17,6 +17,7 @@ class ProfileController extends GetxController with StateMixin {
     super.onInit();
     GetStorage.init();
     getProfileInformation(isGuest);
+    _getConnect.allowAutoSignedCert = true;
   }
 
   Future<void> getProfileInformation(bool isGuest) async {

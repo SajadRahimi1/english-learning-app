@@ -13,6 +13,7 @@ class HomeDataController extends GetxController with StateMixin {
     // TODO: implement onInit
     super.onInit();
     GetStorage.init();
+    _getConnect.allowAutoSignedCert = true;
   }
 
   Future<void> sendStatics() async {

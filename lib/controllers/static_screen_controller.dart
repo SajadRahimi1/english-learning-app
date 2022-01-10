@@ -14,6 +14,7 @@ class StaticController extends GetxController with StateMixin {
     super.onInit();
 
     GetStorage.init();
+    _getConnect.allowAutoSignedCert = true;
   }
 
   void getSummaryData() async {

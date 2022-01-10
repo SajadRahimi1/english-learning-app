@@ -35,16 +35,20 @@ class BookController extends GetxController with StateMixin {
         null) {
       times.addAll(<String, int>{
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+            ((DateTime.now().difference(_dateTime).inSeconds / 3 * 2) +
+                    lastTimer)
+                .toInt()
       });
     } else {
       times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+          ((DateTime.now().difference(_dateTime).inSeconds / 3 * 2) + lastTimer)
+              .toInt();
     }
     if (times['totall'] == null) {
       times.addAll(<String, dynamic>{
-        'totall':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+        'totall': ((DateTime.now().difference(_dateTime).inSeconds / 3 * 2) +
+                lastTimer)
+            .toInt()
       });
     } else {
       var n = DateTime.now();
@@ -60,6 +64,7 @@ class BookController extends GetxController with StateMixin {
   }
 
   void getBookDetail(String bookId, bool isGuest) async {
+    _getConnect.allowAutoSignedCert = true; 
     var request = isGuest
         ? await _getConnect.get(getBookDetailUrl + bookId)
         : await _getConnect.get(

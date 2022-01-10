@@ -11,13 +11,15 @@ class ResourcesController extends GetxController with StateMixin {
   @override
   void onInit() async {
     super.onInit();
-    getResources();
     GetStorage.init();
+    _getConnect.allowAutoSignedCert = true;
+    getResources();
   }
 
   Future<void> getResources() async {
     var request = await _getConnect
         .get(resourcesUrl, headers: {'accept': 'application/json'});
+    print(request.body);
     if (request.statusCode == 200) {
       resourcesList.addAll(resourcesFromJson(request.bodyString ?? ""));
       change(null, status: RxStatus.success());

@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/podcast_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
+import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class PodcastScreen extends StatelessWidget {
   PodcastScreen({Key? key, required this.isGuest}) : super(key: key);
@@ -122,7 +123,7 @@ class PodcastScreen extends StatelessWidget {
                               // Image and Title
                               SizedBox(
                                 width: Get.width,
-                                height: Get.height / 3.5,
+                                height: Get.height / 3.7,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -212,8 +213,8 @@ class PodcastScreen extends StatelessWidget {
                               ),
 
                               // Episodes
-                              SizedBox(
-                                  height: Get.height / 5,
+                              Container(
+                                  height: Get.height / 7,
                                   width: Get.width,
                                   child: ListView.builder(
                                     itemCount: controller.podcast.items.length,
@@ -331,6 +332,30 @@ class PodcastScreen extends StatelessWidget {
                                       ),
                                     ),
                                   )),
+
+                              Container(
+                                  height: Get.height / 4.2,
+                                  width: Get.width,
+                                  child: Obx(() => ListView.builder(
+                                      itemCount: controller
+                                          .podcastItem.value.paragraphs.length,
+                                      itemBuilder: (context, index) =>
+                                          controller.podcastItem.value.paragraphs.isNotEmpty
+                                              ? Obx(()=>TextHighlight(
+                                                  enText: controller
+                                                      .podcastItem
+                                                      .value
+                                                      .paragraphs[index]
+                                                      .en,
+                                                  faText: controller
+                                                      .podcastItem
+                                                      .value
+                                                      .paragraphs[index]
+                                                      .fa,
+                                                  color: controller.playingText.value == controller.podcastItem.value.paragraphs[index].en
+                                                      ? Colors.red
+                                                      : Colors.white))
+                                              : const SizedBox())))
                             ],
                           ),
                         ))

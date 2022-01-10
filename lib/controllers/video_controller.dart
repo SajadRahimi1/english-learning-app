@@ -14,6 +14,7 @@ class VideoController extends GetxController with StateMixin {
   @override
   void onInit() async {
     super.onInit();
+    _getConnect.allowAutoSignedCert = true;
   }
 
   void customeInit() {

@@ -11,6 +11,7 @@ class LoginController extends GetConnect {
   @override
   void onInit() async {
     super.onInit();
+    allowAutoSignedCert = true;
   }
 
   void customInit() async {

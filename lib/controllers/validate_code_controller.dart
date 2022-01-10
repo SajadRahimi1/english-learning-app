@@ -9,6 +9,7 @@ class ValidateController extends GetConnect {
   void onInit() {
     super.onInit();
     GetStorage.init();
+    allowAutoSignedCert = true;
   }
 
   Future<void> validateSignup(String phoneNumber, String code) async {

@@ -29,6 +29,7 @@ class NewsDataController extends GetxController with StateMixin {
     var response = await _getConnect.get(newsCagetoryUrl);
     categories.addAll(jsonDecode(response.bodyString ?? "[]"));
     getContent(categories[0], isGuest);
+    _getConnect.allowAutoSignedCert = true;
   }
 
   void getContent(String category, bool isGuest) async {

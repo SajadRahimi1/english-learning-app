@@ -15,6 +15,7 @@ class NewsDetailController extends GetxController with StateMixin {
     // TODO: implement onInit
     super.onInit();
     print("Init");
+    _getConnect.allowAutoSignedCert = true;
   }
 
   void customeInit() async {

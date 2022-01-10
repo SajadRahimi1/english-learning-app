@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:path_provider/path_provider.dart' as path;
@@ -15,15 +16,27 @@ class PodcastDetailController extends GetxController with StateMixin {
   final Dio dio = Dio();
   final GetStorage _getStorage = GetStorage();
   late List<RxBool> existFile;
+  Rx<PodcastItemModel> podcastItem = PodcastItemModel(
+          id: "id",
+          faTitle: "faTitle",
+          title: "title",
+          type: "type",
+          imagePath: "imagePath",
+          paragraphs: [],
+          itemTitle: "itemTitle",
+          itemFaTitle: "itemFaTitle",
+          podcastPath: "podcastPath")
+      .obs;
   late io.Directory appDoc;
   var isPlaying = false.obs;
+  var playingText = "".obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
   var downloadingState = "".obs;
-  var textPlay = "".obs;
   @override
   void onInit() async {
     super.onInit();
+    _getConnect.allowAutoSignedCert = true;
     appDoc = await path.getApplicationDocumentsDirectory();
     GetStorage.init();
     print("Init");
@@ -97,6 +110,7 @@ class PodcastDetailController extends GetxController with StateMixin {
         }
       }
       change(null, status: RxStatus.success());
+      getPodcastItemData(id, podcast.items[0].id, isGuest);
       if (_getStorage.read("auto_download") ?? false) {
         for (var item in podcast.items) {
           download(item.podcastPath, id, item.title);
@@ -137,6 +151,25 @@ class PodcastDetailController extends GetxController with StateMixin {
     }
   }
 
+  void getPodcastItemData(
+      String podcastId, String edposodeId, bool isGuest) async {
+    _getConnect.allowAutoSignedCert = true;
+    var _request = isGuest
+        ? await _getConnect
+            .get(getPodcastDetailUrl + podcastId + "/item/" + edposodeId)
+        : await _getConnect.get(
+            getPodcastDetailUrl + podcastId + "/item/" + edposodeId,
+            headers: {
+              'accept': 'application/json',
+              'Authorization': 'Bearer ${_getStorage.read('token')}'
+            },
+          );
+
+    if (_request.statusCode == 200) {
+      podcastItem.value = podcastItemModelFromJson(_request.bodyString ?? "");
+    } else {}
+  }
+
   void playAudio(String filePath) async {
     try {
       player.isOpen() ? {} : player.openAudioSession();
@@ -151,9 +184,20 @@ class PodcastDetailController extends GetxController with StateMixin {
       player.onProgress!.listen((event) {
         percentPlayed.value =
             event.position.inMilliseconds / event.duration.inMilliseconds;
-
-        if (event.position.inSeconds == 3) textPlay.value = "Sajad";
-        if (event.position.inSeconds == 15) textPlay.value = "Rahimi";
+        for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {
+          // if (event.position.inMilliseconds >
+          //         podcastItem.value.paragraphs[i].pst &&
+          //     event.position.inMilliseconds <
+          //         (i == podcastItem.value.paragraphs.length
+          //             ? podcastItem.value.paragraphs[i].pst
+          //             : (podcastItem.value.paragraphs[i + 1].pst))) {
+          //   playingText.value = podcastItem.value.paragraphs[i].en;
+          // }
+          if (event.position.inMilliseconds >
+              podcastItem.value.paragraphs[i].pst) {
+            playingText.value = podcastItem.value.paragraphs[i].en;
+          }
+        }
       });
     } catch (e) {
       Get.snackbar("Error", "Error in play audio");

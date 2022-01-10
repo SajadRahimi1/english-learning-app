@@ -6,7 +6,9 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/validate_reset_password_screen.dart';
 
 class RecoveryPasswordController extends GetConnect {
+  
   Future<void> SendCode(String mobail) async {
+    allowAutoSignedCert = true;
     var _request = mobail.isPhoneNumber
         ? await post(forgotPasswordUrl, {'mobile': mobail})
         : await post(forgotPasswordUrl, {'email': mobail});
