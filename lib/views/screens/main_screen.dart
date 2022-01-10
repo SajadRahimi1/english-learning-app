@@ -11,6 +11,7 @@ import 'package:zabaner/views/screens/home_screen.dart';
 import 'package:zabaner/views/screens/news_detail_screen.dart';
 import 'package:zabaner/views/screens/news_screen.dart';
 import 'package:zabaner/views/screens/pocast_screen.dart';
+import 'package:zabaner/views/screens/podcast_play_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/resources_screen.dart';
 import 'package:zabaner/views/screens/video_detailt_screen.dart';
@@ -23,7 +24,7 @@ class MainScreen extends StatelessWidget {
   final bool firstTime;
   late BookScreen bookScreen;
   late NewsDetailScreen newsDetailScreen;
-  late PodcastScreen podcastScreen;
+  late PodcastPlay podcastScreen;
   late VideoDetailScreen videoScreen;
   bool bookScreenBool = false;
   bool newsDetailScreenBool = false;
@@ -114,6 +115,11 @@ class MainScreen extends StatelessWidget {
                           return PodcastScreen(
                             isGuest: isGuest,
                           );
+                        case "/playPodcast":
+                          podcastScreenBool = true;
+                          return podcastScreen = PodcastPlay(
+                            isGuest: isGuest,
+                          );
                         case "/newsDetail":
                           return NewsDetailScreen();
                         case "/home":
@@ -147,10 +153,15 @@ class MainScreen extends StatelessWidget {
                             isGuest: isGuest,
                           );
                         case "/podcast":
-                          podcastScreenBool = true;
-                          return podcastScreen = PodcastScreen(
+                          return PodcastScreen(
                             isGuest: isGuest,
                           );
+                        case "/playPodcast":
+                          podcastScreenBool = true;
+                          return podcastScreen = PodcastPlay(
+                            isGuest: isGuest,
+                          );
+
                         case "/resource":
                           return const ResourcesScreen();
                         case "/video":

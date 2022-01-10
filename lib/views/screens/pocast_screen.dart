@@ -19,7 +19,6 @@ class PodcastScreen extends StatelessWidget {
     controller.getPodcastData(id, isGuest);
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
-    controller.customeInit();
     return SafeArea(
         child: Directionality(
             textDirection: TextDirection.rtl,
@@ -273,42 +272,16 @@ class PodcastScreen extends StatelessWidget {
                                                       )
                                                 :
                                                 // play botton
-                                                Obx(() => controller
-                                                        .isPlaying.value
-                                                    ?
-                                                    // stop aduio
-                                                    InkWell(
-                                                        onTap: () {
-                                                          controller.player
-                                                              .stopPlayer();
-
-                                                          controller.isPlaying
-                                                              .value = false;
-                                                        },
-                                                        child: CircleAvatar(
-                                                          child: Obx(() =>
-                                                              CircularProgressIndicator(
-                                                                value: controller
-                                                                    .percentPlayed
-                                                                    .value,
-                                                                strokeWidth: 2,
-                                                              )),
-                                                          backgroundImage:
-                                                              const AssetImage(
-                                                                  "assets/images/stop.png"),
-                                                          backgroundColor:
-                                                              const Color(
-                                                                  0xffffffff),
-                                                        ),
-                                                      )
-                                                    :
+                                                
                                                     // play audio
                                                     InkWell(
                                                         child: Image.asset(
                                                             "assets/images/play.png"),
                                                         onTap: () {
-                                                          controller.playAudio(
-                                                              controller.appDoc
+                                                          Navigator.pushNamed(context, '/playPodcast', arguments: id+":"+controller
+                                                                  .podcast
+                                                                  .items[index]
+                                                                  .id+":"+controller.appDoc
                                                                       .path +
                                                                   id +
                                                                   controller
@@ -316,7 +289,7 @@ class PodcastScreen extends StatelessWidget {
                                                                       .items[
                                                                           index]
                                                                       .title);
-                                                        }))),
+                                                        })),
 
                                             // title
                                             Text(
@@ -339,23 +312,18 @@ class PodcastScreen extends StatelessWidget {
                                   child: Obx(() => ListView.builder(
                                       itemCount: controller
                                           .podcastItem.value.paragraphs.length,
-                                      itemBuilder: (context, index) =>
-                                          controller.podcastItem.value.paragraphs.isNotEmpty
-                                              ? Obx(()=>TextHighlight(
-                                                  enText: controller
-                                                      .podcastItem
-                                                      .value
-                                                      .paragraphs[index]
-                                                      .en,
-                                                  faText: controller
-                                                      .podcastItem
-                                                      .value
-                                                      .paragraphs[index]
-                                                      .fa,
-                                                  color: controller.playingText.value == controller.podcastItem.value.paragraphs[index].en
-                                                      ? Colors.red
-                                                      : Colors.white))
-                                              : const SizedBox())))
+                                      itemBuilder: (context, index) => controller
+                                              .podcastItem
+                                              .value
+                                              .paragraphs
+                                              .isNotEmpty
+                                          ? Obx(() => TextHighlight(
+                                              enText: controller.podcastItem
+                                                  .value.paragraphs[index].en,
+                                              faText: controller.podcastItem
+                                                  .value.paragraphs[index].fa,
+                                              color: controller.playingText.value == controller.podcastItem.value.paragraphs[index].en ? Colors.red : Colors.white))
+                                          : const SizedBox())))
                             ],
                           ),
                         ))

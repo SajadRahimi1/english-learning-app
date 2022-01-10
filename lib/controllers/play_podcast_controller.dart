@@ -8,7 +8,7 @@ import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
-class PodcastDetailController extends GetxController with StateMixin {
+class PlayPodcastController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   late PodcastModel podcast;
   late DateTime _dateTime;
@@ -89,38 +89,6 @@ class PodcastDetailController extends GetxController with StateMixin {
     print(_getStorage.read('timers'));
   }
 
-  void getPodcastData(String id, bool isGuest) async {
-    var _request = isGuest
-        ? await _getConnect.get(getPodcastDetailUrl + id)
-        : await _getConnect.get(
-            getPodcastDetailUrl + id,
-            headers: {
-              'accept': 'application/json',
-              'Authorization': 'Bearer ${_getStorage.read('token')}'
-            },
-          );
-
-    print(_request.body);
-    if (_request.statusCode == 200) {
-      podcast = podcastModelFromJson(_request.bodyString ?? "");
-      existFile = List.generate(podcast.items.length, (index) => RxBool(false));
-      for (var i = 0; i < podcast.items.length; i++) {
-        if (io.File(appDoc.path + id + podcast.items[i].title).existsSync()) {
-          existFile[i].value = true;
-        }
-      }
-      change(null, status: RxStatus.success());
-      getPodcastItemData(id, podcast.items[0].id, isGuest);
-      if (_getStorage.read("auto_download") ?? false) {
-        for (var item in podcast.items) {
-          download(item.podcastPath, id, item.title);
-        }
-      }
-    } else {
-      change(null, status: RxStatus.error());
-    }
-  }
-
   void download(String urlPath, String id, String title) async {
     io.File _checkFile = io.File(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
@@ -167,7 +135,10 @@ class PodcastDetailController extends GetxController with StateMixin {
 
     if (_request.statusCode == 200) {
       podcastItem.value = podcastItemModelFromJson(_request.bodyString ?? "");
-    } else {}
+      change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error());
+    }
   }
 
   void playAudio(String filePath) async {
@@ -184,7 +155,7 @@ class PodcastDetailController extends GetxController with StateMixin {
       player.onProgress!.listen((event) {
         percentPlayed.value =
             event.position.inMilliseconds / event.duration.inMilliseconds;
-        for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {          
+        for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {
           if (event.position.inMilliseconds >
               podcastItem.value.paragraphs[i].pst) {
             playingText.value = podcastItem.value.paragraphs[i].en;
