@@ -64,7 +64,7 @@ class BookController extends GetxController with StateMixin {
   }
 
   void getBookDetail(String bookId, bool isGuest) async {
-    _getConnect.allowAutoSignedCert = true; 
+    _getConnect.allowAutoSignedCert = true;
     var request = isGuest
         ? await _getConnect.get(getBookDetailUrl + bookId)
         : await _getConnect.get(

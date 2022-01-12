@@ -12,15 +12,25 @@ class TextHighlight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       color: color,
-      child: Column(children: [
-        Text(enText,
-            textAlign: TextAlign.left, textDirection: TextDirection.ltr),
-        Text(
-          faText,
-        ),
-      ]),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
+        child: Column(children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Text(enText,
+                textAlign: TextAlign.left, textDirection: TextDirection.ltr),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Text(faText,
+                textAlign: TextAlign.right, textDirection: TextDirection.rtl),
+          ),
+        ]),
+      ),
     );
   }
 }

@@ -21,6 +21,8 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   Future<void> getProfileInformation(bool isGuest) async {
+    _getConnect.allowAutoSignedCert = true;
+
     if (!isGuest) {
       change(null, status: RxStatus.loading());
       final _request = await _getConnect.get(profileInformationUrl, headers: {
@@ -50,6 +52,8 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   void getImage() async {
+    _getConnect.allowAutoSignedCert = true;
+
     final ImagePicker _picker = ImagePicker();
     final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -73,6 +77,8 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   void updateProfile(String firstName, String lastName, String birthday) async {
+    _getConnect.allowAutoSignedCert = true;
+
     var _request = await _getConnect.patch(updateProfileUrl, {
       'firstName': firstName,
       'lastName': lastName,

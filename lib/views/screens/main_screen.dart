@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
@@ -20,6 +21,7 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key, required this.isGuest, this.firstTime = false})
       : super(key: key);
   final MainScreenController _controller = Get.put(MainScreenController());
+
   final bool isGuest;
   final bool firstTime;
   late BookScreen bookScreen;
@@ -34,8 +36,13 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool doubleTap = false;
     isGuest || firstTime
-        ? Timer(const Duration(milliseconds: 500),
-            () => _controller.intro.start(context))
+        ? {
+            if (_controller.getStorage.read('tour') == null)
+              Timer(const Duration(milliseconds: 500), () {
+                _controller.intro.start(context);
+                _controller.getStorage.write('tour', true);
+              })
+          }
         : () {};
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -127,7 +134,9 @@ class MainScreen extends StatelessWidget {
                             isGuest: isGuest,
                           );
                         case "/video":
-                          return VideoDetailScreen();
+                          videoScreenBool = true;
+                          return videoScreen =
+                              VideoDetailScreen(isGuest: isGuest);
                       }
                       return HomeScreen(
                         isGuest: isGuest,
@@ -166,7 +175,8 @@ class MainScreen extends StatelessWidget {
                           return const ResourcesScreen();
                         case "/video":
                           videoScreenBool = true;
-                          return videoScreen = VideoDetailScreen();
+                          return videoScreen =
+                              VideoDetailScreen(isGuest: isGuest);
                       }
                       return const ResourcesScreen();
                     },

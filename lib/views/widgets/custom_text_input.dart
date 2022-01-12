@@ -8,19 +8,23 @@ class CustomTextInput extends StatelessWidget {
       required this.iconPath,
       required this.error,
       this.keyboardType,
+      this.password = false,
       this.onChanged})
       : super(key: key);
   final String hintText, iconPath;
   final void Function(String)? onChanged;
   final bool error;
+  final bool password;
   final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
         onChanged: onChanged,
-        style: const TextStyle(fontFamily: "Yekan", fontSize: 14),
+        style: const TextStyle(fontFamily: "Yekan", fontSize: 17),
         textAlignVertical: TextAlignVertical.top,
         keyboardType: keyboardType,
+        obscureText: password,
+        obscuringCharacter: '*',
         decoration: InputDecoration(
             filled: true,
             hintText: hintText,

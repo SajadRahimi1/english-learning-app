@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     isGuest ? {} : _controller.sendStatics();
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: const Color(0xffffffff),
           body: _controller.obx(
             (status) => Column(
@@ -137,14 +138,22 @@ class HomeScreen extends StatelessWidget {
                                           Card(
                                             shape: const CircleBorder(),
                                             elevation: 3,
-                                            child: SizedBox(
-                                              height: Get.height,
-                                              width: Get.width,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 6,
-                                                color: const Color(0xffFFC200),
-                                                value: _controller.totallSecond
-                                                    .levelPercent(),
+                                            child: CircleAvatar(
+                                              radius: Get.width / 3,
+                                              backgroundColor:
+                                                  const Color(0xffffffff),
+                                              child: SizedBox(
+                                                width: Get.width,
+                                                height: Get.height / 4.2,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 6,
+                                                  color:
+                                                      const Color(0xffFFC200),
+                                                  value: _controller
+                                                      .totallSecond
+                                                      .levelPercent(),
+                                                ),
                                               ),
                                             ),
                                           ),

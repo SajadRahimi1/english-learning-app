@@ -6,7 +6,9 @@ import 'package:zabaner/views/widgets/custom_text_input.dart';
 import '../colors.dart';
 
 class SetNewPasswordScreen extends StatelessWidget {
-  const SetNewPasswordScreen({Key? key, required this.code,required this.mobail}) : super(key: key);
+  const SetNewPasswordScreen(
+      {Key? key, required this.code, required this.mobail})
+      : super(key: key);
   final String code;
   final String mobail;
 
@@ -104,6 +106,7 @@ class SetNewPasswordScreen extends StatelessWidget {
                                   hintText: "رمز عبور جدید",
                                   error: false,
                                   iconPath: "lock.png",
+                                  password: true,
                                   onChanged: (value) => password = value,
                                 ),
                               ),
@@ -112,6 +115,7 @@ class SetNewPasswordScreen extends StatelessWidget {
                                 child: CustomTextInput(
                                   hintText: "تکرار رمز عبور",
                                   iconPath: "repassword.png",
+                                  password: true,
                                   error: false,
                                   onChanged: (value) => repassword = value,
                                 ),
@@ -142,8 +146,9 @@ class SetNewPasswordScreen extends StatelessWidget {
                               EdgeInsets.symmetric(vertical: Get.height / 45),
                           child: ElevatedButton(
                             onPressed: () {
-                              if(password==repassword){
-                              _controller.sendData(code, mobail, password);}
+                              if (password == repassword) {
+                                _controller.sendData(code, mobail, password);
+                              }
                             },
                             child: const Text(
                               "تغییر رمز عبور",

@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,17 +17,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   final Dio dio = Dio();
   final GetStorage _getStorage = GetStorage();
   late List<RxBool> existFile;
-  Rx<PodcastItemModel> podcastItem = PodcastItemModel(
-          id: "id",
-          faTitle: "faTitle",
-          title: "title",
-          type: "type",
-          imagePath: "imagePath",
-          paragraphs: [],
-          itemTitle: "itemTitle",
-          itemFaTitle: "itemFaTitle",
-          podcastPath: "podcastPath")
-      .obs;
+  late PodcastItemModel podcastItem;
   late io.Directory appDoc;
   var isPlaying = false.obs;
   var playingText = "".obs;
@@ -134,7 +125,7 @@ class PlayPodcastController extends GetxController with StateMixin {
           );
 
     if (_request.statusCode == 200) {
-      podcastItem.value = podcastItemModelFromJson(_request.bodyString ?? "");
+      podcastItem = podcastItemModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
     } else {
       change(null, status: RxStatus.error());
@@ -148,17 +139,15 @@ class PlayPodcastController extends GetxController with StateMixin {
       // if (player.isOpen()) {
       await player
           .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
-          .then((value) {
-        isPlaying.value = player.isPlaying;
-      });
+          .then((value) {});
       player.setSubscriptionDuration(const Duration(milliseconds: 900));
       player.onProgress!.listen((event) {
+        isPlaying.value = player.isPlaying;
         percentPlayed.value =
             event.position.inMilliseconds / event.duration.inMilliseconds;
-        for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {
-          if (event.position.inMilliseconds >
-              podcastItem.value.paragraphs[i].pst) {
-            playingText.value = podcastItem.value.paragraphs[i].en;
+        for (int i = 0; i < podcastItem.paragraphs.length; i++) {
+          if (event.position.inMilliseconds > podcastItem.paragraphs[i].pst) {
+            playingText.value = podcastItem.paragraphs[i].en;
           }
         }
       });

@@ -9,15 +9,21 @@ class StaticController extends GetxController with StateMixin {
   final GetStorage _getStorage = GetStorage();
   int sumDuration = 0;
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
 
-    GetStorage.init();
+    await GetStorage.init();
     _getConnect.allowAutoSignedCert = true;
   }
 
+  get getProfileImage {
+    final GetStorage _getStorage = GetStorage();
+    return _getStorage.read('profile_image');
+  }
+
   void getSummaryData() async {
+    _getConnect.allowAutoSignedCert = true;
     var _request = await _getConnect.get(
       summaryTimeUrl,
       headers: {

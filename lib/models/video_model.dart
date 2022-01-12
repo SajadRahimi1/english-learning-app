@@ -35,16 +35,15 @@ class VideoModel {
 }
 
 class Item {
-  Item({
-    required this.title,
-    required this.videoPath,
-  });
+  Item({required this.title, required this.videoPath, required this.id});
 
   final String title;
   final String videoPath;
+  final String id;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         title: json["title"],
+        id: json["_id"],
         videoPath: json["videoPath"],
       );
 }

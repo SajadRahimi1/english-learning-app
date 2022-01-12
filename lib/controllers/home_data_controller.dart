@@ -17,6 +17,8 @@ class HomeDataController extends GetxController with StateMixin {
   }
 
   Future<void> sendStatics() async {
+    _getConnect.allowAutoSignedCert = true;
+
     if (_getStorage.read('auto_backup') == true) {
       try {
         Map<String, dynamic> times = _getStorage.read('timers') ?? {};
@@ -25,12 +27,13 @@ class HomeDataController extends GetxController with StateMixin {
           var stats = [];
           times.forEach((key, value) {
             if (key != 'totall') {
-              key.split("-")[1].length > 3
+              key.split("-")[1].length >= 2
                   ? {}
                   : key =
                       "${key.split("-")[0]}-0${key.split("-")[1]}-${key.split("-")[2]}";
-              key.split("-")[2].length > 3
-                  ? {}
+
+              key.split("-")[2].length >= 2
+                  ? print("t")
                   : key =
                       "${key.split("-")[0]}-${key.split("-")[1]}-0${key.split("-")[2]}";
               stats.add({
@@ -61,6 +64,8 @@ class HomeDataController extends GetxController with StateMixin {
   }
 
   void getData(bool isGuest) async {
+    _getConnect.allowAutoSignedCert = true;
+
     if (!isGuest) {
       print(_getStorage.read('token'));
       var request = await _getConnect.get(homeDataUrl, headers: {
@@ -70,9 +75,6 @@ class HomeDataController extends GetxController with StateMixin {
 
       if (request.statusCode == 200) {
         homeModel = homeModelFromJson(request.bodyString ?? "");
-        // _getStorage.write('profile_image', homeModel.user.avatarPath);
-        // _getStorage.write('profile_image',
-        //     "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png");
 
         if (request.body['user']['avatarPath'] == null) {
           _getStorage.write('profile_image',
@@ -85,11 +87,6 @@ class HomeDataController extends GetxController with StateMixin {
           var timers =
               request.body['statistics']['durationSum'].toString().split(":");
           if (timers.length > 2) {
-            // var totall = Duration(
-            //         days: int.parse(timers[0]),
-            //         hours: int.parse(timers[1]),
-            //         minutes: int.parse(timers[2]))
-            //     .inSeconds;
             var totall = (int.parse(timers[0]) * 24 * 3600) +
                 (int.parse(timers[1]) * 3600) +
                 (int.parse(timers[2]) * 60);

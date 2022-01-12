@@ -15,6 +15,7 @@ class LoginController extends GetConnect {
   }
 
   void customInit() async {
+    allowAutoSignedCert = true;
     await GetStorage.init();
     print(_getStorage.read('token'));
     if (_getStorage.read('token') != null) {
@@ -35,6 +36,7 @@ class LoginController extends GetConnect {
   }
 
   Future<void> login(String username, String password, bool rememberMe) async {
+    allowAutoSignedCert = true;
     var _response =
         await post(signinUrl, {"username": username, "password": password});
 
@@ -52,6 +54,9 @@ class LoginController extends GetConnect {
     if (_response.statusCode == 400) {
       error.value = true;
       errorMessage.value = "نام کاربری یا رمز عبور صحیح نمی‌باشد";
+    }
+    if (_response.statusCode == 429) {
+      Get.snackbar("خطا", "شما بیش از اندازه تلاش کردید");
     }
   }
 }

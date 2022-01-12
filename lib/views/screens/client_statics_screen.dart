@@ -50,8 +50,9 @@ class StaticsScreen extends StatelessWidget {
                       onTap: () => Navigator.pushNamed(context, '/profile'),
                       child: CircleAvatar(
                         radius: Get.width / 16,
-                        backgroundImage: const NetworkImage(
-                            "https://randomuser.me/api/portraits/med/men/40.jpg"),
+                        backgroundImage: NetworkImage(_controller
+                                .getProfileImage ??
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
                       ),
                     ),
 
@@ -63,7 +64,7 @@ class StaticsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Text(
-                            "سلام سامان!",
+                            "آمار",
                             style: TextStyle(fontFamily: "Yekan", fontSize: 18),
                           ),
                           SizedBox(

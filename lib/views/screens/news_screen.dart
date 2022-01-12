@@ -72,7 +72,7 @@ class NewsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Text(
-                                      "منابع زبان انگلیسی",
+                                      "اخبار زبان انگلیسی",
                                       style: TextStyle(
                                           fontFamily: "Yekan", fontSize: 18),
                                     ),

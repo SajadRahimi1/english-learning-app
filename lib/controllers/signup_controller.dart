@@ -18,6 +18,8 @@ class SignupController extends GetConnect {
 
   Future<void> signup(
       String username, String password, String mobile, String? email) async {
+            allowAutoSignedCert = true;
+
     var _response = email!.isNotEmpty
         ? await post(signupUrl, {
             "username": username,

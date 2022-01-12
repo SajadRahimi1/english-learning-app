@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zabaner/controllers/video_controller.dart';
+import 'package:zabaner/views/colors.dart';
+import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class VideoDetailScreen extends StatelessWidget {
-  VideoDetailScreen({Key? key}) : super(key: key);
+  VideoDetailScreen({Key? key, required this.isGuest}) : super(key: key);
   final VideoController controller = Get.put(VideoController());
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     final String id =
         ModalRoute.of(context)?.settings.arguments.toString() ?? "";
 
     controller.customeInit();
-    controller.getData(id);
-    var isPlaying = false.obs;
+    controller.getData(id, isGuest);
+
     return SafeArea(
         child: Scaffold(
             body: controller.obx(
@@ -72,14 +75,17 @@ class VideoDetailScreen extends StatelessWidget {
                         )),
                   ),
                   InkWell(
-                      onTap: () {
-                        controller.videoController.value.isPlaying
-                            ? controller.videoController.pause()
-                            : controller.videoController.play();
-                        isPlaying.value =
+                      onTap: () async {
+                        if (controller.videoController.value.isPlaying) {
+                          controller.videoController.pause();
+                        } else {
+                          controller.videoController.play();
+                        }
+
+                        controller.isPlaying.value =
                             controller.videoController.value.isPlaying;
                       },
-                      child: Obx(() => Image.asset(isPlaying.value
+                      child: Obx(() => Image.asset(controller.isPlaying.value
                           ? "assets/images/pause.png"
                           : "assets/images/playv.png"))),
                   // share icon
@@ -93,9 +99,21 @@ class VideoDetailScreen extends StatelessWidget {
                   ),
                 ]),
           ),
-          SizedBox(
+          Container(
             height: Get.height / 3,
-            width: Get.width / 1.15,
+            child: Obx(() => controller.videoItems.value.paragraphs.isNotEmpty
+                ? ListView.builder(
+                    itemCount: controller.videoItems.value.paragraphs.length,
+                    itemBuilder: (context, index) => Obx(() => TextHighlight(
+                        enText:
+                            controller.videoItems.value.paragraphs[index].en,
+                        faText:
+                            controller.videoItems.value.paragraphs[index].fa,
+                        color: controller.playingText.value ==
+                                controller.videoItems.value.paragraphs[index].en
+                            ? orange
+                            : Colors.white)))
+                : const SizedBox()),
           )
         ],
       ),

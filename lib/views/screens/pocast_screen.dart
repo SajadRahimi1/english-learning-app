@@ -32,7 +32,6 @@ class PodcastScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.pop(context);
                         controller.player.closeAudioSession();
-                        controller.isPlaying.value = false;
                         controller.onClose();
                       },
                       child: Row(
@@ -74,20 +73,10 @@ class PodcastScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "سلام سامان!",
+                                  "پادکست ها",
                                   style: TextStyle(
                                       fontFamily: "Yekan", fontSize: 16),
                                 ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  "اخبار متنوع به زبان انگلیسی",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan",
-                                      fontSize: 8,
-                                      color: Color(0xff919191)),
-                                )
                               ],
                             ),
                           ),
@@ -134,6 +123,7 @@ class PodcastScreen extends StatelessWidget {
                                       children: [
                                         Row(
                                           children: [
+                                            // Image
                                             SizedBox(
                                               width: Get.width / 12,
                                               height: Get.height / 21,
@@ -142,40 +132,25 @@ class PodcastScreen extends StatelessWidget {
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
-                                            Column(
-                                              children: [
-                                                SizedBox(
-                                                  width: Get.width / 2.5,
-                                                  height: Get.height / 24,
-                                                  child: Text(
-                                                    "   ${controller.podcast.title}",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontFamily: "Yekan",
-                                                        fontSize: 16),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width / 2.5,
-                                                  height: Get.height / 24,
-                                                  child: const Text(
-                                                    "     Dictionary of English",
-                                                    style: TextStyle(
-                                                        fontFamily: "Yekan",
-                                                        color:
-                                                            Color(0xffC2C2C2),
-                                                        fontSize: 10),
-                                                  ),
-                                                )
-                                              ],
-                                            )
+
+                                            // English Title
+                                            SizedBox(
+                                              width: Get.width / 2.5,
+                                              height: Get.height / 24,
+                                              child: Text(
+                                                "   ${controller.podcast.title}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontFamily: "Yekan",
+                                                    fontSize: 16),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                         SizedBox(
                                           width: Get.width / 2.1,
                                           child: Text(
-                                            controller.podcast.faTitle,
+                                            "\n" + controller.podcast.faTitle,
                                             overflow: TextOverflow.ellipsis,
                                             textDirection: TextDirection.rtl,
                                             style: const TextStyle(
@@ -183,17 +158,6 @@ class PodcastScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.w400),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              top: Get.height / 70),
-                                          child: const Text(
-                                            "اخبار جهانی امروز در پادکست بی بی سی",
-                                            style: TextStyle(
-                                                fontFamily: "Yekan",
-                                                fontSize: 10,
-                                                color: Color(0xffC2C2C2)),
-                                          ),
-                                        )
                                       ],
                                     ),
                                     Container(
@@ -212,118 +176,93 @@ class PodcastScreen extends StatelessWidget {
                               ),
 
                               // Episodes
-                              Container(
-                                  height: Get.height / 7,
-                                  width: Get.width,
+                              Expanded(
                                   child: ListView.builder(
-                                    itemCount: controller.podcast.items.length,
-                                    itemBuilder: (context, index) => Container(
-                                      margin:
-                                          EdgeInsets.only(top: Get.height / 50),
-                                      width: Get.width,
-                                      height: Get.height / 18,
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xffDBDBDB),
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: Get.height / 150,
-                                            horizontal: Get.width / 18),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Obx(() => !controller
-                                                    .existFile[index].value
-                                                ? controller.downloadingState
-                                                            .value ==
-                                                        "downloading"
-                                                    ? CircleAvatar(
-                                                        child: Obx(() =>
-                                                            CircularProgressIndicator(
-                                                              value: controller
-                                                                  .downloadingPercent
-                                                                  .value,
-                                                              strokeWidth: 2,
-                                                            )),
-                                                        backgroundColor:
-                                                            const Color(
-                                                                0xffDBDBDB))
-                                                    :
-                                                    // Download
-                                                    InkWell(
-                                                        onTap: () {
-                                                          controller.download(
-                                                              controller
-                                                                  .podcast
-                                                                  .items[index]
-                                                                  .podcastPath,
-                                                              id,
-                                                              controller
-                                                                  .podcast
-                                                                  .items[index]
-                                                                  .title);
-                                                        },
-                                                        child: const Icon(
-                                                          Icons.cloud_download,
-                                                          size: 28,
-                                                        ),
-                                                      )
-                                                :
-                                                // play botton
-                                                
-                                                    // play audio
-                                                    InkWell(
-                                                        child: Image.asset(
-                                                            "assets/images/play.png"),
-                                                        onTap: () {
-                                                          Navigator.pushNamed(context, '/playPodcast', arguments: id+":"+controller
-                                                                  .podcast
-                                                                  .items[index]
-                                                                  .id+":"+controller.appDoc
-                                                                      .path +
-                                                                  id +
-                                                                  controller
-                                                                      .podcast
-                                                                      .items[
-                                                                          index]
-                                                                      .title);
-                                                        })),
-
-                                            // title
-                                            Text(
-                                                controller
-                                                    .podcast.items[index].title,
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                style: const TextStyle(
-                                                    fontFamily: "Arial",
-                                                    color: Color(0xff777777)))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )),
-
-                              Container(
-                                  height: Get.height / 4.2,
+                                itemCount: controller.podcast.items.length,
+                                itemBuilder: (context, index) => Container(
+                                  margin: EdgeInsets.only(top: Get.height / 50),
                                   width: Get.width,
-                                  child: Obx(() => ListView.builder(
-                                      itemCount: controller
-                                          .podcastItem.value.paragraphs.length,
-                                      itemBuilder: (context, index) => controller
-                                              .podcastItem
-                                              .value
-                                              .paragraphs
-                                              .isNotEmpty
-                                          ? Obx(() => TextHighlight(
-                                              enText: controller.podcastItem
-                                                  .value.paragraphs[index].en,
-                                              faText: controller.podcastItem
-                                                  .value.paragraphs[index].fa,
-                                              color: controller.playingText.value == controller.podcastItem.value.paragraphs[index].en ? Colors.red : Colors.white))
-                                          : const SizedBox())))
+                                  height: Get.height / 18,
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffDBDBDB),
+                                      borderRadius: BorderRadius.circular(25)),
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: Get.height / 150,
+                                        horizontal: Get.width / 18),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Obx(() => !controller
+                                                .existFile[index].value
+                                            ? controller.downloadingState
+                                                        .value ==
+                                                    "downloading"
+                                                ? Obx(() =>
+                                                    CircularProgressIndicator(
+                                                      value: controller
+                                                          .downloadingPercent
+                                                          .value,
+                                                      strokeWidth: 2,
+                                                    ))
+                                                :
+                                                // Download
+                                                InkWell(
+                                                    onTap: () {
+                                                      controller.download(
+                                                          controller
+                                                              .podcast
+                                                              .items[index]
+                                                              .podcastPath,
+                                                          id,
+                                                          controller
+                                                              .podcast
+                                                              .items[index]
+                                                              .title);
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.cloud_download,
+                                                      size: 28,
+                                                    ),
+                                                  )
+                                            :
+                                            // play botton
+
+                                            // play audio
+                                            InkWell(
+                                                child: Image.asset(
+                                                    "assets/images/play.png"),
+                                                onTap: () {
+                                                  Navigator.pushNamed(
+                                                      context, '/playPodcast',
+                                                      arguments: id +
+                                                          ":" +
+                                                          controller.podcast
+                                                              .items[index].id +
+                                                          ":" +
+                                                          controller
+                                                              .appDoc.path +
+                                                          id +
+                                                          controller
+                                                              .podcast
+                                                              .items[index]
+                                                              .title);
+                                                })),
+
+                                        // title
+                                        Text(
+                                            controller
+                                                .podcast.items[index].title,
+                                            textDirection: TextDirection.ltr,
+                                            style: const TextStyle(
+                                                fontFamily: "Arial",
+                                                color: Color(0xff777777)))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )),
                             ],
                           ),
                         ))

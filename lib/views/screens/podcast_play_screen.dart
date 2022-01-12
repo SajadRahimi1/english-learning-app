@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/play_podcast_controller.dart';
+import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class PodcastPlay extends StatelessWidget {
@@ -62,27 +63,24 @@ class PodcastPlay extends StatelessWidget {
                       // Hello Text
                       SizedBox(
                         width: Get.width / 1.72,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "سلام سامان!",
-                              style:
-                                  TextStyle(fontFamily: "Yekan", fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            Text(
-                              "اخبار متنوع به زبان انگلیسی",
-                              style: TextStyle(
-                                  fontFamily: "Yekan",
-                                  fontSize: 8,
-                                  color: Color(0xff919191)),
-                            )
-                          ],
-                        ),
+                        child: controller.obx((status) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  controller.podcastItem.title,
+                                  style: const TextStyle(
+                                      fontFamily: "Yekan", fontSize: 16),
+                                ),
+                                Text(
+                                  controller.podcastItem.faTitle,
+                                  style: const TextStyle(
+                                      fontFamily: "Yekan",
+                                      fontSize: 14,
+                                      color: Color(0xff919191)),
+                                )
+                              ],
+                            )),
                       ),
 
                       // Logo in top left
@@ -101,23 +99,21 @@ class PodcastPlay extends StatelessWidget {
 
                 // Paragraph
                 SizedBox(
-                  width: Get.width,
-                  height: Get.height / 1.5,
-                  child: controller.obx((state) => ListView.builder(
-                      itemCount: controller.podcastItem.value.paragraphs.length,
-                      itemBuilder: (context, index) => controller
-                              .podcastItem.value.paragraphs.isNotEmpty
-                          ? Obx(() => TextHighlight(
-                              enText: controller
-                                  .podcastItem.value.paragraphs[index].en,
-                              faText: controller
-                                  .podcastItem.value.paragraphs[index].fa,
-                              color: controller.playingText.value ==
-                                      controller.podcastItem.value.paragraphs[index].en
-                                  ? Colors.red
-                                  : Colors.white))
-                          : const SizedBox())),
-                ),
+                    width: Get.width,
+                    height: Get.height / 1.5,
+                    child: controller.obx((state) => ListView.builder(
+                        itemCount: controller.podcastItem.paragraphs.length,
+                        itemBuilder: (context, index) => Obx(() =>
+                            TextHighlight(
+                                enText:
+                                    controller.podcastItem.paragraphs[index].en,
+                                faText:
+                                    controller.podcastItem.paragraphs[index].fa,
+                                color: controller.playingText.value ==
+                                        controller
+                                            .podcastItem.paragraphs[index].en
+                                    ? orange
+                                    : Colors.white))))),
 
                 // Playing audio
                 InkWell(
@@ -125,7 +121,8 @@ class PodcastPlay extends StatelessWidget {
                       if (!controller.isPlaying.value) {
                         controller.playAudio(id.split(":")[2]);
                       } else {
-                        controller.player.pause(0);
+                        controller.player.pausePlayer();
+                        controller.isPlaying.value = false;
                       }
                     },
                     child: SizedBox(

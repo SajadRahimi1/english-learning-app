@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intro/flutter_intro.dart';
+import 'package:get_storage/get_storage.dart';
 
 class MainScreenController extends GetxController {
   late PageController pageController;
   var currentIndex = 0.obs;
+  final GetStorage getStorage = GetStorage();
   late void Function()? onPressed;
   var first = 0.obs;
   late DateTime currentBackPressTime;
@@ -22,10 +24,12 @@ class MainScreenController extends GetxController {
   );
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
+
     pageController = PageController();
+    await GetStorage.init();
   }
 
   @override

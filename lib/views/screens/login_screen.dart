@@ -121,6 +121,7 @@ class LoginScreen extends StatelessWidget {
                                                     onChanged: (text) {
                                                       password = text;
                                                     },
+                                                    password: true,
                                                   )),
                                             ),
                                             Obx(() => SizedBox(
@@ -221,7 +222,7 @@ class LoginScreen extends StatelessWidget {
                                     // login with gmail button
                                     Expanded(
                                         flex: 1,
-                                        child: InkWell(                                          
+                                        child: InkWell(
                                           child: Container(
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: Get.width / 8,

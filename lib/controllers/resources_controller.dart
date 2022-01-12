@@ -17,6 +17,7 @@ class ResourcesController extends GetxController with StateMixin {
   }
 
   Future<void> getResources() async {
+    _getConnect.allowAutoSignedCert = true;
     var request = await _getConnect
         .get(resourcesUrl, headers: {'accept': 'application/json'});
     print(request.body);
@@ -38,6 +39,7 @@ class ResourcesSearch extends GetConnect {
   var searchState = "".obs;
   List<ResourceSearchModel> searchContent = [];
   void search(String title) async {
+    allowAutoSignedCert = true;
     searchState.value = "loading";
     var _request = await get(resourcesSearchUrl, query: {'title': title});
     if (_request.statusCode == 200) {

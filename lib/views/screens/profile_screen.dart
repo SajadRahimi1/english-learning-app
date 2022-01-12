@@ -16,9 +16,10 @@ class ProfileScreen extends StatelessWidget {
     false,
   ].obs;
   var tabIndex = 0.obs;
-
+  final GetStorage _getStorage = GetStorage();
   @override
   Widget build(BuildContext context) {
+    GetStorage.init();
     final tabWidget = [
       ProfileAccount(
         isGuest: isGuest,
@@ -26,8 +27,7 @@ class ProfileScreen extends StatelessWidget {
       const ProfileSupport(),
       ProfileSetting()
     ];
-    final GetStorage _getStorage = GetStorage();
-    GetStorage.init();
+
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -95,7 +95,9 @@ class ProfileScreen extends StatelessWidget {
                               ProfileTab(
                                 image: "exit.png",
                                 title: "Log Out",
-                                onTap: () {
+                                onTap: () async {
+                                  await GetStorage.init();
+                                  final GetStorage _getStorage = GetStorage();
                                   _getStorage.remove('timers');
                                   _getStorage.remove('token');
                                   Get.offAll(LoginScreen());

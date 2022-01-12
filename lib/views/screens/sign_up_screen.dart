@@ -126,6 +126,8 @@ class SignupScreen extends StatelessWidget {
                                                 onChanged: (text) {
                                                   signupParamerts[index] = text;
                                                 },
+                                                password:
+                                                    index == 1 || index == 2,
                                               )),
                                         )))),
 

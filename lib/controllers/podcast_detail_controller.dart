@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart' as path;
 class PodcastDetailController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   late PodcastModel podcast;
-  late DateTime _dateTime;
+  // late DateTime _dateTime;
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   final Dio dio = Dio();
   final GetStorage _getStorage = GetStorage();
@@ -28,7 +28,6 @@ class PodcastDetailController extends GetxController with StateMixin {
           podcastPath: "podcastPath")
       .obs;
   late io.Directory appDoc;
-  var isPlaying = false.obs;
   var playingText = "".obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
@@ -47,47 +46,47 @@ class PodcastDetailController extends GetxController with StateMixin {
     print(ss.path);
   }
 
-  void customeInit() {
-    _dateTime = DateTime.now();
-  }
+  // void customeInit() {
+  //   _dateTime = DateTime.now();
+  // }
 
-  @override
-  void onClose() async {
-    // TODO: implement onClose
-    super.onClose();
+  // @override
+  // void onClose() async {
+  //   // TODO: implement onClose
+  //   super.onClose();
 
-    Map times = _getStorage.read('timers') ?? {};
-    var lastTimer = times[
-            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ??
-        0;
-    if (times[
-            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
-        null) {
-      times.addAll(<String, int>{
-        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
-      });
-    } else {
-      times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
-          (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
-    }
-    if (times['totall'] == null) {
-      times.addAll(<String, dynamic>{
-        'totall':
-            (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
-      });
-    } else {
-      var n = DateTime.now();
-      print(_dateTime);
-      print(n);
-      var add = n.difference(_dateTime);
-      print(add.inSeconds);
-      times['totall'] = times['totall'] + (add.inSeconds).toInt();
-    }
-    await _getStorage.write('timers', times);
-    // _getStorage.remove('timers');
-    print(_getStorage.read('timers'));
-  }
+  //   Map times = _getStorage.read('timers') ?? {};
+  //   var lastTimer = times[
+  //           '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ??
+  //       0;
+  //   if (times[
+  //           '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] ==
+  //       null) {
+  //     times.addAll(<String, int>{
+  //       '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}':
+  //           (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+  //     });
+  //   } else {
+  //     times['${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'] =
+  //         (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt();
+  //   }
+  //   if (times['totall'] == null) {
+  //     times.addAll(<String, dynamic>{
+  //       'totall':
+  //           (DateTime.now().difference(_dateTime).inSeconds + lastTimer).toInt()
+  //     });
+  //   } else {
+  //     var n = DateTime.now();
+  //     print(_dateTime);
+  //     print(n);
+  //     var add = n.difference(_dateTime);
+  //     print(add.inSeconds);
+  //     times['totall'] = times['totall'] + (add.inSeconds).toInt();
+  //   }
+  //   await _getStorage.write('timers', times);
+  //   // _getStorage.remove('timers');
+  //   print(_getStorage.read('timers'));
+  // }
 
   void getPodcastData(String id, bool isGuest) async {
     var _request = isGuest
@@ -110,7 +109,6 @@ class PodcastDetailController extends GetxController with StateMixin {
         }
       }
       change(null, status: RxStatus.success());
-      getPodcastItemData(id, podcast.items[0].id, isGuest);
       if (_getStorage.read("auto_download") ?? false) {
         for (var item in podcast.items) {
           download(item.podcastPath, id, item.title);
@@ -151,48 +149,48 @@ class PodcastDetailController extends GetxController with StateMixin {
     }
   }
 
-  void getPodcastItemData(
-      String podcastId, String edposodeId, bool isGuest) async {
-    _getConnect.allowAutoSignedCert = true;
-    var _request = isGuest
-        ? await _getConnect
-            .get(getPodcastDetailUrl + podcastId + "/item/" + edposodeId)
-        : await _getConnect.get(
-            getPodcastDetailUrl + podcastId + "/item/" + edposodeId,
-            headers: {
-              'accept': 'application/json',
-              'Authorization': 'Bearer ${_getStorage.read('token')}'
-            },
-          );
+  // void getPodcastItemData(
+  //     String podcastId, String edposodeId, bool isGuest) async {
+  //   _getConnect.allowAutoSignedCert = true;
+  //   var _request = isGuest
+  //       ? await _getConnect
+  //           .get(getPodcastDetailUrl + podcastId + "/item/" + edposodeId)
+  //       : await _getConnect.get(
+  //           getPodcastDetailUrl + podcastId + "/item/" + edposodeId,
+  //           headers: {
+  //             'accept': 'application/json',
+  //             'Authorization': 'Bearer ${_getStorage.read('token')}'
+  //           },
+  //         );
 
-    if (_request.statusCode == 200) {
-      podcastItem.value = podcastItemModelFromJson(_request.bodyString ?? "");
-    } else {}
-  }
+  //   if (_request.statusCode == 200) {
+  //     podcastItem.value = podcastItemModelFromJson(_request.bodyString ?? "");
+  //   } else {}
+  // }
 
-  void playAudio(String filePath) async {
-    try {
-      player.isOpen() ? {} : player.openAudioSession();
-      io.File audioFile = io.File(filePath);
-      // if (player.isOpen()) {
-      await player
-          .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
-          .then((value) {
-        isPlaying.value = player.isPlaying;
-      });
-      player.setSubscriptionDuration(const Duration(milliseconds: 900));
-      player.onProgress!.listen((event) {
-        percentPlayed.value =
-            event.position.inMilliseconds / event.duration.inMilliseconds;
-        for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {          
-          if (event.position.inMilliseconds >
-              podcastItem.value.paragraphs[i].pst) {
-            playingText.value = podcastItem.value.paragraphs[i].en;
-          }
-        }
-      });
-    } catch (e) {
-      Get.snackbar("Error", "Error in play audio");
-    }
-  }
+  // void playAudio(String filePath) async {
+  //   try {
+  //     player.isOpen() ? {} : player.openAudioSession();
+  //     io.File audioFile = io.File(filePath);
+  //     // if (player.isOpen()) {
+  //     await player
+  //         .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
+  //         .then((value) {
+  //       isPlaying.value = player.isPlaying;
+  //     });
+  //     player.setSubscriptionDuration(const Duration(milliseconds: 900));
+  //     player.onProgress!.listen((event) {
+  //       percentPlayed.value =
+  //           event.position.inMilliseconds / event.duration.inMilliseconds;
+  //       for (int i = 0; i < podcastItem.value.paragraphs.length; i++) {
+  //         if (event.position.inMilliseconds >
+  //             podcastItem.value.paragraphs[i].pst) {
+  //           playingText.value = podcastItem.value.paragraphs[i].en;
+  //         }
+  //       }
+  //     });
+  //   } catch (e) {
+  //     Get.snackbar("Error", "Error in play audio");
+  //   }
+  // }
 }

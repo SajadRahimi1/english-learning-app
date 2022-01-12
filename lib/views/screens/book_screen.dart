@@ -5,6 +5,7 @@ import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/widgets/book_item_widget.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
+import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class BookScreen extends StatelessWidget {
   BookScreen({Key? key, required this.isGuest}) : super(key: key);
@@ -25,7 +26,7 @@ class BookScreen extends StatelessWidget {
                 backgroundColor: const Color(0xffffffff),
                 body: Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
-                  child: ListView(children: [
+                  child: Column(children: [
                     // close this screen button
                     GestureDetector(
                       onTap: () {
@@ -71,20 +72,10 @@ class BookScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "سلام سامان!",
+                                  "کتاب های انگلیسی",
                                   style: TextStyle(
                                       fontFamily: "Yekan", fontSize: 16),
                                 ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  "اخبار متنوع به زبان انگلیسی",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan",
-                                      fontSize: 8,
-                                      color: Color(0xff919191)),
-                                )
                               ],
                             ),
                           ),
@@ -114,106 +105,88 @@ class BookScreen extends StatelessWidget {
                       height: Get.height / 30,
                     ),
 
-                    controller.obx(
-                      (state) => Column(
-                        children: [
-                          SizedBox(
-                              width: Get.width,
-                              height: Get.height / 4,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: Get.width / 10,
-                                            height: Get.height / 22,
-                                            child: Image.asset(
-                                              "assets/images/bookr.png",
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              SizedBox(
-                                                width: Get.width / 2,
-                                                height: Get.height / 22,
-                                                child: Text(
-                                                  "   ${controller.bookDetail.title}",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: "Yekan",
-                                                      fontSize: 16),
-                                                ),
+                    Expanded(
+                      child: controller.obx(
+                        (state) => Column(
+                          children: [
+                            SizedBox(
+                                width: Get.width,
+                                height: Get.height / 4,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: Get.width / 10,
+                                              height: Get.height / 22,
+                                              child: Image.asset(
+                                                "assets/images/bookr.png",
+                                                fit: BoxFit.fill,
                                               ),
-                                              SizedBox(
-                                                width: Get.width / 2,
-                                                height: Get.height / 22,
-                                                child: const Text(
-                                                  "     Dictionary of English",
-                                                  style: TextStyle(
-                                                      fontFamily: "Yekan",
-                                                      color: Color(0xffC2C2C2),
-                                                      fontSize: 10),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: Get.width / 1.7,
-                                        child: Text(
-                                          controller.bookDetail.faTitle,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontFamily: "Yekan",
-                                              fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width / 2,
+                                              height: Get.height / 22,
+                                              child: Text(
+                                                "   ${controller.bookDetail.title}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontFamily: "Yekan",
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: Get.height / 50),
-                                        child: const Text(
-                                          "راهنمای مبتدیان جهت مکالمات روزانه",
-                                          style: TextStyle(
-                                              fontFamily: "Yekan",
-                                              fontSize: 10,
-                                              color: Color(0xffC2C2C2)),
+                                        SizedBox(
+                                          width: Get.width / 1.7,
+                                          child: Text(
+                                            "\n" +
+                                                controller.bookDetail.faTitle,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontFamily: "Yekan",
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width: Get.width / 3.2,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                            image: NetworkImage(baseUrl +
-                                                controller
-                                                    .bookDetail.imagePath),
-                                            fit: BoxFit.fill)),
-                                  )
-                                ],
-                              )),
-                          SizedBox(
-                              width: Get.width,
-                              child: Column(
-                                  children: List.generate(
-                                      controller.bookDetail.items.length,
-                                      (index) => BookItem(
+                                      ],
+                                    ),
+                                    Container(
+                                      width: Get.width / 3.2,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: NetworkImage(baseUrl +
+                                                  controller
+                                                      .bookDetail.imagePath),
+                                              fit: BoxFit.fill)),
+                                    )
+                                  ],
+                                )),
+                            SizedBox(
+                              height: Get.height / 50,
+                            ),
+                            Expanded(
+                                child: ListView.builder(
+                                    itemCount:
+                                        controller.bookDetail.items.length,
+                                    itemBuilder: (context, index) =>
+                                        TextHighlight(
+                                          faText: controller
+                                              .bookDetail.items[index].faTitle,
                                           enText: controller
                                               .bookDetail.items[index].title,
-                                          faText: controller.bookDetail
-                                              .items[index].faTitle))))
-                        ],
+                                          color: const Color(0xffffffff),
+                                        )))
+                          ],
+                        ),
                       ),
                     )
                   ]),

@@ -24,15 +24,17 @@ class NewsDataController extends GetxController with StateMixin {
   @override
   void onInit() async {
     super.onInit();
-    GetStorage.init();
+    _getConnect.allowAutoSignedCert = true;
+    await GetStorage.init();
     change(null, status: RxStatus.loading());
     var response = await _getConnect.get(newsCagetoryUrl);
     categories.addAll(jsonDecode(response.bodyString ?? "[]"));
-    getContent(categories[0], isGuest);
+    if (categories.isNotEmpty) getContent(categories[0], isGuest);
     _getConnect.allowAutoSignedCert = true;
   }
 
   void getContent(String category, bool isGuest) async {
+    _getConnect.allowAutoSignedCert = true;
     content.clear();
 
     var req = isGuest
@@ -80,6 +82,7 @@ class NewsSearchController extends GetConnect {
   List<CategoryContent> searchContent = [];
   var searchState = "".obs;
   void search(String title) async {
+    allowAutoSignedCert = true;
     searchState.value = "loading";
     var _searchRequest =
         await get(newsCategoryContentUrl, query: {'title': title});
