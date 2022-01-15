@@ -59,7 +59,7 @@ class ProfileAccount extends StatelessWidget {
                         radius: Get.width / 6.5,
                         backgroundImage: NetworkImage(_getStorage
                                 .read('profile_image') ??
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png"),
+                            "https://htmlcolorcodes.com/assets/images/colors/bright-blue-color-solid-background-1920x1080.png"),
                       ),
                     ),
                     const Text(

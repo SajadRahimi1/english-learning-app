@@ -79,7 +79,7 @@ class HomeDataController extends GetxController with StateMixin {
 
         if (request.body['user']['avatarPath'] == null) {
           _getStorage.write('profile_image',
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png");
+              "https://htmlcolorcodes.com/assets/images/colors/bright-blue-color-solid-background-1920x1080.png");
         } else {
           _getStorage.write('profile_image', homeModel.user.avatarPath);
         }

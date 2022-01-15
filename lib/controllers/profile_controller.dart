@@ -35,14 +35,12 @@ class ProfileController extends GetxController with StateMixin {
             profileInformationFromJson(_request.bodyString ?? "");
         change(null, status: RxStatus.success());
         _getStorage.write('profile_image', profileInformation.avatarPath);
-      } 
-      else if (_request.statusCode == 401) {
-      _getStorage.remove('timers');
-      _getStorage.remove('token');
-      _getStorage.remove('timers');
-      Get.offAll(LoginScreen());
-    }
-      else {
+      } else if (_request.statusCode == 401) {
+        _getStorage.remove('timers');
+        _getStorage.remove('token');
+        _getStorage.remove('timers');
+        Get.offAll(LoginScreen());
+      } else {
         print(_request.body);
         change(null, status: RxStatus.error());
       }
@@ -64,24 +62,27 @@ class ProfileController extends GetxController with StateMixin {
 
     final ImagePicker _picker = ImagePicker();
     final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
+    if ((await _image?.length())! / 1024 / 1024 < 9.8) {
+      var request = http.MultipartRequest("PATCH", Uri.parse(updateProfileUrl));
 
-    var request = http.MultipartRequest("PATCH", Uri.parse(updateProfileUrl));
+      request.headers["Authorization"] = "Bearer ${_getStorage.read('token')}";
 
-    request.headers["Authorization"] = "Bearer ${_getStorage.read('token')}";
+      try {
+        var pic = await http.MultipartFile.fromPath('avatar', _image!.path);
 
-    try {
-      var pic = await http.MultipartFile.fromPath('avatar', _image!.path);
+        request.files.add(pic);
+        var response = await request.send();
 
-      request.files.add(pic);
-      var response = await request.send();
-
-      var responseData = await response.stream.toBytes();
-      var responseString = String.fromCharCodes(responseData);
-      if (response.statusCode == 200) {
-        getProfileInformation(isGuest);
-      }
-      print(responseString);
-    } catch (e) {}
+        var responseData = await response.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        if (response.statusCode == 200) {
+          getProfileInformation(isGuest);
+        }
+        print(responseString);
+      } catch(e){}
+    } else {
+      Get.snackbar("خطا", "سایز عکس شما باید زیر 10 مگابایت باشد");
+    }
   }
 
   void updateProfile(String firstName, String lastName, String birthday) async {
