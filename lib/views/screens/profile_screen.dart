@@ -100,6 +100,7 @@ class ProfileScreen extends StatelessWidget {
                                   final GetStorage _getStorage = GetStorage();
                                   _getStorage.remove('timers');
                                   _getStorage.remove('token');
+                                  _getStorage.remove('timers');
                                   Get.offAll(LoginScreen());
                                 },
                               ),

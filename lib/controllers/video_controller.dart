@@ -6,6 +6,7 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/video_items_model.dart';
 import 'package:zabaner/models/video_model.dart';
 import 'package:video_player/video_player.dart';
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class VideoController extends GetxController with StateMixin {
   late VideoModel videoModel;
@@ -130,7 +131,13 @@ class VideoController extends GetxController with StateMixin {
     if (_request.statusCode == 200) {
       videoItems.value = videoItemsModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
-    } else {
+    } else if (_request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
+    }
+    else {
       change(null, status: RxStatus.error());
     }
   }

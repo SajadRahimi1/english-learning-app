@@ -4,6 +4,7 @@ import 'package:zabaner/models/profile_information_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class ProfileController extends GetxController with StateMixin {
   ProfileController(this.isGuest);
@@ -34,7 +35,14 @@ class ProfileController extends GetxController with StateMixin {
             profileInformationFromJson(_request.bodyString ?? "");
         change(null, status: RxStatus.success());
         _getStorage.write('profile_image', profileInformation.avatarPath);
-      } else {
+      } 
+      else if (_request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
+    }
+      else {
         print(_request.body);
         change(null, status: RxStatus.error());
       }

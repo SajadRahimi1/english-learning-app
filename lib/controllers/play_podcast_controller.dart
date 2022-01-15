@@ -8,6 +8,7 @@ import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class PlayPodcastController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
@@ -127,7 +128,12 @@ class PlayPodcastController extends GetxController with StateMixin {
     if (_request.statusCode == 200) {
       podcastItem = podcastItemModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
-    } else {
+    } else if (_request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
+    }else {
       change(null, status: RxStatus.error());
     }
   }

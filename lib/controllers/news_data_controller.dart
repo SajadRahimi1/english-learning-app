@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/category_content_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class NewsDataController extends GetxController with StateMixin {
   NewsDataController(this.isGuest);
@@ -53,6 +54,11 @@ class NewsDataController extends GetxController with StateMixin {
     if (req.statusCode == 200) {
       content.addAll(categoryContentFromJson(req.bodyString ?? ""));
       change(null, status: RxStatus.success());
+    } else if (req.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
     } else {
       change(null, status: RxStatus.error("مشکل در ارتباط با سرور"));
     }

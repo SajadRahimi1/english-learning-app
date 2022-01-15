@@ -95,7 +95,7 @@ class ResourcesScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-
+  
                     Stack(
                       children: [
                         // Resources

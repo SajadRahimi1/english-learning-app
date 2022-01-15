@@ -33,6 +33,7 @@ class RecoveryPasswordController extends GetConnect {
               textAlign: TextAlign.right,
             ));
       }
+      
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/summary_time_static_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class StaticController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
@@ -39,6 +40,11 @@ class StaticController extends GetxController with StateMixin {
       for (var item in summaryTime.lastDaysStats) {
         sumDuration += item.duration.inSeconds;
       }
+    } else if (_request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
     } else {
       change(null, status: RxStatus.error());
     }

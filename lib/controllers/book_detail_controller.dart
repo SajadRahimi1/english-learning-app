@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/models/bool_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/login_screen.dart';
 
 class BookController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
@@ -78,6 +79,11 @@ class BookController extends GetxController with StateMixin {
     if (request.statusCode == 200) {
       bookDetail = bookModelFromJson(request.bodyString ?? "");
       change(null, status: RxStatus.success());
+    } else if (request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
     } else {
       change(null, status: RxStatus.error());
     }
