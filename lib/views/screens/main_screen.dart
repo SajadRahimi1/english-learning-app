@@ -101,6 +101,7 @@ class MainScreen extends StatelessWidget {
               controller: _controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
+               
                 // Home screen and navigate to profile screen
                 Navigator(
                   key: _controller.navigationKey[0],
@@ -115,7 +116,8 @@ class MainScreen extends StatelessWidget {
                             isGuest: isGuest,
                           );
                         case '/bookScreen':
-                          return BookScreen(
+                          bookScreenBool = true;
+                          return bookScreen = BookScreen(
                             isGuest: isGuest,
                           );
                         case "/podcast":

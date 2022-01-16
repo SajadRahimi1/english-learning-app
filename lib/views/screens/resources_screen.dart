@@ -21,7 +21,7 @@ class ResourcesScreen extends StatelessWidget {
                 backgroundColor: const Color(0xffffffff),
                 body: Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
-                  child: ListView(children: [
+                  child: Column(children: [
                     // Top of screen
                     SizedBox(
                       height: Get.height / 10,
@@ -92,85 +92,86 @@ class ResourcesScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: Get.height / 70,
                     ),
-  
-                    Stack(
-                      children: [
-                        // Resources
-                        SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                          child: _controller.obx((state) => Column(
-                                children: [
-                                  BookResources(
-                                    resource:
-                                        _controller.resourcesList[0].resources,
-                                  ),
-                                  PocastResources(
-                                      resource: _controller
-                                          .resourcesList[1].resources),
-                                  VideoResources(
-                                      resource: _controller
-                                          .resourcesList[2].resources)
-                                ],
-                              )),
-                        ),
 
-                        /// search items
-                        Obx(() => Visibility(
-                            visible: onSearchClick.value,
-                            child: Container(
-                              height: Get.height / 1.45,
-                              width: Get.width,
-                              color: Colors.white,
-                              child: Obx(() {
-                                switch (_searchController.searchState.value) {
-                                  case "success":
-                                    return ListView.builder(
-                                        itemCount: _searchController
-                                            .searchContent.length,
-                                        itemBuilder: (context, index) =>
-                                            ResourcesSearchWidget(
-                                              id: _searchController
-                                                  .searchContent[index].id,
-                                              imagePath: _searchController
-                                                  .searchContent[index]
-                                                  .imagePath,
-                                              title: _searchController
-                                                  .searchContent[index].title,
-                                              type: _searchController
-                                                  .searchContent[index].type,
-                                            ));
-                                  case "empty":
-                                    return Container(
-                                      height: Get.height / 1.5,
-                                      width: Get.width,
-                                      color: Colors.white,
-                                      child: const Center(
-                                        child: Text(
-                                            "نتیجه ای برای جستجوی شما یافت نشد"),
-                                      ),
-                                    );
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          // Resources
+                          SizedBox(
+                            height: Get.height,
+                            width: Get.width,
+                            child: _controller.obx((state) => ListView(
+                                  children: [
+                                    BookResources(
+                                      resource: _controller
+                                          .resourcesList[0].resources,
+                                    ),
+                                    PocastResources(
+                                        resource: _controller
+                                            .resourcesList[1].resources),
+                                    VideoResources(
+                                        resource: _controller
+                                            .resourcesList[2].resources)
+                                  ],
+                                )),
+                          ),
 
-                                  case "loading":
-                                    return Container(
-                                      height: Get.height / 1.5,
-                                      width: Get.width,
-                                      color: Colors.white,
-                                      child: const Center(
-                                          child: CircularProgressIndicator()),
-                                    );
-                                }
-                                return Container(
-                                  height: Get.height / 1.5,
-                                  width: Get.width,
-                                  color: Colors.white,
-                                );
-                              }),
-                            )))
-                      ],
+                          /// search items
+                          Obx(() => Visibility(
+                              visible: onSearchClick.value,
+                              child: Container(
+                                width: Get.width,
+                                color: Colors.white,
+                                child: Obx(() {
+                                  switch (_searchController.searchState.value) {
+                                    case "success":
+                                      return ListView.builder(
+                                          itemCount: _searchController
+                                              .searchContent.length,
+                                          itemBuilder: (context, index) =>
+                                              ResourcesSearchWidget(
+                                                id: _searchController
+                                                    .searchContent[index].id,
+                                                imagePath: _searchController
+                                                    .searchContent[index]
+                                                    .imagePath,
+                                                title: _searchController
+                                                    .searchContent[index].title,
+                                                type: _searchController
+                                                    .searchContent[index].type,
+                                              ));
+                                    case "empty":
+                                      return Container(
+                                        height: Get.height / 1.5,
+                                        width: Get.width,
+                                        color: Colors.white,
+                                        child: const Center(
+                                          child: Text(
+                                              "نتیجه ای برای جستجوی شما یافت نشد"),
+                                        ),
+                                      );
+
+                                    case "loading":
+                                      return Container(
+                                        height: Get.height / 1.5,
+                                        width: Get.width,
+                                        color: Colors.white,
+                                        child: const Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                  }
+                                  return Container(
+                                    height: Get.height / 1.5,
+                                    width: Get.width,
+                                    color: Colors.white,
+                                  );
+                                }),
+                              )))
+                        ],
+                      ),
                     )
                   ]),
                 ))));

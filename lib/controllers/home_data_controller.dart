@@ -20,7 +20,7 @@ class HomeDataController extends GetxController with StateMixin {
   Future<void> sendStatics() async {
     _getConnect.allowAutoSignedCert = true;
 
-    if (_getStorage.read('auto_backup') == true) {
+    if (_getStorage.read('auto_backup') != false) {
       try {
         Map<String, dynamic> times = _getStorage.read('timers') ?? {};
 

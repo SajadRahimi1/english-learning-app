@@ -24,7 +24,6 @@ class BookController extends GetxController with StateMixin {
 
   @override
   void onClose() async {
-    // TODO: implement onClose
     super.onClose();
 
     Map times = _getStorage.read('timers') ?? {};
