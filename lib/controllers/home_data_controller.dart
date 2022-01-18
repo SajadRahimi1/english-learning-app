@@ -34,14 +34,12 @@ class HomeDataController extends GetxController with StateMixin {
                       "${key.split("-")[0]}-0${key.split("-")[1]}-${key.split("-")[2]}";
 
               key.split("-")[2].length >= 2
-                  ? print("t")
+                  ? {}
                   : key =
                       "${key.split("-")[0]}-${key.split("-")[1]}-0${key.split("-")[2]}";
               stats.add({
                 "date": key,
-                "duration": ((int.parse(value.toString()) / 3) * 2)
-                    .toInt()
-                    .formatSecond()
+                "duration": (int.parse(value.toString())).toInt().formatSecond()
               });
             }
           });

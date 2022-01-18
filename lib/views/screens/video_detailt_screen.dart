@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zabaner/controllers/video_controller.dart';
 import 'package:zabaner/views/colors.dart';
@@ -92,9 +93,20 @@ class VideoDetailScreen extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 14,
                     height: Get.height,
-                    child: Image.asset(
-                      "assets/images/share.png",
-                      fit: BoxFit.fill,
+                    child: InkWell(
+                      onTap: () {
+                        String _text = "";
+                        for (var item
+                            in controller.videoItems.value.paragraphs) {
+                          _text += item.en + "\n";
+                          _text += item.fa + "\n";
+                        }
+                        Share.share(_text);
+                      },
+                      child: Image.asset(
+                        "assets/images/share.png",
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ]),

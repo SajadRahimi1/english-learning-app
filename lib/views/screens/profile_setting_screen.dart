@@ -4,8 +4,10 @@ import 'package:zabaner/controllers/setting_toggle_controller.dart';
 import 'package:zabaner/views/widgets/custom_setting_card.dart';
 
 class ProfileSetting extends StatelessWidget {
-  ProfileSetting({Key? key}) : super(key: key);
+  ProfileSetting({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
   final SettingToggle _controller = Get.put(SettingToggle());
+
   @override
   Widget build(BuildContext context) {
     _controller.onInit();
@@ -41,14 +43,14 @@ class ProfileSetting extends StatelessWidget {
                       title: "دانلود خودکار صوت",
                       enable: _controller.autoDownload.value,
                       onTap: (value) {
-                        _controller.box.write('auto_download', value);
+                        _controller.getStorage.write('auto_download', value);
                       },
                     )),
                 Obx(() => SettingCard(
                       title: "کارت حافظه محل پیش فرض برای ذخیره اطلاعات باشد",
                       enable: _controller.saveStorage.value,
                       onTap: (value) {
-                        _controller.box.write('save_storage', value);
+                        _controller.getStorage.write('save_storage', value);
                       },
                     )),
                 // Obx(() => SettingCard(
@@ -120,7 +122,8 @@ class ProfileSetting extends StatelessWidget {
                                   onChanged: (value) {
                                     _controller.autoBackup.value =
                                         value ?? true;
-                                    _controller.box.write('auto_backup', value);
+                                    _controller.getStorage
+                                        .write('auto_backup', value);
                                   },
                                 ))
                           ],
@@ -150,7 +153,9 @@ class ProfileSetting extends StatelessWidget {
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)))),
-                          onPressed: () {},
+                          onPressed: () {
+                            _controller.sendStatics();
+                          },
                         ),
                       ),
 
@@ -169,21 +174,14 @@ class ProfileSetting extends StatelessWidget {
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)))),
-                          onPressed: () {},
+                          onPressed: () {
+                            _controller.getData(isGuest);
+                          },
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Last Backup time text
-                const Text(
-                  "آخرین زمان پشتیبان گیری تاریخ 30/06/00 در ساعت 14:08",
-                  style: TextStyle(
-                      fontFamily: "Yekan",
-                      fontSize: 8,
-                      color: Color(0xff686868)),
-                )
               ],
             ),
           ),

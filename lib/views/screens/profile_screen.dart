@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
         isGuest: isGuest,
       ),
       const ProfileSupport(),
-      ProfileSetting()
+      ProfileSetting(isGuest: isGuest)
     ];
 
     return SafeArea(

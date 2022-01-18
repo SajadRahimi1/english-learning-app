@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/main_screen_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';

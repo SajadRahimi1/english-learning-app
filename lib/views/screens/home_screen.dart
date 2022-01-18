@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zabaner/controllers/home_data_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/level.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key, required this.isGuest}) : super(key: key);
@@ -75,6 +76,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
+                // sum of duration
                 SizedBox(
                   width: Get.width / 1.22,
                   child: Text(
@@ -180,64 +182,96 @@ class HomeScreen extends StatelessWidget {
                                   width: Get.width / 3.5,
                                   height: Get.height / 3.8,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // chart circle box image
-                                      Card(
-                                        color: const Color(0xffffffff),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(150)),
-                                        child: Container(
-                                          width: Get.width / 7.3,
-                                          height: Get.height / 13,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle),
-                                          child: Image.asset(
-                                            "assets/images/CHART2.png",
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                      ),
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: List.generate(
+                                        _controller.homeModel.statistics
+                                                .last4Days.length +
+                                            1,
+                                        (index) => index == 0
+                                            ? Card(
+                                                color: const Color(0xffffffff),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            150)),
+                                                child: Container(
+                                                  width: Get.width / 7.3,
+                                                  height: Get.height / 13,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle),
+                                                  child: Image.asset(
+                                                    "assets/images/CHART2.png",
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
+                                              )
+                                            : Text(
+                                                "${DateFormat('EEEE').format(DateTime.parse(_controller.homeModel.statistics.last4Days[index - 1]['date'])).substring(0, 2)}:    ${_controller.homeModel.statistics.last4Days[index - 1]['duration']} ",
+                                                style: const TextStyle(
+                                                    fontFamily: "Arial",
+                                                    fontSize: 11,
+                                                    color: Color(0xff9F9F9F)),
+                                              ),
+                                      )
+                                      // // chart circle box image
+                                      // Card(
+                                      //   color: const Color(0xffffffff),
+                                      //   shape: RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(150)),
+                                      //   child: Container(
+                                      //     width: Get.width / 7.3,
+                                      //     height: Get.height / 13,
+                                      //     decoration: const BoxDecoration(
+                                      //         shape: BoxShape.circle),
+                                      //     child: Image.asset(
+                                      //       "assets/images/CHART2.png",
+                                      //       fit: BoxFit.contain,
+                                      //     ),
+                                      //   ),
+                                      // ),
 
-                                      const Text(
-                                        "MO:    2D:8H:22M ",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 10,
-                                            color: Color(0xff9F9F9F)),
-                                      ),
-                                      const Text(
-                                        "Tu:      2D:8H:22M ",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 10,
-                                            color: Color(0xff9F9F9F)),
-                                      ),
-                                      const Text(
-                                        "We:     2D:8H:22M ",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 10,
-                                            color: Color(0xff9F9F9F)),
-                                      ),
-                                      const Text(
-                                        "Th:      2D:8H:22M ",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 10,
-                                            color: Color(0xff9F9F9F)),
-                                      ),
-                                      const Text(
-                                        "Fr:       2D:8H:22M ",
-                                        style: TextStyle(
-                                            fontFamily: "Arial",
-                                            fontSize: 10,
-                                            color: Color(0xff9F9F9F)),
-                                      ),
-                                    ],
-                                  )),
+                                      // const Text(
+                                      //   "MO:    2D:8H:22M ",
+                                      //   style: TextStyle(
+                                      //       fontFamily: "Arial",
+                                      //       fontSize: 10,
+                                      //       color: Color(0xff9F9F9F)),
+                                      // ),
+                                      // const Text(
+                                      //   "Tu:      2D:8H:22M ",
+                                      //   style: TextStyle(
+                                      //       fontFamily: "Arial",
+                                      //       fontSize: 10,
+                                      //       color: Color(0xff9F9F9F)),
+                                      // ),
+                                      // const Text(
+                                      //   "We:     2D:8H:22M ",
+                                      //   style: TextStyle(
+                                      //       fontFamily: "Arial",
+                                      //       fontSize: 10,
+                                      //       color: Color(0xff9F9F9F)),
+                                      // ),
+                                      // const Text(
+                                      //   "Th:      2D:8H:22M ",
+                                      //   style: TextStyle(
+                                      //       fontFamily: "Arial",
+                                      //       fontSize: 10,
+                                      //       color: Color(0xff9F9F9F)),
+                                      // ),
+                                      // const Text(
+                                      //   "Fr:       2D:8H:22M ",
+                                      //   style: TextStyle(
+                                      //       fontFamily: "Arial",
+                                      //       fontSize: 10,
+                                      //       color: Color(0xff9F9F9F)),
+                                      // ),
+
+                                      // ],
+                                      )),
                             )
                           ],
                         ),

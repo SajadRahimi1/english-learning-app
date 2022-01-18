@@ -95,12 +95,6 @@ class PodcastScreen extends StatelessWidget {
                       ),
                     ),
 
-                    // Search Text Input
-                    SizedBox(
-                        width: Get.width,
-                        height: Get.height / 22,
-                        child: const SearchTextInput()),
-
                     // Space between search text input and body
                     SizedBox(
                       height: Get.height / 30,

@@ -55,11 +55,16 @@ class NewsWidget extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                const Icon(
-                  Icons.share,
-                  size: 30,
-                  color: Color(0xff707070),
-                )
+                // InkWell(
+                //   onTap: () {
+                //     Share.share(text);
+                //   },
+                //   child: const Icon(
+                //     Icons.share,
+                //     size: 30,
+                //     color: Color(0xff707070),
+                //   ),
+                // )
               ],
             ),
           ),

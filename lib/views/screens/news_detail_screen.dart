@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:zabaner/controllers/news_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 
@@ -77,13 +78,25 @@ class NewsDetailScreen extends StatelessWidget {
                                     size: Get.width / 11,
                                   )),
                             ),
+
                             // share icon
                             SizedBox(
                               width: Get.width / 14,
                               height: Get.height,
-                              child: Image.asset(
-                                "assets/images/share.png",
-                                fit: BoxFit.fill,
+                              child: InkWell(
+                                onTap: () async {
+                                  String _text = "";
+                                  for (var item
+                                      in controller.newsDetail.paragraphs) {
+                                    _text += item.en + "\n";
+                                    _text += item.fa + "\n";
+                                  }
+                                  await Share.share(_text);
+                                },
+                                child: Image.asset(
+                                  "assets/images/share.png",
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                           ]),

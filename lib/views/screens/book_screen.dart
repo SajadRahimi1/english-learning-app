@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
-import 'package:zabaner/views/widgets/book_item_widget.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
@@ -93,12 +92,6 @@ class BookScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    // Search Text Input
-                    SizedBox(
-                        width: Get.width,
-                        height: Get.height / 22,
-                        child: const SearchTextInput()),
 
                     // Space between search text input and body
                     SizedBox(
