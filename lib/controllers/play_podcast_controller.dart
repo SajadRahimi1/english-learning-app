@@ -9,6 +9,7 @@ import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/login_screen.dart';
 
 class PlayPodcastController extends GetxController with StateMixin {
@@ -99,19 +100,16 @@ class PlayPodcastController extends GetxController with StateMixin {
 
       if (_downloadRequest.statusCode == 200) {
         print("Completed");
-        print(io.File(appDoc.path + id + title).existsSync());
-        for (var i = 0; i < podcast.items.length; i++) {
-          if (io.File(appDoc.path + id + title).existsSync()) {
-            existFile[i].value = true;
-          }
-        }
-      } else {
-        for (var i = 0; i < podcast.items.length; i++) {
-          if (io.File(appDoc.path + id + title).existsSync()) {
-            existFile[i].value = true;
-          }
-        }
+        Get.snackbar("", "دانلود با موفقیت به اتمام رسید",
+            backgroundColor: orange);
+        downloadingPercent.value = 0;
       }
+    } else {
+      Get.snackbar(
+        "",
+        "شما این فایل را قبلا دانلود کرده اید",
+        backgroundColor: orange,
+      );
     }
   }
 

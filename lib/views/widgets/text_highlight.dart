@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TextHighlight extends StatelessWidget {
-  const TextHighlight(
-      {Key? key,
-      required this.enText,
-      required this.faText,
-      required this.color})
-      : super(key: key);
+  const TextHighlight({
+    Key? key,
+    required this.enText,
+    required this.faText,
+    required this.color,
+    this.visibleEN = true,
+    this.visibleFA = true,
+  }) : super(key: key);
   final String enText, faText;
   final Color color;
+  final bool visibleEN, visibleFA;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +22,21 @@ class TextHighlight extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
         child: Column(children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Text(enText,
-                textAlign: TextAlign.left, textDirection: TextDirection.ltr),
+          Visibility(
+            visible: visibleEN,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Text(enText,
+                  textAlign: TextAlign.left, textDirection: TextDirection.ltr),
+            ),
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Text(faText,
-                textAlign: TextAlign.right, textDirection: TextDirection.rtl),
+          Visibility(
+            visible: visibleFA,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Text(faText,
+                  textAlign: TextAlign.right, textDirection: TextDirection.rtl),
+            ),
           ),
         ]),
       ),

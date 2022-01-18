@@ -28,22 +28,25 @@ class PodcastScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
                   child: Column(children: [
                     // close this screen button
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        controller.player.closeAudioSession();
-                        controller.onClose();
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.arrow_back,
-                            size: 18,
-                          ),
-                          Text("  بازگشت",
-                              style:
-                                  TextStyle(fontFamily: "Yekan", fontSize: 12)),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 9),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          controller.player.closeAudioSession();
+                          controller.onClose();
+                        },
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.arrow_back,
+                              size: 18,
+                            ),
+                            Text(" بازگشت",
+                                style: TextStyle(
+                                    fontFamily: "Yekan", fontSize: 14)),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -188,61 +191,23 @@ class PodcastScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Obx(() => !controller
-                                                .existFile[index].value
-                                            ? controller.downloadingState
-                                                        .value ==
-                                                    "downloading"
-                                                ? Obx(() =>
-                                                    CircularProgressIndicator(
-                                                      value: controller
-                                                          .downloadingPercent
-                                                          .value,
-                                                      strokeWidth: 2,
-                                                    ))
-                                                :
-                                                // Download
-                                                InkWell(
-                                                    onTap: () {
-                                                      controller.download(
-                                                          controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .podcastPath,
-                                                          id,
-                                                          controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .title);
-                                                    },
-                                                    child: const Icon(
-                                                      Icons.cloud_download,
-                                                      size: 28,
-                                                    ),
-                                                  )
-                                            :
-                                            // play botton
-
-                                            // play audio
-                                            InkWell(
-                                                child: Image.asset(
-                                                    "assets/images/play.png"),
-                                                onTap: () {
-                                                  Navigator.pushNamed(
-                                                      context, '/playPodcast',
-                                                      arguments: id +
-                                                          ":" +
-                                                          controller.podcast
-                                                              .items[index].id +
-                                                          ":" +
-                                                          controller
-                                                              .appDoc.path +
-                                                          id +
-                                                          controller
-                                                              .podcast
-                                                              .items[index]
-                                                              .title);
-                                                })),
+                                        // play audio
+                                        InkWell(
+                                            child: Image.asset(
+                                                "assets/images/play.png"),
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, '/playPodcast',
+                                                  arguments: id +
+                                                      ":" +
+                                                      controller.podcast
+                                                          .items[index].id +
+                                                      ":" +
+                                                      controller.appDoc.path +
+                                                      id +
+                                                      controller.podcast
+                                                          .items[index].title);
+                                            }),
 
                                         // title
                                         Text(
