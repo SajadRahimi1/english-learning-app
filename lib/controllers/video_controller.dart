@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/video_items_model.dart';
@@ -27,6 +28,8 @@ class VideoController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   final GetStorage _getStorage = GetStorage();
   var isPlaying = false.obs;
+  var playIndex = 0;
+  final AutoScrollController scrollController = AutoScrollController();
   var bookmark = false.obs;
   @override
   void onInit() async {
@@ -36,6 +39,8 @@ class VideoController extends GetxController with StateMixin {
 
   void customeInit() {
     _dateTime = DateTime.now();
+    playIndex = 0;
+    isPlaying = false.obs;
   }
 
   @override
@@ -89,8 +94,11 @@ class VideoController extends GetxController with StateMixin {
         if (videoController.value.position.inMilliseconds >
             videoItems.value.paragraphs[i].pst) {
           playingText.value = videoItems.value.paragraphs[i].en;
+          playIndex = i;
         }
       }
+      scrollController.scrollToIndex(playIndex,
+          preferPosition: AutoScrollPosition.begin);
     }
   }
 
@@ -136,8 +144,7 @@ class VideoController extends GetxController with StateMixin {
       _getStorage.remove('token');
       _getStorage.remove('timers');
       Get.offAll(LoginScreen());
-    }
-    else {
+    } else {
       change(null, status: RxStatus.error());
     }
   }

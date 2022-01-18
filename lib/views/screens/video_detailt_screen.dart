@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zabaner/controllers/video_controller.dart';
@@ -115,16 +116,23 @@ class VideoDetailScreen extends StatelessWidget {
             height: Get.height / 3,
             child: Obx(() => controller.videoItems.value.paragraphs.isNotEmpty
                 ? ListView.builder(
+                    controller: controller.scrollController,
                     itemCount: controller.videoItems.value.paragraphs.length,
-                    itemBuilder: (context, index) => Obx(() => TextHighlight(
-                        enText:
-                            controller.videoItems.value.paragraphs[index].en,
-                        faText:
-                            controller.videoItems.value.paragraphs[index].fa,
-                        color: controller.playingText.value ==
-                                controller.videoItems.value.paragraphs[index].en
-                            ? orange
-                            : Colors.white)))
+                    itemBuilder: (context, index) => Obx(() => AutoScrollTag(
+                          controller: controller.scrollController,
+                          key: ValueKey(index),
+                          index: index,
+                          child: TextHighlight(
+                              enText: controller
+                                  .videoItems.value.paragraphs[index].en,
+                              faText: controller
+                                  .videoItems.value.paragraphs[index].fa,
+                              color: controller.playingText.value ==
+                                      controller
+                                          .videoItems.value.paragraphs[index].en
+                                  ? orange
+                                  : Colors.white),
+                        )))
                 : const SizedBox()),
           )
         ],
