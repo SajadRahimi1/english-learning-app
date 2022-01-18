@@ -52,7 +52,7 @@ class NewsDataController extends GetxController with StateMixin {
             },
           );
     if (req.statusCode == 200) {
-      content.addAll(categoryContentFromJson(req.bodyString ?? ""));
+      content.addAll(categoryContentFromJson(req.bodyString ?? ""));      
       change(null, status: RxStatus.success());
     } else if (req.statusCode == 401) {
       _getStorage.remove('timers');

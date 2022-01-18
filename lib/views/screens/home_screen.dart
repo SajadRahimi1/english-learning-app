@@ -29,36 +29,21 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       // profile image
                       InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/profile'),
-                        child: CircleAvatar(
-                            radius: Get.width / 13,
-                            backgroundImage: NetworkImage(
-                                _controller.homeModel.user.avatarPath)),
-                      ),
+                          onTap: () => Navigator.pushNamed(context, '/profile'),
+                          // child: CircleAvatar(
+                          //     radius: Get.width / 13,
+                          //     backgroundImage: NetworkImage(
+                          //         _controller.homeModel.user.avatarPath)
+                          //         ),
+                          child: Icon(Icons.menu, size: Get.width / 8)),
 
                       // Hello Text
                       SizedBox(
                         width: Get.width / 1.6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "سلام ${_controller.homeModel.user.fullName}!",
-                              style: const TextStyle(
-                                  fontFamily: "Yekan", fontSize: 22),
-                            ),
-                            const SizedBox(
-                              height: 3,
-                            ),
-                            const Text(
-                              "امروز وقتشه که یه قدم بیشتر مهارت کسب کنی",
-                              style: TextStyle(
-                                  fontFamily: "Yekan",
-                                  fontSize: 10,
-                                  color: Color(0xff919191)),
-                            )
-                          ],
+                        child: Text(
+                          "سلام ${_controller.homeModel.user.fullName}!",
+                          style: const TextStyle(
+                              fontFamily: "Yekan", fontSize: 22),
                         ),
                       ),
 

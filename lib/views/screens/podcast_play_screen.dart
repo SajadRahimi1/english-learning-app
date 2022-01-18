@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/controllers/play_podcast_controller.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
@@ -103,17 +104,23 @@ class PodcastPlay extends StatelessWidget {
                     height: Get.height / 1.5,
                     child: controller.obx((state) => ListView.builder(
                         itemCount: controller.podcastItem.paragraphs.length,
-                        itemBuilder: (context, index) => Obx(() =>
-                            TextHighlight(
-                                enText:
-                                    controller.podcastItem.paragraphs[index].en,
-                                faText:
-                                    controller.podcastItem.paragraphs[index].fa,
-                                color: controller.playingText.value ==
-                                        controller
-                                            .podcastItem.paragraphs[index].en
-                                    ? orange
-                                    : Colors.white))))),
+                        controller: controller.scrollController,
+                        itemBuilder: (context, index) =>
+                            Obx(() => AutoScrollTag(
+                                  index: index,
+                                  key: ValueKey(index),
+                                  controller: controller.scrollController,
+                                  child: TextHighlight(
+                                      enText: controller
+                                          .podcastItem.paragraphs[index].en,
+                                      faText: controller
+                                          .podcastItem.paragraphs[index].fa,
+                                      color: controller.playingText.value ==
+                                              controller.podcastItem
+                                                  .paragraphs[index].en
+                                          ? orange
+                                          : Colors.white),
+                                ))))),
 
                 // Playing audio
                 InkWell(

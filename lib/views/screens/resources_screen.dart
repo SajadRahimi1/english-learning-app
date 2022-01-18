@@ -43,26 +43,10 @@ class ResourcesScreen extends StatelessWidget {
                           // Hello Text
                           SizedBox(
                             width: Get.width / 1.72,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "منابع زبان انگلیسی",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan", fontSize: 18),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  "اخبار متنوع به زبان انگلیسی",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan",
-                                      fontSize: 10,
-                                      color: Color(0xff919191)),
-                                )
-                              ],
+                            child: const Text(
+                              "منابع زبان انگلیسی",
+                              style:
+                                  TextStyle(fontFamily: "Yekan", fontSize: 18),
                             ),
                           ),
 

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/podcast_model.dart';
 import 'package:zabaner/models/urls.dart';
@@ -20,6 +21,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   late List<RxBool> existFile;
   late PodcastItemModel podcastItem;
   late io.Directory appDoc;
+  AutoScrollController scrollController = AutoScrollController();
   var isPlaying = false.obs;
   var playingText = "".obs;
   var percentPlayed = 0.0.obs;
@@ -133,7 +135,7 @@ class PlayPodcastController extends GetxController with StateMixin {
       _getStorage.remove('token');
       _getStorage.remove('timers');
       Get.offAll(LoginScreen());
-    }else {
+    } else {
       change(null, status: RxStatus.error());
     }
   }
@@ -154,6 +156,7 @@ class PlayPodcastController extends GetxController with StateMixin {
         for (int i = 0; i < podcastItem.paragraphs.length; i++) {
           if (event.position.inMilliseconds > podcastItem.paragraphs[i].pst) {
             playingText.value = podcastItem.paragraphs[i].en;
+            scrollController.scrollToIndex(i);
           }
         }
       });
