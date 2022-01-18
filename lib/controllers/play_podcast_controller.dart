@@ -23,6 +23,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   late io.Directory appDoc;
   AutoScrollController scrollController = AutoScrollController();
   var isPlaying = false.obs;
+  var ind = 0;
   var playingText = "".obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
@@ -81,6 +82,7 @@ class PlayPodcastController extends GetxController with StateMixin {
     await _getStorage.write('timers', times);
     // _getStorage.remove('timers');
     print(_getStorage.read('timers'));
+    player.stopPlayer();
   }
 
   void download(String urlPath, String id, String title) async {
@@ -145,9 +147,13 @@ class PlayPodcastController extends GetxController with StateMixin {
       player.isOpen() ? {} : player.openAudioSession();
       io.File audioFile = io.File(filePath);
       // if (player.isOpen()) {
-      await player
-          .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
-          .then((value) {});
+      if (player.isPaused) {
+        await player.resumePlayer();
+      } else {
+        await player
+            .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
+            .then((value) {});
+      }
       player.setSubscriptionDuration(const Duration(milliseconds: 900));
       player.onProgress!.listen((event) {
         isPlaying.value = player.isPlaying;
@@ -156,9 +162,10 @@ class PlayPodcastController extends GetxController with StateMixin {
         for (int i = 0; i < podcastItem.paragraphs.length; i++) {
           if (event.position.inMilliseconds > podcastItem.paragraphs[i].pst) {
             playingText.value = podcastItem.paragraphs[i].en;
-            scrollController.scrollToIndex(i);
+            ind = i;
           }
         }
+        scrollController.scrollToIndex(ind);
       });
     } catch (e) {
       Get.snackbar("Error", "Error in play audio");
