@@ -1,16 +1,20 @@
 # zabaner
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ToDo
+- [x] Button for hide english of persian text
+- [ ] in detail of every resources must just be title and textes
+- [x] remove logo and profile avatar in details screen
+- [ ] show english text in detaill screen 
+- [x] auto scroll when resource played
+- [ ] controll options for player
+- [x] change text next to profile image in resources and new screen 
+- [x] change profile image to menu icon in home page
+- [ ] get resources type from server
+- [ ] add "همه" to news category
+- [x] stop player when screen closed
+- [ ] add player to news 
+- [ ] send message to support
+- [ ] add player and other feature to book screen
+- [x] logic for backup button
+- [x] last five days show real data
+- [x] logic for share icon 
