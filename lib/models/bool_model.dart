@@ -34,16 +34,12 @@ class BookModel {
 }
 
 class Item {
-  Item({
-    required this.faTitle,
-    required this.title,
-  });
+  Item({required this.faTitle, required this.title, required this.id});
 
   final String faTitle;
   final String title;
+  final String id;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
-        faTitle: json["faTitle"],
-        title: json["title"],
-      );
+  factory Item.fromJson(Map<String, dynamic> json) =>
+      Item(faTitle: json["faTitle"], title: json["title"], id: json['_id']);
 }

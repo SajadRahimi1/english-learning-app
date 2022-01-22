@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/video_detailt_screen.dart';
 
 class VideoResources extends StatelessWidget {
-  const VideoResources({Key? key, required this.resource}) : super(key: key);
+  const VideoResources(
+      {Key? key, required this.resource, required this.isGuest})
+      : super(key: key);
   final List<Resource> resource;
+  final bool isGuest;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,7 @@ class VideoResources extends StatelessWidget {
               ),
               reverse: true,
               itemBuilder: (context, index) => VideoListTile(
+                  isGuest: isGuest,
                   imagePath: resource[index].imagePath,
                   title: resource[index].title,
                   id: resource[index].id),
@@ -74,13 +80,16 @@ class VideoListTile extends StatelessWidget {
       {Key? key,
       required this.imagePath,
       required this.title,
+      required this.isGuest,
       required this.id})
       : super(key: key);
   final String imagePath, title, id;
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, '/video', arguments: id),
+      // onTap: () => Navigator.pushNamed(context, '/video', arguments: id),
+      onTap: () => Get.to(VideoDetailScreen(isGuest: isGuest), arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

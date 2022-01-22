@@ -100,7 +100,6 @@ class MainScreen extends StatelessWidget {
               controller: _controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-               
                 // Home screen and navigate to profile screen
                 Navigator(
                   key: _controller.navigationKey[0],
@@ -173,13 +172,17 @@ class MainScreen extends StatelessWidget {
                           );
 
                         case "/resource":
-                          return const ResourcesScreen();
+                          return ResourcesScreen(
+                            isGuest: isGuest,
+                          );
                         case "/video":
                           videoScreenBool = true;
                           return videoScreen =
                               VideoDetailScreen(isGuest: isGuest);
                       }
-                      return const ResourcesScreen();
+                      return ResourcesScreen(
+                        isGuest: isGuest,
+                      );
                     },
                   ),
                 ),

@@ -12,6 +12,13 @@ import 'package:zabaner/views/screens/login_screen.dart';
 class VideoController extends GetxController with StateMixin {
   late VideoModel videoModel;
   late VideoPlayerController videoController;
+  var isHide = false.obs;
+  var repeat = false.obs;
+  var duration = const Duration().obs;
+  var playSpeed = 1.0.obs;
+
+  var playerPosition = const Duration().obs;
+
   late DateTime _dateTime;
   var playingText = "".obs;
   Rx<VideoItemsModel> videoItems = VideoItemsModel(
@@ -29,18 +36,32 @@ class VideoController extends GetxController with StateMixin {
   final GetStorage _getStorage = GetStorage();
   var isPlaying = false.obs;
   var playIndex = 0;
-  final AutoScrollController scrollController = AutoScrollController();
+  late AutoScrollController scrollController;
   var bookmark = false.obs;
   @override
   void onInit() async {
     super.onInit();
     _getConnect.allowAutoSignedCert = true;
+    scrollController = AutoScrollController();
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    onClose();
   }
 
   void customeInit() {
     _dateTime = DateTime.now();
     playIndex = 0;
     isPlaying = false.obs;
+    isHide = false.obs;
+    playSpeed.value = 1;
+    playIndex = 0;
+    repeat = false.obs;
+    playingText = "".obs;
+    duration = const Duration(milliseconds: 0).obs;
+    playerPosition = const Duration(milliseconds: 0).obs;
   }
 
   @override
@@ -90,6 +111,8 @@ class VideoController extends GetxController with StateMixin {
   void play() {
     if (videoController.value.isPlaying) {
       isPlaying.value = true;
+      duration.value = videoController.value.duration;
+      playerPosition.value = videoController.value.position;
       for (int i = 0; i < videoItems.value.paragraphs.length; i++) {
         if (videoController.value.position.inMilliseconds >
             videoItems.value.paragraphs[i].pst) {

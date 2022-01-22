@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/controllers/book_detail_controller.dart';
+import 'package:zabaner/models/level.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
@@ -14,175 +17,273 @@ class BookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final String bookId = ModalRoute.of(context)?.settings.arguments as String;
     controller.getBookDetail(bookId, isGuest);
-    final GetStorage _getStotage = GetStorage();
+    // final GetStorage _getStotage = GetStorage();
+    var en = true.obs, fa = true.obs;
     GetStorage.init();
     controller.customeInit();
-    print(controller.initialized);
     return SafeArea(
-        child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-                backgroundColor: const Color(0xffffffff),
-                body: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
-                  child: Column(children: [
-                    // close this screen button
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context, false);
-                        controller.onClose();
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.arrow_back,
-                            size: 18,
-                          ),
-                          Text("  بازگشت",
-                              style:
-                                  TextStyle(fontFamily: "Yekan", fontSize: 12)),
-                        ],
-                      ),
-                    ),
-
-                    // Top of screen
-                    SizedBox(
-                      height: Get.height / 10,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // profile image
-                          InkWell(
-                            onTap: () =>
-                                Navigator.pushNamed(context, '/profile'),
-                            child: CircleAvatar(
-                              radius: Get.width / 18,
-                              backgroundImage: NetworkImage(_getStotage
-                                      .read('profile_image') ??
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Disc_Plain_cyan.svg/1200px-Disc_Plain_cyan.svg.png"),
+        child: controller.obx(
+      (status) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+            appBar: AppBar(
+                leading: InkWell(
+                    onTap: () {
+                      controller.onClose();
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(Icons.arrow_back)),
+                backgroundColor: orange,
+                actions: [
+                  Obx(() => controller.downloadingState.value == "downloading"
+                      ? Obx(() => CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: CircularProgressIndicator(
+                              value: controller.downloadingPercent.value,
+                              strokeWidth: 2,
                             ),
+                          ))
+                      :
+                      // Download
+                      InkWell(
+                          onTap: () {
+                            controller.download(
+                                controller.bookItemModel.podcastPath,
+                                bookId,
+                                controller.bookItemModel.title);
+                          },
+                          child: Icon(
+                            Icons.cloud_download,
+                            size: Get.width / 12,
                           ),
-
-                          // Hello Text
-                          SizedBox(
-                            width: Get.width / 1.72,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "کتاب های انگلیسی",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan", fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // Logo in top left
-                          Container(
-                            padding: EdgeInsets.only(left: Get.width / 25),
-                            width: Get.width / 5,
-                            height: Get.height / 14,
-                            child: Image.asset(
-                              "assets/images/home_logo.png",
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-
-                    // Space between search text input and body
-                    SizedBox(
-                      height: Get.height / 30,
-                    ),
-
-                    Expanded(
-                      child: controller.obx(
-                        (state) => Column(
-                          children: [
-                            SizedBox(
-                                width: Get.width,
-                                height: Get.height / 4,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: Get.width / 10,
-                                              height: Get.height / 22,
-                                              child: Image.asset(
-                                                "assets/images/bookr.png",
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width / 2,
-                                              height: Get.height / 22,
-                                              child: Text(
-                                                "   ${controller.bookDetail.title}",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    fontFamily: "Yekan",
-                                                    fontSize: 16),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: Get.width / 1.7,
+                        )),
+                  Row(
+                    children: [
+                      const Text("   انگلیسی:",
+                          style: TextStyle(fontFamily: "Yekan", fontSize: 16)),
+                      Obx(() => Switch(
+                            value: en.value,
+                            onChanged: (value) => en.value = value,
+                          ))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(" فارسی:",
+                          style: TextStyle(fontFamily: "Yekan", fontSize: 16)),
+                      Obx(() => Switch(
+                            value: fa.value,
+                            onChanged: (value) => fa.value = value,
+                          ))
+                    ],
+                  )
+                ]),
+            body: Column(children: [
+              // Paragraph
+              Obx(() => Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
+                      child: SizedBox(
+                          width: Get.width,
+                          height: Get.height,
+                          child: !en.value && !fa.value
+                              ? const SizedBox()
+                              : ListView.builder(
+                                  itemCount:
+                                      controller.bookDetail.items.length + 1,
+                                  controller: controller.scrollController,
+                                  itemBuilder: (context, index) => index == 0
+                                      ? SizedBox(
+                                          width: Get.width,
                                           child: Text(
-                                            "\n" +
-                                                controller.bookDetail.faTitle,
-                                            overflow: TextOverflow.ellipsis,
+                                            controller.bookDetail.title,
                                             style: const TextStyle(
                                                 fontFamily: "Yekan",
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: Get.width / 3.2,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: NetworkImage(baseUrl +
-                                                  controller
-                                                      .bookDetail.imagePath),
-                                              fit: BoxFit.fill)),
-                                    )
-                                  ],
-                                )),
-                            SizedBox(
-                              height: Get.height / 50,
-                            ),
-                            Expanded(
-                                child: ListView.builder(
-                                    itemCount:
-                                        controller.bookDetail.items.length,
-                                    itemBuilder: (context, index) =>
-                                        TextHighlight(
-                                          faText: controller
-                                              .bookDetail.items[index].faTitle,
-                                          enText: controller
-                                              .bookDetail.items[index].title,
-                                          color: const Color(0xffffffff),
-                                        )))
-                          ],
+                                                fontSize: 22),
+                                            textAlign: TextAlign.center,
+                                          ))
+                                      : Obx(() => AutoScrollTag(
+                                            index: index,
+                                            key: ValueKey(index - 1),
+                                            controller:
+                                                controller.scrollController,
+                                            child: TextHighlight(
+                                                enText: controller.bookItemModel
+                                                    .paragraphs[index - 1].en,
+                                                faText: controller.bookItemModel
+                                                    .paragraphs[index - 1].fa,
+                                                visibleEN: en.value,
+                                                visibleFA: fa.value,
+                                                color: controller.playingText
+                                                            .value ==
+                                                        controller
+                                                            .bookItemModel
+                                                            .paragraphs[
+                                                                index - 1]
+                                                            .en
+                                                    ? orange
+                                                    : Colors.white),
+                                          )))),
+                    ),
+                  )),
+
+              Obx(() => AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  height: controller.isHide.value
+                      ? Get.height / 9 / 1.5
+                      : Get.height / 9,
+                  child: Column(children: [
+                    // hide or show icon
+                    SizedBox(
+                      height: Get.height / 30,
+                      child: InkWell(
+                        onTap: () => controller.isHide.toggle(),
+                        child: Image.asset(
+                          controller.isHide.value
+                              ? "assets/images/upward2.png"
+                              : "assets/images/downward2.png",
+                          height: double.infinity,
                         ),
                       ),
-                    )
-                  ]),
-                ))));
+                    ),
+
+                    // seekbar
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Expanded(
+                          flex: controller.isHide.value ? 1 : 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Obx(() => Text((controller
+                                          .duration.value.inSeconds -
+                                      controller.playerPosition.value.inSeconds)
+                                  .formatTimer())),
+                              SizedBox(
+                                  width: Get.width / 1.3,
+                                  child: Obx(() => Slider(
+                                        value: controller
+                                            .playerPosition.value.inMilliseconds
+                                            .toDouble(),
+                                        min: 0,
+                                        max: controller
+                                            .duration.value.inMilliseconds
+                                            .toDouble(),
+                                        onChanged: (value) {
+                                          controller.playerPosition.value =
+                                              Duration(
+                                                  milliseconds: value.toInt());
+                                        },
+                                        onChangeEnd: (value) {
+                                          controller.player.seekToPlayer(
+                                              Duration(
+                                                  milliseconds: value.toInt()));
+                                        },
+                                      ))),
+                              Text(controller.duration.value.inSeconds
+                                  .formatTimer())
+                            ],
+                          )),
+                    ),
+
+                    // controll option buttons
+                    controller.isHide.value
+                        ? const SizedBox()
+                        : Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                // play speed
+                                InkWell(
+                                    onTap: () {
+                                      if (controller.isPlaying.value) {
+                                        if (controller.playSpeed.value == 0.5) {
+                                          controller.playSpeed.value = 1;
+                                          controller.player.setSpeed(1);
+                                        } else if (controller.playSpeed.value ==
+                                            1) {
+                                          controller.playSpeed.value = 2;
+                                          controller.player.setSpeed(2);
+                                        } else if (controller.playSpeed.value ==
+                                            2) {
+                                          controller.playSpeed.value = 0.5;
+                                          controller.player.setSpeed(0.5);
+                                        }
+                                      }
+                                    },
+                                    child: Obx(() => Text(
+                                          controller.playSpeed.value
+                                                  .toString() +
+                                              "x",
+                                          style: const TextStyle(fontSize: 18),
+                                        ))),
+
+                                // forward
+                                InkWell(
+                                    onTap: () {
+                                      if (controller.ind !=
+                                          controller.bookItemModel.paragraphs
+                                                  .length -
+                                              1) {
+                                        controller.player.seekToPlayer(Duration(
+                                            milliseconds: controller
+                                                .bookItemModel
+                                                .paragraphs[controller.ind + 1]
+                                                .pst));
+                                      }
+                                    },
+                                    child: const Icon(Icons.arrow_back)),
+
+                                // play or pause
+                                Obx(() => InkWell(
+                                    onTap: () {
+                                      if (!controller.isPlaying.value) {
+                                        controller.playAudio(
+                                            controller.appDoc.path +
+                                                bookId +
+                                                controller.bookItemModel.title);
+                                      } else {
+                                        controller.player.pausePlayer();
+                                        controller.isPlaying.value = false;
+                                      }
+                                    },
+                                    child: Icon(controller.isPlaying.value
+                                        ? Icons.pause
+                                        : Icons.play_arrow))),
+
+                                // backward
+                                InkWell(
+                                    onTap: () {
+                                      if (controller.ind != 0) {
+                                        controller.player.seekToPlayer(Duration(
+                                            milliseconds: controller
+                                                .bookItemModel
+                                                .paragraphs[controller.ind - 1]
+                                                .pst));
+                                      }
+                                    },
+                                    child: const Icon(Icons.arrow_forward)),
+
+                                // repeat
+                                InkWell(
+                                    onTap: () {
+                                      controller.repeat.toggle();
+                                    },
+                                    child: Obx(() => Icon(
+                                        controller.repeat.value
+                                            ? Icons.repeat_one
+                                            : Icons.repeat))),
+                              ],
+                            ),
+                          )
+                  ]))),
+              
+              SizedBox(
+                height: Get.height / 45,
+              )
+            ])),
+      ),
+    ));
   }
 }

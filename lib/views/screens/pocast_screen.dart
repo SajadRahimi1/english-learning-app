@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/podcast_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/podcast_play_screen.dart';
 import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
@@ -196,17 +197,16 @@ class PodcastScreen extends StatelessWidget {
                                             child: Image.asset(
                                                 "assets/images/play.png"),
                                             onTap: () {
-                                              Navigator.pushNamed(
-                                                  context, '/playPodcast',
+                                              Get.to(
+                                                  // context, '/playPodcast',
+                                                  PodcastPlay(isGuest: isGuest),
                                                   arguments: id +
                                                       ":" +
                                                       controller.podcast
                                                           .items[index].id +
                                                       ":" +
                                                       controller.appDoc.path +
-                                                      id +
-                                                      controller.podcast
-                                                          .items[index].title);
+                                                      id);
                                             }),
 
                                         // title

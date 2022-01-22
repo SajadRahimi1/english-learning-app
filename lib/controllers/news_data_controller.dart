@@ -29,6 +29,7 @@ class NewsDataController extends GetxController with StateMixin {
     await GetStorage.init();
     change(null, status: RxStatus.loading());
     var response = await _getConnect.get(newsCagetoryUrl);
+    categories.insert(0, 'همه');
     categories.addAll(jsonDecode(response.bodyString ?? "[]"));
     if (categories.isNotEmpty) getContent(categories[0], isGuest);
     _getConnect.allowAutoSignedCert = true;
@@ -37,30 +38,54 @@ class NewsDataController extends GetxController with StateMixin {
   void getContent(String category, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     content.clear();
-
-    var req = isGuest
-        ? await _getConnect.get(
-            newsCategoryContentUrl,
-            query: {'category': category},
-          )
-        : await _getConnect.get(
-            newsCategoryContentUrl,
-            query: {'category': category},
-            headers: {
-              'accept': 'application/json',
-              'Authorization': 'Bearer ${_getStorage.read('token')}'
-            },
-          );
-    if (req.statusCode == 200) {
-      content.addAll(categoryContentFromJson(req.bodyString ?? ""));      
-      change(null, status: RxStatus.success());
-    } else if (req.statusCode == 401) {
-      _getStorage.remove('timers');
-      _getStorage.remove('token');
-      _getStorage.remove('timers');
-      Get.offAll(LoginScreen());
+    if (category != 'همه') {
+      var req = isGuest
+          ? await _getConnect.get(
+              newsCategoryContentUrl,
+              query: {'category': category},
+            )
+          : await _getConnect.get(
+              newsCategoryContentUrl,
+              query: {'category': category},
+              headers: {
+                'accept': 'application/json',
+                'Authorization': 'Bearer ${_getStorage.read('token')}'
+              },
+            );
+      if (req.statusCode == 200) {
+        content.addAll(categoryContentFromJson(req.bodyString ?? ""));
+        change(null, status: RxStatus.success());
+      } else if (req.statusCode == 401) {
+        _getStorage.remove('timers');
+        _getStorage.remove('token');
+        _getStorage.remove('timers');
+        Get.offAll(LoginScreen());
+      } else {
+        change(null, status: RxStatus.error("مشکل در ارتباط با سرور"));
+      }
     } else {
-      change(null, status: RxStatus.error("مشکل در ارتباط با سرور"));
+      var req = isGuest
+          ? await _getConnect.get(
+              newsCategoryContentUrl,
+            )
+          : await _getConnect.get(
+              newsCategoryContentUrl,
+              headers: {
+                'accept': 'application/json',
+                'Authorization': 'Bearer ${_getStorage.read('token')}'
+              },
+            );
+      if (req.statusCode == 200) {
+        content.addAll(categoryContentFromJson(req.bodyString ?? ""));
+        change(null, status: RxStatus.success());
+      } else if (req.statusCode == 401) {
+        _getStorage.remove('timers');
+        _getStorage.remove('token');
+        _getStorage.remove('timers');
+        Get.offAll(LoginScreen());
+      } else {
+        change(null, status: RxStatus.error("مشکل در ارتباط با سرور"));
+      }
     }
   }
 

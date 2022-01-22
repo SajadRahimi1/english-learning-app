@@ -35,7 +35,9 @@ class TextHighlight extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Text(faText,
-                  textAlign: TextAlign.right, textDirection: TextDirection.rtl),
+                  textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(fontFamily: "Yekan")),
             ),
           ),
         ]),

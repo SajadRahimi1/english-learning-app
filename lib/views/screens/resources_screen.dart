@@ -8,7 +8,9 @@ import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:zabaner/views/widgets/video_resources.dart';
 
 class ResourcesScreen extends StatelessWidget {
-  const ResourcesScreen({Key? key}) : super(key: key);
+  const ResourcesScreen({Key? key, required this.isGuest}) : super(key: key);
+  final bool isGuest;
+
   @override
   Widget build(BuildContext context) {
     var onSearchClick = false.obs;
@@ -97,6 +99,7 @@ class ResourcesScreen extends StatelessWidget {
                                         resource: _controller
                                             .resourcesList[1].resources),
                                     VideoResources(
+                                        isGuest: isGuest,
                                         resource: _controller
                                             .resourcesList[2].resources)
                                   ],

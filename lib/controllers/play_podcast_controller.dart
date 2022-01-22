@@ -14,20 +14,23 @@ import 'package:zabaner/views/screens/login_screen.dart';
 
 class PlayPodcastController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
-  late PodcastModel podcast;
   late DateTime _dateTime;
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   final Dio dio = Dio();
   final GetStorage _getStorage = GetStorage();
-  late List<RxBool> existFile;
   late PodcastItemModel podcastItem;
   late io.Directory appDoc;
   AutoScrollController scrollController = AutoScrollController();
   var isPlaying = false.obs;
   var ind = 0;
   var playingText = "".obs;
+  var isHide = false.obs;
+  var playSpeed = 1.0.obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
+  var duration = const Duration().obs;
+  var playerPosition = const Duration().obs;
+  var repeat = false.obs;
   var downloadingState = "".obs;
   @override
   void onInit() async {
@@ -45,6 +48,16 @@ class PlayPodcastController extends GetxController with StateMixin {
 
   void customeInit() {
     _dateTime = DateTime.now();
+    isHide = false.obs;
+    ind = 0;
+    playingText = "".obs;
+    percentPlayed = 0.0.obs;
+    downloadingPercent = 0.0.obs;
+    duration = const Duration(milliseconds: 0).obs;
+    playerPosition = const Duration(milliseconds: 0).obs;
+    downloadingState = "".obs;
+    repeat = false.obs;
+    playSpeed.value = 1;
   }
 
   @override
@@ -84,10 +97,12 @@ class PlayPodcastController extends GetxController with StateMixin {
     // _getStorage.remove('timers');
     print(_getStorage.read('timers'));
     player.stopPlayer();
+    isPlaying.value = false;
   }
 
   void download(String urlPath, String id, String title) async {
     io.File _checkFile = io.File(appDoc.path + id + title);
+    print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
@@ -145,28 +160,36 @@ class PlayPodcastController extends GetxController with StateMixin {
       player.isOpen() ? {} : player.openAudioSession();
       io.File audioFile = io.File(filePath);
       // if (player.isOpen()) {
-      if (player.isPaused) {
-        await player.resumePlayer();
-      } else {
-        await player
-            .startPlayer(fromDataBuffer: audioFile.readAsBytesSync())
-            .then((value) {});
-      }
-      player.setSubscriptionDuration(const Duration(milliseconds: 900));
-      player.onProgress!.listen((event) {
-        isPlaying.value = player.isPlaying;
-        percentPlayed.value =
-            event.position.inMilliseconds / event.duration.inMilliseconds;
-        for (int i = 0; i < podcastItem.paragraphs.length; i++) {
-          if (event.position.inMilliseconds > podcastItem.paragraphs[i].pst) {
-            playingText.value = podcastItem.paragraphs[i].en;
-            ind = i;
-          }
+      if (audioFile.existsSync()) {
+        if (player.isPaused) {
+          await player.resumePlayer();
+        } else {
+          await player.startPlayer(
+              fromDataBuffer: audioFile.readAsBytesSync(),
+              whenFinished: () {
+                print("finished\nfinished2\nfini2shed\nfini2hed\nfinished2\n");
+                repeat.value ? playAudio(filePath) : {};
+              });
         }
-        scrollController.scrollToIndex(ind);
-      });
+        player.setSubscriptionDuration(const Duration(milliseconds: 900));
+        player.onProgress!.listen((event) {
+          isPlaying.value = player.isPlaying;
+          duration.value = event.duration;
+          playerPosition.value = event.position;
+          percentPlayed.value =
+              event.position.inMilliseconds / event.duration.inMilliseconds;
+          for (int i = 0; i < podcastItem.paragraphs.length; i++) {
+            if (event.position.inMilliseconds > podcastItem.paragraphs[i].pst) {
+              playingText.value = podcastItem.paragraphs[i].en;
+              ind = i;
+            }
+          }
+        });
+      } else {
+        Get.snackbar("", "ابتدا فایل صورتی را دانلود کنید");
+      }
     } catch (e) {
-      Get.snackbar("Error", "Error in play audio");
+      Get.snackbar("Error", "$e");
     }
   }
 }
