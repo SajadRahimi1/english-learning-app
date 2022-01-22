@@ -96,6 +96,7 @@ class ResourcesScreen extends StatelessWidget {
                                           .resourcesList[0].resources,
                                     ),
                                     PocastResources(
+                                        isGuest: isGuest,
                                         resource: _controller
                                             .resourcesList[1].resources),
                                     VideoResources(

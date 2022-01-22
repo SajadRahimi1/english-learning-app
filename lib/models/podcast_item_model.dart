@@ -63,8 +63,8 @@ class Paragraph {
   factory Paragraph.fromJson(Map<String, dynamic> json) => Paragraph(
         id: json["_id"],
         pst: json["pst"],
-        fa: json["fa"],
-        en: json["en"],
+        fa: json["fa"] ?? "",
+        en: json["en"] ?? "",
         startTime: json["startTime"],
       );
 }

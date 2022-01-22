@@ -129,6 +129,30 @@ class PlayPodcastController extends GetxController with StateMixin {
     }
   }
 
+  void getPodcastData(String id, bool isGuest) async {
+    var _request = isGuest
+        ? await _getConnect.get(getPodcastDetailUrl + id)
+        : await _getConnect.get(
+            getPodcastDetailUrl + id,
+            headers: {
+              'accept': 'application/json',
+              'Authorization': 'Bearer ${_getStorage.read('token')}'
+            },
+          );
+
+    print(_request.body);
+    if (_request.statusCode == 200) {
+      getPodcastItemData(id, _request.body['items'][0]['_id'], isGuest);
+    } else if (_request.statusCode == 401) {
+      _getStorage.remove('timers');
+      _getStorage.remove('token');
+      _getStorage.remove('timers');
+      Get.offAll(LoginScreen());
+    } else {
+      change(null, status: RxStatus.error());
+    }
+  }
+
   void getPodcastItemData(
       String podcastId, String edposodeId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;

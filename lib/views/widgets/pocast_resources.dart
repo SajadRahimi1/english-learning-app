@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/podcast_play_screen.dart';
 
 class PocastResources extends StatelessWidget {
-  const PocastResources({Key? key, required this.resource}) : super(key: key);
+  const PocastResources(
+      {Key? key, required this.resource, required this.isGuest})
+      : super(key: key);
   final List<Resource> resource;
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,6 +56,7 @@ class PocastResources extends StatelessWidget {
               reverse: true,
               itemBuilder: (context, index) => PocastListTile(
                   imagePath: resource[index].imagePath,
+                  isGuest: isGuest,
                   title: resource[index].title,
                   id: resource[index].id),
               separatorBuilder: (context, index) => SizedBox(
@@ -74,13 +80,16 @@ class PocastListTile extends StatelessWidget {
       {Key? key,
       required this.imagePath,
       required this.title,
+      required this.isGuest,
       required this.id})
       : super(key: key);
   final String imagePath, title, id;
+  final bool isGuest;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, '/podcast', arguments: id),
+      // onTap: () => Navigator.pushNamed(context, '/podcast', arguments: id),
+      onTap: () => Get.to(PodcastPlay(isGuest: isGuest), arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

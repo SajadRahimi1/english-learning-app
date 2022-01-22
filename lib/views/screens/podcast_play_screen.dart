@@ -16,11 +16,10 @@ class PodcastPlay extends StatelessWidget {
     final String id =
         ModalRoute.of(context)?.settings.arguments.toString() ?? "";
 
-    final GetStorage _getStorage = GetStorage();
     GetStorage.init();
     controller.customeInit();
-    
-    controller.getPodcastItemData(id.split(":")[0], id.split(":")[1], isGuest);
+
+    controller.getPodcastData(id, isGuest);
     return WillPopScope(
       onWillPop: () async {
         controller.onClose();
@@ -122,8 +121,10 @@ class PodcastPlay extends StatelessWidget {
                                                       .paragraphs[index - 1].en,
                                                   faText: controller.podcastItem
                                                       .paragraphs[index - 1].fa,
-                                                  visibleEN: controller.en.value,
-                                                  visibleFA: controller.fa.value,
+                                                  visibleEN:
+                                                      controller.en.value,
+                                                  visibleFA:
+                                                      controller.fa.value,
                                                   color: controller.playingText
                                                               .value ==
                                                           controller

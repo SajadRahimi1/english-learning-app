@@ -1,9 +1,9 @@
 # zabaner
 
 ## ToDo
-- [ ] in detail of every resources must just be title and textes
 - [ ] get resources type from server
 - [ ] send message to support
+- [x] in detail of every resources must just be title and textes
 - [x] fix circle bug of progress indicator in home screen 
 - [x] add player to news 
 - [x] controll options for player
