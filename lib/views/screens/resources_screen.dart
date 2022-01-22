@@ -111,6 +111,7 @@ class ResourcesScreen extends StatelessWidget {
                               visible: onSearchClick.value,
                               child: Container(
                                 width: Get.width,
+                                height: Get.height,
                                 color: Colors.white,
                                 child: Obx(() {
                                   switch (_searchController.searchState.value) {

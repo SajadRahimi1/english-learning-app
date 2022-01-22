@@ -19,7 +19,7 @@ class PodcastPlay extends StatelessWidget {
     final GetStorage _getStorage = GetStorage();
     GetStorage.init();
     controller.customeInit();
-    var en = true.obs, fa = true.obs;
+    
     controller.getPodcastItemData(id.split(":")[0], id.split(":")[1], isGuest);
     return WillPopScope(
       onWillPop: () async {
@@ -68,8 +68,8 @@ class PodcastPlay extends StatelessWidget {
                             style:
                                 TextStyle(fontFamily: "Yekan", fontSize: 16)),
                         Obx(() => Switch(
-                              value: en.value,
-                              onChanged: (value) => en.value = value,
+                              value: controller.en.value,
+                              onChanged: (value) => controller.en.value = value,
                             ))
                       ],
                     ),
@@ -79,8 +79,8 @@ class PodcastPlay extends StatelessWidget {
                             style:
                                 TextStyle(fontFamily: "Yekan", fontSize: 16)),
                         Obx(() => Switch(
-                              value: fa.value,
-                              onChanged: (value) => fa.value = value,
+                              value: controller.fa.value,
+                              onChanged: (value) => controller.fa.value = value,
                             ))
                       ],
                     )
@@ -94,7 +94,7 @@ class PodcastPlay extends StatelessWidget {
                         child: SizedBox(
                             width: Get.width,
                             height: Get.height,
-                            child: !en.value && !fa.value
+                            child: !controller.en.value && !controller.fa.value
                                 ? const SizedBox()
                                 : ListView.builder(
                                     itemCount: controller
@@ -122,8 +122,8 @@ class PodcastPlay extends StatelessWidget {
                                                       .paragraphs[index - 1].en,
                                                   faText: controller.podcastItem
                                                       .paragraphs[index - 1].fa,
-                                                  visibleEN: en.value,
-                                                  visibleFA: fa.value,
+                                                  visibleEN: controller.en.value,
+                                                  visibleFA: controller.fa.value,
                                                   color: controller.playingText
                                                               .value ==
                                                           controller

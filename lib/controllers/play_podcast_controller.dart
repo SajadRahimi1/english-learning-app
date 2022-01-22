@@ -23,6 +23,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   AutoScrollController scrollController = AutoScrollController();
   var isPlaying = false.obs;
   var ind = 0;
+  var en = false.obs, fa = false.obs;
   var playingText = "".obs;
   var isHide = false.obs;
   var playSpeed = 1.0.obs;
@@ -145,6 +146,18 @@ class PlayPodcastController extends GetxController with StateMixin {
     if (_request.statusCode == 200) {
       podcastItem = podcastItemModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());
+      for (var item in podcastItem.paragraphs) {
+        if (item.en.isNotEmpty) {
+          en.value = true;
+          break;
+        }
+      }
+      for (var item in podcastItem.paragraphs) {
+        if (item.fa.isNotEmpty) {
+          fa.value = true;
+          break;
+        }
+      }
     } else if (_request.statusCode == 401) {
       _getStorage.remove('timers');
       _getStorage.remove('token');
@@ -167,7 +180,8 @@ class PlayPodcastController extends GetxController with StateMixin {
           await player.startPlayer(
               fromDataBuffer: audioFile.readAsBytesSync(),
               whenFinished: () {
-               
+                isPlaying.value = false;
+
                 repeat.value ? playAudio(filePath) : {};
               });
         }

@@ -2,9 +2,9 @@
 
 ## ToDo
 - [ ] in detail of every resources must just be title and textes
-- [ ] fix circle bug of progress indicator in home screen 
 - [ ] get resources type from server
 - [ ] send message to support
+- [x] fix circle bug of progress indicator in home screen 
 - [x] add player to news 
 - [x] controll options for player
 - [x] add "همه" to news category

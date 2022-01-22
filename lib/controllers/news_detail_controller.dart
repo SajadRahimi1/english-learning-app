@@ -155,6 +155,7 @@ class NewsDetailController extends GetxController with StateMixin {
           await player.startPlayer(
               fromDataBuffer: audioFile.readAsBytesSync(),
               whenFinished: () {
+                isPlaying.value = false;
                 repeat.value ? playAudio(filePath) : {};
               });
         }

@@ -4,10 +4,12 @@ import 'package:zabaner/controllers/home_data_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/level.dart';
 import 'package:intl/intl.dart';
+import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/news_detail_screen.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
 import 'package:zabaner/views/screens/video_detailt_screen.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key, required this.isGuest}) : super(key: key);
@@ -17,7 +19,6 @@ class HomeScreen extends StatelessWidget {
     final HomeDataController _controller = Get.put(HomeDataController());
     _controller.getData(isGuest);
     isGuest ? {} : _controller.sendStatics();
-    final GlobalKey _globalkey = GlobalKey();
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -121,28 +122,26 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
 
-                                    // Progress Circle
                                     SizedBox(
                                       height: Get.height / 3.8,
                                       width: Get.width / 2,
-                                      child: Card(
-                                        shape: const CircleBorder(),
-                                        elevation: 3,
-                                        child: CircleAvatar(
-                                          radius: Get.width / 3,
-                                          backgroundColor:
-                                              const Color(0xffffffff),
-                                          child: SizedBox(
-                                            width: Get.width,
-                                            height: Get.width,
-                                            // height: Get.height / 4.2,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 6,
-                                              color: const Color(0xffFFC200),
-                                              value: _controller.totallSecond
-                                                  .levelPercent(),
-                                            ),
-                                          ),
+                                      child: CircularPercentIndicator(
+                                        radius:
+                                            MediaQuery.of(context).size.width /
+                                                4,
+                                        percent: _controller.totallSecond
+                                            .levelPercent(),
+                                        animation: true,
+                                        progressColor: orange,
+                                        animationDuration: 1000,
+                                        lineWidth: 6,
+                                        center: Text(
+                                          _controller.totallSecond
+                                              .showCurrent(),
+                                          style: const TextStyle(
+                                              fontFamily: "Arial",
+                                              fontSize: 15,
+                                              color: Color(0xff707070)),
                                         ),
                                       ),
                                     )

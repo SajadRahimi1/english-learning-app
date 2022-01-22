@@ -106,8 +106,7 @@ class VideoDetailScreen extends StatelessWidget {
             ),
 
             // paragraphs
-            Container(
-              color: Colors.cyan,
+            SizedBox(
               height: Get.height / 3,
               child: Obx(() => controller.videoItems.value.paragraphs.isNotEmpty
                   ? ListView.builder(

@@ -218,7 +218,7 @@ class NewsScreen extends StatelessWidget {
                               Obx(() => Visibility(
                                   visible: onSearch.value,
                                   child: Container(
-                                    height: Get.height / 1.5,
+                                    height: Get.height,
                                     width: Get.width,
                                     color: Colors.white,
                                     child: Obx(() {
