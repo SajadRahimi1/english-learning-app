@@ -128,7 +128,7 @@ class MainScreen extends StatelessWidget {
                             isGuest: isGuest,
                           );
                         case "/newsDetail":
-                          return NewsDetailScreen();
+                          return NewsDetailScreen(isGuest: isGuest);
                         case "/home":
                           return HomeScreen(
                             isGuest: isGuest,
@@ -194,7 +194,9 @@ class MainScreen extends StatelessWidget {
                     settings: settings,
                     builder: (context) {
                       if (settings.name == '/newsDetail') {
-                        newsDetailScreen = NewsDetailScreen();
+                        newsDetailScreen = NewsDetailScreen(
+                          isGuest: isGuest,
+                        );
                         newsDetailScreenBool = true;
                         return newsDetailScreen;
                       }

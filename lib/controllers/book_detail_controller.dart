@@ -32,7 +32,6 @@ class BookController extends GetxController with StateMixin {
   var duration = const Duration().obs;
   var playerPosition = const Duration().obs;
   var repeat = false.obs;
-  var ended = false;
   var downloadingState = "".obs;
   @override
   void onInit() async {
@@ -51,7 +50,6 @@ class BookController extends GetxController with StateMixin {
     isHide = false.obs;
     ind = 0;
     playingText = "".obs;
-    ended = false;
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
     duration = const Duration(milliseconds: 0).obs;
@@ -142,8 +140,8 @@ class BookController extends GetxController with StateMixin {
         } else {
           await player.startPlayer(
               fromDataBuffer: audioFile.readAsBytesSync(),
-              whenFinished: () async {
-                print("finished\nfinished2\nfini2shed\nfini2hed\nfinished2\n");
+              whenFinished: () {
+               
                 repeat.value ? playAudio(filePath) : {};
               });
         }

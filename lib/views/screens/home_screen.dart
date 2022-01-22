@@ -4,6 +4,10 @@ import 'package:zabaner/controllers/home_data_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/level.dart';
 import 'package:intl/intl.dart';
+import 'package:zabaner/views/screens/book_screen.dart';
+import 'package:zabaner/views/screens/news_detail_screen.dart';
+import 'package:zabaner/views/screens/podcast_play_screen.dart';
+import 'package:zabaner/views/screens/video_detailt_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key, required this.isGuest}) : super(key: key);
@@ -13,6 +17,7 @@ class HomeScreen extends StatelessWidget {
     final HomeDataController _controller = Get.put(HomeDataController());
     _controller.getData(isGuest);
     isGuest ? {} : _controller.sendStatics();
+    final GlobalKey _globalkey = GlobalKey();
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -120,41 +125,25 @@ class HomeScreen extends StatelessWidget {
                                     SizedBox(
                                       height: Get.height / 3.8,
                                       width: Get.width / 2,
-                                      child: Stack(
-                                        children: [
-                                          Card(
-                                            shape: const CircleBorder(),
-                                            elevation: 3,
-                                            child: CircleAvatar(
-                                              radius: Get.width / 3,
-                                              backgroundColor:
-                                                  const Color(0xffffffff),
-                                              child: SizedBox(
-                                                width: Get.width,
-                                                height: Get.height / 4.2,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 6,
-                                                  color:
-                                                      const Color(0xffFFC200),
-                                                  value: _controller
-                                                      .totallSecond
-                                                      .levelPercent(),
-                                                ),
-                                              ),
+                                      child: Card(
+                                        shape: const CircleBorder(),
+                                        elevation: 3,
+                                        child: CircleAvatar(
+                                          radius: Get.width / 3,
+                                          backgroundColor:
+                                              const Color(0xffffffff),
+                                          child: SizedBox(
+                                            width: Get.width,
+                                            height: Get.width,
+                                            // height: Get.height / 4.2,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 6,
+                                              color: const Color(0xffFFC200),
+                                              value: _controller.totallSecond
+                                                  .levelPercent(),
                                             ),
                                           ),
-                                          Center(
-                                            child: Text(
-                                              _controller.totallSecond
-                                                  .showCurrent(),
-                                              style: const TextStyle(
-                                                  fontFamily: "Arial",
-                                                  fontSize: 15,
-                                                  color: Color(0xff707070)),
-                                            ),
-                                          )
-                                        ],
+                                        ),
                                       ),
                                     )
                                   ],
@@ -290,25 +279,37 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           if (_controller.homeModel.histories[index].type ==
                               "news") {
-                            Navigator.pushNamed(context, '/newsDetail',
+                            // Navigator.pushNamed(context, '/newsDetail',
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
+                            Get.to(NewsDetailScreen(isGuest: isGuest),
                                 arguments:
                                     _controller.homeModel.histories[index].id);
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "podcasts") {
-                            Navigator.pushNamed(context, '/podcast',
+                            // Navigator.pushNamed(context, '/podcast',
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
+                            Get.to(PodcastPlay(isGuest: isGuest),
                                 arguments:
                                     _controller.homeModel.histories[index].id);
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "books") {
-                            Navigator.pushNamed(context, '/bookScreen',
+                            // Navigator.pushNamed(context, '/bookScreen',
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
+                            Get.to(BookScreen(isGuest: isGuest),
                                 arguments:
                                     _controller.homeModel.histories[index].id);
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "videos") {
-                            Navigator.pushNamed(context, '/video',
+                            // Navigator.pushNamed(context, '/video',
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
+                            Get.to(VideoDetailScreen(isGuest: isGuest),
                                 arguments:
                                     _controller.homeModel.histories[index].id);
                           }

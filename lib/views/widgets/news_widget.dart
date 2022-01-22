@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/views/screens/news_detail_screen.dart';
 
 class NewsWidget extends StatelessWidget {
   const NewsWidget(
@@ -10,15 +11,16 @@ class NewsWidget extends StatelessWidget {
       required this.id,
       required this.imagePath,
       required this.bookmark,
+      required this.isGuest,
       this.onBookmarkTap})
       : super(key: key);
   final String title, description, imagePath, id;
-  final bool bookmark;
+  final bool bookmark, isGuest;
   final void Function()? onBookmarkTap;
   @override
   Widget build(BuildContext context) {
     var rxBookmark = RxBool(bookmark);
-    return Container(
+      return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 5.8,
       margin: EdgeInsetsDirectional.only(
@@ -55,16 +57,6 @@ class NewsWidget extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                // InkWell(
-                //   onTap: () {
-                //     Share.share(text);
-                //   },
-                //   child: const Icon(
-                //     Icons.share,
-                //     size: 30,
-                //     color: Color(0xff707070),
-                //   ),
-                // )
               ],
             ),
           ),
@@ -72,7 +64,8 @@ class NewsWidget extends StatelessWidget {
           // title and describtion text
           InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/newsDetail', arguments: id);
+                // Navigator.pushNamed(context, '/newsDetail', arguments: id);
+                Get.to(NewsDetailScreen(isGuest: isGuest), arguments: id);
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),

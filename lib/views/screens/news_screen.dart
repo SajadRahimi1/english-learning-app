@@ -167,6 +167,7 @@ class NewsScreen extends StatelessWidget {
                                                   itemBuilder:
                                                       (context, index) =>
                                                           NewsWidget(
+                                                    isGuest: isGuest,
                                                     title: _newsDataController
                                                         .content[index].title,
                                                     id: _newsDataController
@@ -229,6 +230,7 @@ class NewsScreen extends StatelessWidget {
                                                   .searchContent.length,
                                               itemBuilder: (context, index) =>
                                                   NewsWidget(
+                                                    isGuest: isGuest,
                                                     id: _searchController
                                                         .searchContent[index]
                                                         .id,
