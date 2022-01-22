@@ -3,12 +3,13 @@
 ## ToDo
 - [ ] in detail of every resources must just be title and textes
 - [ ] controll options for player
+- [ ] fix circle bug of progress indicator in home screen
 - [ ] show english text in detaill screen 
 - [ ] get resources type from server
-- [ ] add "همه" to news category
 - [ ] add player to news 
 - [ ] send message to support
-- [ ] add player and other feature to book screen
+- [x] add "همه" to news category
+- [x] add player and other feature to book screen
 - [x] Button for hide english of persian text
 - [x] remove logo and profile avatar in details screen
 - [x] auto scroll when resource played

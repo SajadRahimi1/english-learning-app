@@ -167,7 +167,7 @@ class PlayPodcastController extends GetxController with StateMixin {
           await player.startPlayer(
               fromDataBuffer: audioFile.readAsBytesSync(),
               whenFinished: () {
-                print("finished\nfinished2\nfini2shed\nfini2hed\nfinished2\n");
+               
                 repeat.value ? playAudio(filePath) : {};
               });
         }
