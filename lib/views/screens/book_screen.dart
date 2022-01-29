@@ -4,9 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/controllers/book_detail_controller.dart';
 import 'package:zabaner/models/level.dart';
-import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
-import 'package:zabaner/views/widgets/serach_text_input.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class BookScreen extends StatelessWidget {
@@ -16,7 +14,7 @@ class BookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String bookId = ModalRoute.of(context)?.settings.arguments as String;
-    controller.getBookDetail(bookId, isGuest);
+    controller.getPodcastItemData(bookId, isGuest);
     // final GetStorage _getStotage = GetStorage();
     var en = true.obs, fa = true.obs;
     GetStorage.init();
@@ -97,14 +95,15 @@ class BookScreen extends StatelessWidget {
                             child: !en.value && !fa.value
                                 ? const SizedBox()
                                 : ListView.builder(
-                                    itemCount:
-                                        controller.bookDetail.items.length + 1,
+                                    itemCount: controller
+                                            .bookItemModel.paragraphs.length +
+                                        1,
                                     controller: controller.scrollController,
                                     itemBuilder: (context, index) => index == 0
                                         ? SizedBox(
                                             width: Get.width,
                                             child: Text(
-                                              controller.bookDetail.title,
+                                              controller.bookItemModel.title,
                                               style: const TextStyle(
                                                   fontFamily: "Yekan",
                                                   fontSize: 22),

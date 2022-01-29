@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:zabaner/controllers/news_detail_controller.dart';
 import 'package:zabaner/models/level.dart';
-import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 

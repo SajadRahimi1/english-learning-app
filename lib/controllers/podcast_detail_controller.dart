@@ -24,8 +24,6 @@ class PodcastDetailController extends GetxController with StateMixin {
           type: "type",
           imagePath: "imagePath",
           paragraphs: [],
-          itemTitle: "itemTitle",
-          itemFaTitle: "itemFaTitle",
           podcastPath: "podcastPath")
       .obs;
   late io.Directory appDoc;
@@ -78,8 +76,7 @@ class PodcastDetailController extends GetxController with StateMixin {
       _getStorage.remove('token');
       _getStorage.remove('timers');
       Get.offAll(LoginScreen());
-    }
-    else {
+    } else {
       change(null, status: RxStatus.error());
     }
   }

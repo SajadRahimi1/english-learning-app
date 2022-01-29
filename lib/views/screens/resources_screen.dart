@@ -92,6 +92,7 @@ class ResourcesScreen extends StatelessWidget {
                             child: _controller.obx((state) => ListView(
                                   children: [
                                     BookResources(
+                                      isGuest: isGuest,
                                       resource: _controller
                                           .resourcesList[0].resources,
                                     ),

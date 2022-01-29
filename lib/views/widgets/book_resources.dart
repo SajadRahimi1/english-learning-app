@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/book_screen.dart';
 
 class BookResources extends StatelessWidget {
-  const BookResources({Key? key, required this.resource}) : super(key: key);
+  const BookResources({Key? key, required this.resource, required this.isGuest})
+      : super(key: key);
   final List<Resource> resource;
+
+  final bool isGuest;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,13 +49,14 @@ class BookResources extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: 6,
+              itemCount: resource.length,
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width / 25,
                 right: MediaQuery.of(context).size.width / 25,
               ),
               reverse: true,
               itemBuilder: (context, index) => BookListTile(
+                  isGuest: isGuest,
                   imagePath: resource[index].imagePath,
                   title: resource[index].title,
                   id: resource[index].id),
@@ -74,13 +81,17 @@ class BookListTile extends StatelessWidget {
       {Key? key,
       required this.imagePath,
       required this.title,
+      required this.isGuest,
       required this.id})
       : super(key: key);
   final String imagePath, title, id;
+  final bool isGuest;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
+      onTap: () => Get.to(BookScreen(isGuest: isGuest), arguments: id),
+      // onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

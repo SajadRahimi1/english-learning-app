@@ -17,8 +17,6 @@ class VideoItemsModel {
     required this.title,
     required this.faTitle,
     required this.imagePath,
-    required this.itemTitle,
-    required this.itemFaTitle,
     required this.videoPath,
     required this.type,
   });
@@ -28,8 +26,6 @@ class VideoItemsModel {
   final String title;
   final String faTitle;
   final String imagePath;
-  final String itemTitle;
-  final String itemFaTitle;
   final String videoPath;
   final String type;
 
@@ -41,8 +37,6 @@ class VideoItemsModel {
         title: json["title"],
         faTitle: json["faTitle"],
         imagePath: json["imagePath"],
-        itemTitle: json["itemTitle"],
-        itemFaTitle: json["itemFaTitle"],
         videoPath: json["videoPath"],
         type: json["type"],
       );
@@ -53,8 +47,6 @@ class VideoItemsModel {
         "title": title,
         "faTitle": faTitle,
         "imagePath": imagePath,
-        "itemTitle": itemTitle,
-        "itemFaTitle": itemFaTitle,
         "videoPath": videoPath,
         "type": type,
       };

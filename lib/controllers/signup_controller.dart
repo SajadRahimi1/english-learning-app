@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:zabaner/main.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/validate_reset_password_screen.dart';
 

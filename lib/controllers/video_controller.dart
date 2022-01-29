@@ -1,24 +1,30 @@
-import 'package:flutter/widgets.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:zabaner/models/podcast_item_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/models/video_items_model.dart';
-import 'package:zabaner/models/video_model.dart';
 import 'package:video_player/video_player.dart';
+import 'package:zabaner/views/colors.dart';
+import 'package:path_provider/path_provider.dart' as path;
 import 'package:zabaner/views/screens/login_screen.dart';
+import 'dart:io' as io;
 
 class VideoController extends GetxController with StateMixin {
-  late VideoModel videoModel;
+  // late VideoModel videoModel;
   late VideoPlayerController videoController;
   var isHide = false.obs;
+  var videoInitialized = false.obs;
   var repeat = false.obs;
   var duration = const Duration().obs;
   var playSpeed = 1.0.obs;
+  late io.Directory appDoc;
+
+  var downloadingPercent = 0.0.obs;
+
+  var downloadingState = "".obs;
 
   var playerPosition = const Duration().obs;
-
   late DateTime _dateTime;
   var playingText = "".obs;
   Rx<VideoItemsModel> videoItems = VideoItemsModel(
@@ -28,13 +34,12 @@ class VideoController extends GetxController with StateMixin {
           type: "type",
           imagePath: "imagePath",
           paragraphs: [],
-          itemTitle: "itemTitle",
-          itemFaTitle: "itemFaTitle",
           videoPath: "podcastPath")
       .obs;
   final GetConnect _getConnect = GetConnect();
   final GetStorage _getStorage = GetStorage();
   var isPlaying = false.obs;
+  final Dio dio = Dio();
   var playIndex = 0;
   late AutoScrollController scrollController;
   var bookmark = false.obs;
@@ -43,6 +48,7 @@ class VideoController extends GetxController with StateMixin {
     super.onInit();
     _getConnect.allowAutoSignedCert = true;
     scrollController = AutoScrollController();
+    appDoc = await path.getApplicationDocumentsDirectory();
   }
 
   @override
@@ -58,6 +64,8 @@ class VideoController extends GetxController with StateMixin {
     isHide = false.obs;
     playSpeed.value = 1;
     playIndex = 0;
+    downloadingPercent = 0.0.obs;
+    downloadingState = "".obs;
     repeat = false.obs;
     playingText = "".obs;
     duration = const Duration(milliseconds: 0).obs;
@@ -145,14 +153,12 @@ class VideoController extends GetxController with StateMixin {
     }
   }
 
-  void getVideoItemData(
-      String podcastId, String edposodeId, bool isGuest) async {
+  void getVideoItemData(String podcastId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
-        ? await _getConnect
-            .get(getVideoDataUrl + podcastId + "/item/" + edposodeId)
+        ? await _getConnect.get(getVideoDataUrl + podcastId)
         : await _getConnect.get(
-            getVideoDataUrl + podcastId + "/item/" + edposodeId,
+            getVideoDataUrl + podcastId,
             headers: {
               'accept': 'application/json',
               'Authorization': 'Bearer ${_getStorage.read('token')}'
@@ -161,6 +167,26 @@ class VideoController extends GetxController with StateMixin {
 
     if (_request.statusCode == 200) {
       videoItems.value = videoItemsModelFromJson(_request.bodyString ?? "");
+      var _v = "https://185.79.156.93:3000" + videoItems.value.videoPath;
+      print(_v);
+
+      if (fileExists(appDoc.path + podcastId + videoItems.value.title)) {
+        videoController = VideoPlayerController.file(
+            io.File(appDoc.path + podcastId + videoItems.value.title))
+          ..initialize().then((_) {
+            change(null, status: RxStatus.success());
+            videoInitialized.value = true;
+          });
+        videoController.addListener(play);
+      } else {
+        videoController =
+            VideoPlayerController.network(baseUrl + videoItems.value.videoPath)
+              ..initialize().then((_) {
+                change(null, status: RxStatus.success());
+              });
+        videoController.addListener(play);
+      }
+
       change(null, status: RxStatus.success());
     } else if (_request.statusCode == 401) {
       _getStorage.remove('timers');
@@ -172,30 +198,70 @@ class VideoController extends GetxController with StateMixin {
     }
   }
 
-  Future<void> getData(String id, bool isGuest) async {
-    _getConnect.allowAutoSignedCert = true;
+  void download(String urlPath, String id, String title) async {
+    io.File _checkFile = io.File(appDoc.path + id + title);
 
-    await GetStorage.init();
-    var _request = await _getConnect.get(
-      getVideoDataUrl + id,
-      headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer ${_getStorage.read('token')}'
-      },
-    );
+    print(appDoc.path + id + title);
+    if (!_checkFile.existsSync()) {
+      var _downloadRequest = await dio
+          .download(baseUrl + urlPath, appDoc.path + id + title,
+              onReceiveProgress: (recive, total) {
+        downloadingState.value = "downloading";
+        downloadingPercent.value = recive / total;
+        print(downloadingPercent);
+      });
+      Get.closeAllSnackbars();
 
-    if (_request.statusCode == 200) {
-      videoModel = videoModelFromJson(_request.bodyString ?? "");
-      print(_request.body);
-      videoController =
-          VideoPlayerController.network(baseUrl + videoModel.items[0].videoPath)
-            ..initialize().then((_) {
-              change(null, status: RxStatus.success());
-            });
-      videoController.addListener(play);
-      getVideoItemData(id, videoModel.items[0].id, isGuest);
+      if (_downloadRequest.statusCode == 200) {
+        print("Completed");
+        Get.snackbar("", "دانلود با موفقیت به اتمام رسید",
+            backgroundColor: orange);
+        downloadingPercent.value = 0;
+        videoController =
+            VideoPlayerController.file(io.File(appDoc.path + id + title))
+              ..initialize().then((_) {
+                change(null, status: RxStatus.success());
+                videoInitialized.value = true;
+              });
+        videoController.addListener(play);
+      }
     } else {
-      change(null, status: RxStatus.error());
+      Get.snackbar(
+        "",
+        "شما این فایل را قبلا دانلود کرده اید",
+        backgroundColor: orange,
+      );
     }
   }
+
+  bool fileExists(String path) {
+    io.File _checkFile = io.File(path);
+    return _checkFile.existsSync();
+  }
+  // Future<void> getData(String id, bool isGuest) async {
+  //   _getConnect.allowAutoSignedCert = true;
+
+  //   await GetStorage.init();
+  //   var _request = await _getConnect.get(
+  //     getVideoDataUrl + id,
+  //     headers: {
+  //       'accept': 'application/json',
+  //       'Authorization': 'Bearer ${_getStorage.read('token')}'
+  //     },
+  //   );
+
+  //   if (_request.statusCode == 200) {
+  //     videoModel = videoModelFromJson(_request.bodyString ?? "");
+  //     print(_request.body);
+  //     videoController =
+  //         VideoPlayerController.network(baseUrl + videoModel.items[0].videoPath)
+  //           ..initialize().then((_) {
+  //             change(null, status: RxStatus.success());
+  //           });
+  //     videoController.addListener(play);
+  //     getVideoItemData(id, videoModel.items[0].id, isGuest);
+  //   } else {
+  //     change(null, status: RxStatus.error());
+  //   }
+  // }
 }

@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/news_detail_screen.dart';
-import 'package:zabaner/views/screens/pocast_screen.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
 import 'package:zabaner/views/screens/video_detailt_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

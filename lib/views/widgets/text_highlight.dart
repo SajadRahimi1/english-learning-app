@@ -37,7 +37,7 @@ class TextHighlight extends StatelessWidget {
               child: Text(faText,
                   textAlign: TextAlign.right,
                   textDirection: TextDirection.rtl,
-                  style: TextStyle(fontFamily: "Yekan")),
+                  style: const TextStyle(fontFamily: "Yekan")),
             ),
           ),
         ]),

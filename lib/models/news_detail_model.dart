@@ -2,7 +2,6 @@
 //
 //     final newsItemModel = newsItemModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 NewsItemModel newsItemModelFromJson(String str) => NewsItemModel.fromJson(json.decode(str));

@@ -2,7 +2,6 @@
 //
 //     final bookItemModel = bookItemModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 BookItemModel bookItemModelFromJson(String str) =>
@@ -16,8 +15,6 @@ class BookItemModel {
     required this.type,
     required this.imagePath,
     required this.paragraphs,
-    required this.itemTitle,
-    required this.itemFaTitle,
     required this.podcastPath,
   });
 
@@ -27,8 +24,6 @@ class BookItemModel {
   final String type;
   final String imagePath;
   final List<Paragraph> paragraphs;
-  final String itemTitle;
-  final String itemFaTitle;
   final String podcastPath;
 
   factory BookItemModel.fromJson(Map<String, dynamic> json) => BookItemModel(
@@ -39,8 +34,6 @@ class BookItemModel {
         imagePath: json["imagePath"],
         paragraphs: List<Paragraph>.from(
             json["paragraphs"].map((x) => Paragraph.fromJson(x))),
-        itemTitle: json["itemTitle"],
-        itemFaTitle: json["itemFaTitle"],
         podcastPath: json["podcastPath"],
       );
 }

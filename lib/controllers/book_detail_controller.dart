@@ -14,7 +14,7 @@ import 'package:zabaner/views/screens/login_screen.dart';
 class BookController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   final GetStorage _getStorage = GetStorage();
-  late BookModel bookDetail;
+  // late BookModel bookDetail;
   late BookItemModel bookItemModel;
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   AutoScrollController scrollController = AutoScrollController();
@@ -102,32 +102,32 @@ class BookController extends GetxController with StateMixin {
     isPlaying.value = false;
   }
 
-  void getBookDetail(String bookId, bool isGuest) async {
-    _getConnect.allowAutoSignedCert = true;
-    var request = isGuest
-        ? await _getConnect.get(getBookDetailUrl + bookId)
-        : await _getConnect.get(
-            getBookDetailUrl + bookId,
-            headers: {
-              'accept': 'application/json',
-              'Authorization': 'Bearer ${_getStorage.read('token')}'
-            },
-          );
+  // void getBookDetail(String bookId, bool isGuest) async {
+  //   _getConnect.allowAutoSignedCert = true;
+  //   var request = isGuest
+  //       ? await _getConnect.get(getBookDetailUrl + bookId)
+  //       : await _getConnect.get(
+  //           getBookDetailUrl + bookId,
+  //           headers: {
+  //             'accept': 'application/json',
+  //             'Authorization': 'Bearer ${_getStorage.read('token')}'
+  //           },
+  //         );
 
-    if (request.statusCode == 200) {
-      bookDetail = bookModelFromJson(request.bodyString ?? "");
-      bookDetail.items.isNotEmpty
-          ? getPodcastItemData(bookId, bookDetail.items[0].id, isGuest)
-          : change(null, status: RxStatus.success());
-    } else if (request.statusCode == 401) {
-      _getStorage.remove('timers');
-      _getStorage.remove('token');
-      _getStorage.remove('timers');
-      Get.offAll(LoginScreen());
-    } else {
-      change(null, status: RxStatus.error());
-    }
-  }
+  //   if (request.statusCode == 200) {
+  //     bookDetail = bookModelFromJson(request.bodyString ?? "");
+  //     bookDetail.items.isNotEmpty
+  //         ? getPodcastItemData(bookId, bookDetail.items[0].id, isGuest)
+  //         : change(null, status: RxStatus.success());
+  //   } else if (request.statusCode == 401) {
+  //     _getStorage.remove('timers');
+  //     _getStorage.remove('token');
+  //     _getStorage.remove('timers');
+  //     Get.offAll(LoginScreen());
+  //   } else {
+  //     change(null, status: RxStatus.error());
+  //   }
+  // }
 
   void playAudio(String filePath) async {
     try {
@@ -199,13 +199,13 @@ class BookController extends GetxController with StateMixin {
   }
 
   void getPodcastItemData(
-      String bookId, String edposodeId, bool isGuest) async {
+      String bookId,  bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
         ? await _getConnect
-            .get(getBookDetailUrl + bookId + "/item/" + edposodeId)
+            .get(getBookDetailUrl + bookId)
         : await _getConnect.get(
-            getBookDetailUrl + bookId + "/item/" + edposodeId,
+            getBookDetailUrl + bookId,
             headers: {
               'accept': 'application/json',
               'Authorization': 'Bearer ${_getStorage.read('token')}'

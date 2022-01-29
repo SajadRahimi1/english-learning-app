@@ -48,7 +48,7 @@ class PocastResources extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: 6,
+              itemCount: resource.length,
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width / 25,
                 right: MediaQuery.of(context).size.width / 25,

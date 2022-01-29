@@ -19,7 +19,7 @@ class PodcastPlay extends StatelessWidget {
     GetStorage.init();
     controller.customeInit();
 
-    controller.getPodcastData(id, isGuest);
+    controller.getPodcastItemData(id, isGuest);
     return WillPopScope(
       onWillPop: () async {
         controller.onClose();
@@ -53,7 +53,7 @@ class PodcastPlay extends StatelessWidget {
                             onTap: () {
                               controller.download(
                                   controller.podcastItem.podcastPath,
-                                  id.split(":")[0],
+                                  id,
                                   controller.podcastItem.title);
                             },
                             child: Icon(
@@ -261,7 +261,8 @@ class PodcastPlay extends StatelessWidget {
                                       onTap: () {
                                         if (!controller.isPlaying.value) {
                                           controller.playAudio(
-                                              id.split(":")[2] +
+                                              controller.appDoc.path +
+                                                  id +
                                                   controller.podcastItem.title);
                                         } else {
                                           controller.player.pausePlayer();

@@ -15,8 +15,6 @@ class PodcastItemModel {
     required this.type,
     required this.imagePath,
     required this.paragraphs,
-    required this.itemTitle,
-    required this.itemFaTitle,
     required this.podcastPath,
   });
 
@@ -26,8 +24,6 @@ class PodcastItemModel {
   final String type;
   final String imagePath;
   final List<Paragraph> paragraphs;
-  final String itemTitle;
-  final String itemFaTitle;
   final String podcastPath;
 
   factory PodcastItemModel.fromJson(Map<String, dynamic> json) =>
@@ -39,8 +35,6 @@ class PodcastItemModel {
         imagePath: json["imagePath"],
         paragraphs: List<Paragraph>.from(
             json["paragraphs"].map((x) => Paragraph.fromJson(x))),
-        itemTitle: json["itemTitle"],
-        itemFaTitle: json["itemFaTitle"],
         podcastPath: json["podcastPath"],
       );
 }

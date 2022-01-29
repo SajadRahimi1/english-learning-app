@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zabaner/controllers/video_controller.dart';
 import 'package:zabaner/models/level.dart';
+import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
@@ -18,7 +19,7 @@ class VideoDetailScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments.toString() ?? "";
 
     controller.customeInit();
-    controller.getData(id, isGuest);
+    controller.getVideoItemData(id, isGuest);
 
     return SafeArea(
         child: WillPopScope(
@@ -37,13 +38,17 @@ class VideoDetailScreen extends StatelessWidget {
                     horizontal: Get.width / 50, vertical: 5),
                 height: Get.height / 2.2,
                 width: Get.width,
-                child: controller.videoController.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio:
-                            controller.videoController.value.aspectRatio,
-                        child: VideoPlayer(controller.videoController),
-                      )
-                    : Container()
+                child: Obx(() => controller.videoInitialized.value
+                    ? controller.videoController.value.isInitialized
+                        ? AspectRatio(
+                            aspectRatio:
+                                controller.videoController.value.aspectRatio,
+                            child: VideoPlayer(controller.videoController),
+                          )
+                        : Container()
+                    : Image.network(
+                        baseUrl + controller.videoItems.value.imagePath,
+                        fit: BoxFit.fill))
 
                 // back button
                 // child: Padding(
@@ -83,6 +88,30 @@ class VideoDetailScreen extends StatelessWidget {
                             size: Get.width / 11,
                           )),
                     ),
+
+                    Obx(() => controller.downloadingState.value == "downloading"
+                        ? Obx(() => CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: CircularProgressIndicator(
+                                value: controller.downloadingPercent.value,
+                                strokeWidth: 2,
+                              ),
+                            ))
+                        :
+                        // Download
+                        InkWell(
+                            onTap: () {
+                              controller.download(
+                                  controller.videoItems.value.videoPath,
+                                  id,
+                                  controller.videoItems.value.title);
+                            },
+                            child: Icon(
+                              Icons.cloud_download,
+                              size: Get.width / 12,
+                            ),
+                          )),
+
                     SizedBox(
                       width: Get.width / 14,
                       height: Get.height,
@@ -246,11 +275,19 @@ class VideoDetailScreen extends StatelessWidget {
                                 // play or pause
                                 Obx(() => InkWell(
                                     onTap: () {
-                                      if (!controller.isPlaying.value) {
-                                        controller.videoController.play();
+                                      if (controller.fileExists(controller
+                                              .appDoc.path +
+                                          id +
+                                          controller.videoItems.value.title)) {
+                                        if (!controller.isPlaying.value) {
+                                          controller.videoController.play();
+                                        } else {
+                                          controller.videoController.pause();
+                                          controller.isPlaying.value = false;
+                                        }
                                       } else {
-                                        controller.videoController.pause();
-                                        controller.isPlaying.value = false;
+                                        Get.snackbar("",
+                                            "ابتدا فایل صورتی را دانلود کنید");
                                       }
                                     },
                                     child: Icon(controller.isPlaying.value

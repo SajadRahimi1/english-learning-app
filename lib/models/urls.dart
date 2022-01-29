@@ -1,4 +1,5 @@
-const baseUrl = "https://3sotweb-projects.com";
+// const baseUrl = "https://3sotweb-projects.com";
+const baseUrl = "https://185.79.156.93:3000";
 // const baseUrl = "https://138.201.100.200:3000";
 const signinUrl = "$baseUrl/api/v1/auth/signin";
 const signupUrl = "$baseUrl/api/v1/auth/signup";

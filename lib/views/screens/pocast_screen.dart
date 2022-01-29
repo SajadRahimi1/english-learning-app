@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zabaner/controllers/podcast_detail_controller.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
-import 'package:zabaner/views/widgets/serach_text_input.dart';
-import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class PodcastScreen extends StatelessWidget {
   PodcastScreen({Key? key, required this.isGuest}) : super(key: key);
