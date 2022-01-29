@@ -22,6 +22,7 @@ class NewsDetailController extends GetxController with StateMixin {
   var seconds = 0;
   var isPlaying = false.obs;
   var ind = 0;
+  var en = false.obs, fa = false.obs;
   var playingText = "".obs;
   var playSpeed = 1.0.obs;
   var isHide = false.obs;
@@ -57,6 +58,8 @@ class NewsDetailController extends GetxController with StateMixin {
     _dateTime = DateTime.now();
     isHide = false.obs;
     ind = 0;
+    en = false.obs;
+    fa = false.obs;
     playingText = "".obs;
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
@@ -110,6 +113,22 @@ class NewsDetailController extends GetxController with StateMixin {
     print(_request.body);
     if (_request.statusCode == 200) {
       newsDetail = newsItemModelFromJson(_request.bodyString ?? "");
+      for (var item in newsDetail.paragraphs) {
+        if (item.fa.isNotEmpty) {
+          fa.value = true;
+          break;
+        } else {
+          fa.value = false;
+        }
+      }
+      for (var item in newsDetail.paragraphs) {
+        if (item.en.isNotEmpty) {
+          en.value = true;
+          break;
+        } else {
+          en.value = false;
+        }
+      }
       bookmark.value = newsDetail.bookmark;
       change(null, status: RxStatus.success());
       print(_request.body);

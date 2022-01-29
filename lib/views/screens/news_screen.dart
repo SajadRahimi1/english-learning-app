@@ -184,16 +184,6 @@ class NewsScreen extends StatelessWidget {
                                                         _newsDataController
                                                             .content[index]
                                                             .bookmark,
-                                                    onBookmarkTap: () {
-                                                      if (!isGuest) {
-                                                        _newsDataController
-                                                            .bookmarkToggle(
-                                                                _newsDataController
-                                                                    .content[
-                                                                        index]
-                                                                    .id);
-                                                      }
-                                                    },
                                                   ),
                                                 ),
                                             onLoading: const Center(
