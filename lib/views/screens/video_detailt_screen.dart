@@ -45,10 +45,10 @@ class VideoDetailScreen extends StatelessWidget {
                                 controller.videoController.value.aspectRatio,
                             child: VideoPlayer(controller.videoController),
                           )
-                        : Container()
+                        : const SizedBox()
                     : Image.network(
                         baseUrl + controller.videoItems.value.imagePath,
-                        fit: BoxFit.fill))
+                      ))
 
                 // back button
                 // child: Padding(
@@ -77,16 +77,16 @@ class VideoDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                     // bookmark icon
-                    InkWell(
-                      onTap: () async {
-                        controller.bookmarkToggle(id);
-                      },
-                      child: Obx(() => Icon(
-                            controller.bookmark.value
-                                ? Icons.bookmark
-                                : Icons.bookmark_outline,
-                            size: Get.width / 11,
-                          )),
+                    Row(
+                      children: [
+                        const Text("   انگلیسی:",
+                            style:
+                                TextStyle(fontFamily: "Yekan", fontSize: 16)),
+                        Obx(() => Switch(
+                              value: controller.en.value,
+                              onChanged: (value) => controller.en.value = value,
+                            ))
+                      ],
                     ),
 
                     Obx(() => controller.downloadingState.value == "downloading"
@@ -112,25 +112,17 @@ class VideoDetailScreen extends StatelessWidget {
                             ),
                           )),
 
-                    SizedBox(
-                      width: Get.width / 14,
-                      height: Get.height,
-                      child: InkWell(
-                        onTap: () {
-                          String _text = "";
-                          for (var item
-                              in controller.videoItems.value.paragraphs) {
-                            _text += item.en + "\n";
-                            _text += item.fa + "\n";
-                          }
-                          Share.share(_text);
-                        },
-                        child: Image.asset(
-                          "assets/images/share.png",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
+                    Row(
+                      children: [
+                        const Text(" فارسی:",
+                            style:
+                                TextStyle(fontFamily: "Yekan", fontSize: 16)),
+                        Obx(() => Switch(
+                              value: controller.fa.value,
+                              onChanged: (value) => controller.fa.value = value,
+                            ))
+                      ],
+                    )
                   ]),
             ),
 
@@ -146,6 +138,8 @@ class VideoDetailScreen extends StatelessWidget {
                             key: ValueKey(index),
                             index: index,
                             child: TextHighlight(
+                                visibleEN: controller.en.value,
+                                visibleFA: controller.fa.value,
                                 enText: controller
                                     .videoItems.value.paragraphs[index].en,
                                 faText: controller

@@ -43,7 +43,6 @@ class PlayPodcastController extends GetxController with StateMixin {
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
     downloadingState = "".obs;
-    
   }
 
   void customeInit() {
@@ -51,6 +50,8 @@ class PlayPodcastController extends GetxController with StateMixin {
     isHide = false.obs;
     ind = 0;
     playingText = "".obs;
+    en = false.obs;
+    fa = false.obs;
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
     duration = const Duration(milliseconds: 0).obs;
@@ -166,6 +167,22 @@ class PlayPodcastController extends GetxController with StateMixin {
 
     if (_request.statusCode == 200) {
       podcastItem = podcastItemModelFromJson(_request.bodyString ?? "");
+      for (var item in podcastItem.paragraphs) {
+        if (item.fa.isNotEmpty) {
+          fa.value = true;
+          break;
+        } else {
+          fa.value = false;
+        }
+      }
+      for (var item in podcastItem.paragraphs) {
+        if (item.en.isNotEmpty) {
+          en.value = true;
+          break;
+        } else {
+          en.value = false;
+        }
+      }
       change(null, status: RxStatus.success());
       for (var item in podcastItem.paragraphs) {
         if (item.en.isNotEmpty) {

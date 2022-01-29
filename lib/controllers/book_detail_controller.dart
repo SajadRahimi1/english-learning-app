@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zabaner/models/book_item_model.dart';
-import 'package:zabaner/models/bool_model.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
@@ -22,6 +21,7 @@ class BookController extends GetxController with StateMixin {
   final Dio dio = Dio();
   late io.Directory appDoc;
   var seconds = 0;
+  var en = true.obs, fa = true.obs;
   var isPlaying = false.obs;
   var ind = 0;
   var playingText = "".obs;
@@ -48,6 +48,7 @@ class BookController extends GetxController with StateMixin {
     GetStorage.init();
     _dateTime = DateTime.now();
     isHide = false.obs;
+    en = true.obs; fa = true.obs;
     ind = 0;
     playingText = "".obs;
     percentPlayed = 0.0.obs;
@@ -214,6 +215,22 @@ class BookController extends GetxController with StateMixin {
 
     if (_request.statusCode == 200) {
       bookItemModel = bookItemModelFromJson(_request.bodyString ?? "");
+      for (var item in bookItemModel.paragraphs) {
+        if (item.fa.isNotEmpty) {
+          fa.value = true;
+          break;
+        } else {
+          fa.value = false;
+        }
+      }
+      for (var item in bookItemModel.paragraphs) {
+        if (item.en.isNotEmpty) {
+          en.value = true;
+          break;
+        } else {
+          en.value = false;
+        }
+      }
       change(null, status: RxStatus.success());
       print(bookItemModel.paragraphs[0].pst);
     } else if (_request.statusCode == 401) {

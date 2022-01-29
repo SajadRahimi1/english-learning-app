@@ -104,7 +104,8 @@ class PodcastPlay extends StatelessWidget {
                                         ? SizedBox(
                                             width: Get.width,
                                             child: Text(
-                                              controller.podcastItem.title,
+                                              "\n" +
+                                                  controller.podcastItem.title,
                                               style: const TextStyle(
                                                 fontFamily: "Yekan",
                                                 fontSize: 25,

@@ -16,7 +16,7 @@ class BookScreen extends StatelessWidget {
     final String bookId = ModalRoute.of(context)?.settings.arguments as String;
     controller.getPodcastItemData(bookId, isGuest);
     // final GetStorage _getStotage = GetStorage();
-    var en = true.obs, fa = true.obs;
+
     GetStorage.init();
     controller.customeInit();
     return SafeArea(
@@ -66,8 +66,8 @@ class BookScreen extends StatelessWidget {
                             style:
                                 TextStyle(fontFamily: "Yekan", fontSize: 16)),
                         Obx(() => Switch(
-                              value: en.value,
-                              onChanged: (value) => en.value = value,
+                              value: controller.en.value,
+                              onChanged: (value) => controller.en.value = value,
                             ))
                       ],
                     ),
@@ -77,66 +77,52 @@ class BookScreen extends StatelessWidget {
                             style:
                                 TextStyle(fontFamily: "Yekan", fontSize: 16)),
                         Obx(() => Switch(
-                              value: fa.value,
-                              onChanged: (value) => fa.value = value,
+                              value: controller.fa.value,
+                              onChanged: (value) => controller.fa.value = value,
                             ))
                       ],
                     )
                   ]),
               body: Column(children: [
                 // Paragraph
-                Obx(() => Expanded(
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: Get.width / 25),
-                        child: SizedBox(
-                            width: Get.width,
-                            height: Get.height,
-                            child: !en.value && !fa.value
-                                ? const SizedBox()
-                                : ListView.builder(
-                                    itemCount: controller
-                                            .bookItemModel.paragraphs.length +
-                                        1,
-                                    controller: controller.scrollController,
-                                    itemBuilder: (context, index) => index == 0
-                                        ? SizedBox(
-                                            width: Get.width,
-                                            child: Text(
-                                              controller.bookItemModel.title,
-                                              style: const TextStyle(
-                                                  fontFamily: "Yekan",
-                                                  fontSize: 22),
-                                              textAlign: TextAlign.center,
-                                            ))
-                                        : Obx(() => AutoScrollTag(
-                                              index: index,
-                                              key: ValueKey(index - 1),
-                                              controller:
-                                                  controller.scrollController,
-                                              child: TextHighlight(
-                                                  enText: controller
-                                                      .bookItemModel
-                                                      .paragraphs[index - 1]
-                                                      .en,
-                                                  faText: controller
-                                                      .bookItemModel
-                                                      .paragraphs[index - 1]
-                                                      .fa,
-                                                  visibleEN: en.value,
-                                                  visibleFA: fa.value,
-                                                  color: controller.playingText
-                                                              .value ==
-                                                          controller
-                                                              .bookItemModel
-                                                              .paragraphs[
-                                                                  index - 1]
-                                                              .en
-                                                      ? orange
-                                                      : Colors.white),
-                                            )))),
-                      ),
-                    )),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
+                    child: SizedBox(
+                        width: Get.width,
+                        height: Get.height,
+                        child: ListView.builder(
+                            itemCount:
+                                controller.bookItemModel.paragraphs.length + 1,
+                            controller: controller.scrollController,
+                            itemBuilder: (context, index) => index == 0
+                                ? SizedBox(
+                                    width: Get.width,
+                                    child: Text(
+                                      "\n" + controller.bookItemModel.title,
+                                      style: const TextStyle(
+                                          fontFamily: "Yekan", fontSize: 22),
+                                      textAlign: TextAlign.center,
+                                    ))
+                                : Obx(() => AutoScrollTag(
+                                      index: index,
+                                      key: ValueKey(index - 1),
+                                      controller: controller.scrollController,
+                                      child: TextHighlight(
+                                          enText: controller.bookItemModel
+                                              .paragraphs[index - 1].en,
+                                          faText: controller.bookItemModel
+                                              .paragraphs[index - 1].fa,
+                                          visibleEN: controller.en.value,
+                                          visibleFA: controller.fa.value,
+                                          color: controller.playingText.value ==
+                                                  controller.bookItemModel
+                                                      .paragraphs[index - 1].en
+                                              ? orange
+                                              : Colors.white),
+                                    )))),
+                  ),
+                ),
 
                 Obx(() => AnimatedContainer(
                     duration: const Duration(milliseconds: 500),

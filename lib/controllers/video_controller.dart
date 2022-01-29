@@ -15,6 +15,8 @@ class VideoController extends GetxController with StateMixin {
   late VideoPlayerController videoController;
   var isHide = false.obs;
   var videoInitialized = false.obs;
+  var fa = false.obs;
+  var en = false.obs;
   var repeat = false.obs;
   var duration = const Duration().obs;
   var playSpeed = 1.0.obs;
@@ -62,6 +64,8 @@ class VideoController extends GetxController with StateMixin {
     playIndex = 0;
     isPlaying = false.obs;
     isHide = false.obs;
+    fa = false.obs;
+    en = false.obs;
     playSpeed.value = 1;
     playIndex = 0;
     downloadingPercent = 0.0.obs;
@@ -167,8 +171,23 @@ class VideoController extends GetxController with StateMixin {
 
     if (_request.statusCode == 200) {
       videoItems.value = videoItemsModelFromJson(_request.bodyString ?? "");
-      var _v = "https://185.79.156.93:3000" + videoItems.value.videoPath;
-      print(_v);
+
+      for (var item in videoItems.value.paragraphs) {
+        if (item.fa.isNotEmpty) {
+          fa.value = true;
+          break;
+        } else {
+          fa.value = false;
+        }
+      }
+      for (var item in videoItems.value.paragraphs) {
+        if (item.en.isNotEmpty) {
+          en.value = true;
+          break;
+        } else {
+          en.value = false;
+        }
+      }
 
       if (fileExists(appDoc.path + podcastId + videoItems.value.title)) {
         videoController = VideoPlayerController.file(
