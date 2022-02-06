@@ -1,5 +1,5 @@
 # Set the name of your workflow
-name: IOSBuilder
+name: AndroidBuild
 
 # Controls when the action will run.
 # [workflow_dispatch] --> allows to run the workflow manually
@@ -14,7 +14,7 @@ jobs:
   # In this workflow we use a single job called "build"
   build:
     # The type of runner ie, the OS that the job will run on. apart from mac windows and ubuntu are also available
-    runs-on: macos-latest
+    runs-on: ubuntu
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,15 +29,13 @@ jobs:
      - run: flutter pub get
 
 #build and sign the ipa
-     - name: Building IPA
+     - name: Building APK
        run: |
-         xcode-project use-profiles
-         flutter build ios --profile
-         xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
+         flutter build apk --profile --split-per-abi
 #collect the files            
-     - name: collect ipa artifacts
+     - name: collect apk artifacts
        uses: actions/upload-artifact@v2
        with:
-        name: adhoc-ipa
+        name: apk
         # Path to the release files
-        path: build/ios/ipa/*.ipa
+        path: build/app/outputs/apk/profile/app-armeabi-v7a-profile.apk
