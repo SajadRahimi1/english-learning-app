@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/support_controller.dart';
+import 'package:zabaner/views/colors.dart';
+import 'package:zabaner/views/widgets/message_text_widget.dart';
 
 class ProfileSupport extends StatelessWidget {
-  const ProfileSupport({Key? key}) : super(key: key);
+  ProfileSupport({Key? key}) : super(key: key);
+  final SupportController _controller = Get.put(SupportController());
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +66,10 @@ class ProfileSupport extends StatelessWidget {
                       TextField(
                         keyboardType: TextInputType.multiline,
                         maxLines: 7,
+                        maxLength: 2000,
+                        onChanged: (value) {
+                          _controller.message = value;
+                        },
                         decoration: InputDecoration(
                             hintText: "متن مورد نظر خود را وارد کنید...",
                             hintStyle: const TextStyle(
@@ -88,7 +96,9 @@ class ProfileSupport extends StatelessWidget {
                         "ارسال ",
                         style: TextStyle(fontFamily: "Yekan", fontSize: 12),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _controller.sendMessage();
+                      },
                       style: ButtonStyle(
                           elevation: MaterialStateProperty.all(0),
                           shape: MaterialStateProperty.all(
@@ -102,22 +112,27 @@ class ProfileSupport extends StatelessWidget {
           ),
         ),
 
-        // Support email text
-        SizedBox(
-          width: Get.width / 1.2,
-          child: const Text(
-            "Support@Zabaner.ir",
-            style: TextStyle(
-                fontFamily: "Yekan", fontSize: 10, color: Color(0xff5A5A5A)),
-            textAlign: TextAlign.left,
-          ),
-        ),
+        // // Support email text
+        // SizedBox(
+        //   width: Get.width / 1.2,
+        //   child: const Text(
+        //     "Support@Zabaner.ir",
+        //     style: TextStyle(
+        //         fontFamily: "Yekan", fontSize: 10, color: Color(0xff5A5A5A)),
+        //     textAlign: TextAlign.left,
+        //   ),
+        // ),
 
-        // Zabaner Logo
         SizedBox(
-            width: Get.width / 1.6,
-            child:
-                Image.asset("assets/images/signup_image.png", fit: BoxFit.fill))
+            height: Get.height / 3,
+            width: Get.width,
+            child: Obx(() => ListView.builder(
+                itemCount: _controller.messagesList.length,
+                itemBuilder: (context, index) => MessageWidget(
+                    text: _controller.messagesList[index].message,
+                    time:
+                        "${_controller.messagesList[index].createdAt.hour}:${_controller.messagesList[index].createdAt.minute}",
+                    type: _controller.messagesList[index].type))))
       ],
     );
   }

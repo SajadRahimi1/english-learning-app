@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
       ProfileAccount(
         isGuest: isGuest,
       ),
-      const ProfileSupport(),
+       ProfileSupport(),
       ProfileSetting(isGuest: isGuest)
     ];
 
