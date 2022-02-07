@@ -91,7 +91,7 @@ flutter:
   #         style: italic
     - family: Aria;
       fonts:
-        - asset: assets/fonts/Arial.ttf
+        - asset: assets/fonts/arial.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
