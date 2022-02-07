@@ -57,6 +57,7 @@ class VideoController extends GetxController with StateMixin {
   void dispose() async {
     super.dispose();
     onClose();
+    videoController.dispose();
   }
 
   void customeInit() {

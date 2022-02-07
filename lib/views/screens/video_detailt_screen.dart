@@ -69,26 +69,43 @@ class VideoDetailScreen extends StatelessWidget {
 
             // Icons
             SizedBox(
-              width: Get.width / 1.15,
+              width: Get.width / 1.1,
               height: Get.height / 20,
               child:
-                  // share and bookmark icon
+                  // download and text visible icon
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                    // bookmark icon
                     Row(
                       children: [
-                        const Text("   انگلیسی:",
-                            style:
-                                TextStyle(fontFamily: "Yekan", fontSize: 16)),
-                        Obx(() => Switch(
-                              value: controller.en.value,
-                              onChanged: (value) => controller.en.value = value,
-                            ))
+                      // bookmark icon
+                        Row(
+                          children: [
+                            const Text("   انگلیسی:",
+                                style: TextStyle(
+                                    fontFamily: "Yekan", fontSize: 16)),
+                            Obx(() => Switch(
+                                  value: controller.en.value,
+                                  onChanged: (value) =>
+                                      controller.en.value = value,
+                                ))
+                          ],
+                        ),
+
+                        Row(
+                          children: [
+                            const Text(" فارسی:",
+                                style: TextStyle(
+                                    fontFamily: "Yekan", fontSize: 16)),
+                            Obx(() => Switch(
+                                  value: controller.fa.value,
+                                  onChanged: (value) =>
+                                      controller.fa.value = value,
+                                ))
+                          ],
+                        ),
                       ],
                     ),
-
                     Obx(() => controller.downloadingState.value == "downloading"
                         ? Obx(() => CircleAvatar(
                               backgroundColor: Colors.transparent,
@@ -111,18 +128,6 @@ class VideoDetailScreen extends StatelessWidget {
                               size: Get.width / 12,
                             ),
                           )),
-
-                    Row(
-                      children: [
-                        const Text(" فارسی:",
-                            style:
-                                TextStyle(fontFamily: "Yekan", fontSize: 16)),
-                        Obx(() => Switch(
-                              value: controller.fa.value,
-                              onChanged: (value) => controller.fa.value = value,
-                            ))
-                      ],
-                    )
                   ]),
             ),
 

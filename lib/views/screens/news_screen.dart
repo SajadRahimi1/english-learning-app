@@ -130,7 +130,6 @@ class NewsScreen extends StatelessWidget {
                                                   BorderRadius.circular(15)),
                                           child: Obx(() => ListView.builder(
                                               scrollDirection: Axis.horizontal,
-                                              reverse: true,
                                               itemCount: _newsDataController
                                                   .categories.length,
                                               itemBuilder: (context, index) =>
