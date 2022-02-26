@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zabaner/controllers/video_controller.dart';
 import 'package:zabaner/models/level.dart';
@@ -78,7 +77,7 @@ class VideoDetailScreen extends StatelessWidget {
                       children: [
                     Row(
                       children: [
-                      // bookmark icon
+                        // bookmark icon
                         Row(
                           children: [
                             const Text("   انگلیسی:",

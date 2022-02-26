@@ -17,7 +17,11 @@ class MainScreenController extends GetxController {
   ];
   Intro intro = Intro(
     widgetBuilder: StepWidgetBuilder.useDefaultTheme(
-        texts: ['Home', 'Resources', 'News'],
+        texts: [
+          'در اینجا میتوانید نمودار خود و منابع مطاله شده را ببینید',
+          'در اینجا میتوانید منابع را مطالعه کنید',
+          'در اینجا میتواانید اخبار را مطالعه کنید'
+        ],
         buttonTextBuilder: (current, totall) =>
             current < totall - 1 ? 'بعدی' : 'تمام'),
     stepCount: 3,

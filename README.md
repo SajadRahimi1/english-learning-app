@@ -1,3 +1,8 @@
+
+## Count lines of codes: 8504
+## File with most lines of code: profile_setting_screen.dart
+## Most lines of code in one file: 338
+
 # zabaner
 
 ## ToDo

@@ -48,7 +48,8 @@ class BookController extends GetxController with StateMixin {
     GetStorage.init();
     _dateTime = DateTime.now();
     isHide = false.obs;
-    en = true.obs; fa = true.obs;
+    en = true.obs;
+    fa = true.obs;
     ind = 0;
     playingText = "".obs;
     percentPlayed = 0.0.obs;
@@ -162,6 +163,8 @@ class BookController extends GetxController with StateMixin {
               ind = i;
             }
           }
+          scrollController.scrollToIndex(ind,
+              preferPosition: AutoScrollPosition.begin);
         });
       } else {
         Get.snackbar("", "ابتدا فایل صورتی را دانلود کنید");
@@ -199,12 +202,10 @@ class BookController extends GetxController with StateMixin {
     }
   }
 
-  void getPodcastItemData(
-      String bookId,  bool isGuest) async {
+  void getPodcastItemData(String bookId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
-        ? await _getConnect
-            .get(getBookDetailUrl + bookId)
+        ? await _getConnect.get(getBookDetailUrl + bookId)
         : await _getConnect.get(
             getBookDetailUrl + bookId,
             headers: {

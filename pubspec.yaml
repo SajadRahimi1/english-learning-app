@@ -43,7 +43,6 @@ dependencies:
   video_player: ^2.2.10
   scroll_to_index: ^2.1.1
   intl: ^0.17.0
-  share_plus: ^3.0.4
   percent_indicator: ^4.0.0
 dev_dependencies:
   flutter_test:

@@ -106,6 +106,7 @@ class BookScreen extends StatelessWidget {
                                     ))
                                 : Obx(() => AutoScrollTag(
                                       index: index,
+                                      
                                       key: ValueKey(index - 1),
                                       controller: controller.scrollController,
                                       child: TextHighlight(
