@@ -34,7 +34,7 @@ class PocastResources extends StatelessWidget {
               "   پادکست ها",
               style: TextStyle(
                   fontFamily: "Yekan",
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.w500),
             )
           ],
@@ -89,9 +89,9 @@ class PocastListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       // onTap: () => Navigator.pushNamed(context, '/podcast', arguments: id),
-      onTap: () => Get.to(PodcastPlay(isGuest: isGuest), arguments: id),
+      onTap: () => Get.to(()=>PodcastPlay(isGuest: isGuest), arguments: id),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             width: MediaQuery.of(context).size.width / 4.2,
@@ -112,7 +112,7 @@ class PocastListTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  color: Color(0xffC2C2C2), fontSize: 10, fontFamily: "Yekan"),
+                  color: Color(0xff000000), fontSize: 12, fontFamily: "Yekan"),
             ),
           )
         ],
