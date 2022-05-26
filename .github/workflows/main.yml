@@ -36,6 +36,6 @@ jobs:
      - name: collect apk artifacts
        uses: actions/upload-artifact@v2
        with:
-        name: apk
+        name: app
         # Path to the release files
         path: build/app/outputs/apk/profile/app-armeabi-v7a-profile.apk

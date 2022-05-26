@@ -220,38 +220,29 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: Obx(() => BottomNavigationBar(
+                selectedIconTheme: IconThemeData(color: Color(0xff000000)),
+                unselectedItemColor: Color(0xff858585),
+                iconSize: 30,
                 items: [
                   BottomNavigationBarItem(
-                    icon: Image.asset(
-                      _controller.currentIndex.value == 0
-                          ? "assets/images/homeS.png"
-                          : "assets/images/home.png",
-                      width: Get.height / 6,
+                    icon: ImageIcon(
+                      AssetImage("assets/images/homeS.png"),
                       key: _controller.intro.keys[0],
-                      height: Get.height / 25,
                     ),
-                    label: "Home",
+                    label: "",
                   ),
                   BottomNavigationBarItem(
-                      icon: Image.asset(
-                        _controller.currentIndex.value == 1
-                            ? "assets/images/book_enable.png"
-                            : "assets/images/book.png",
-                        width: Get.height / 6,
+                      icon: ImageIcon(
+                        AssetImage("assets/images/book_enable.png"),
                         key: _controller.intro.keys[1],
-                        height: Get.height / 25,
                       ),
-                      label: "Resources"),
+                      label: ""),
                   BottomNavigationBarItem(
-                      icon: Image.asset(
-                        _controller.currentIndex.value == 2
-                            ? "assets/images/news_enable.png"
-                            : "assets/images/news.png",
-                        width: Get.height / 6,
+                      icon: ImageIcon(
+                        AssetImage("assets/images/news_enable.png"),
                         key: _controller.intro.keys[2],
-                        height: Get.height / 25,
                       ),
-                      label: "News"),
+                      label: ""),
                 ],
                 currentIndex: _controller.currentIndex.value,
                 selectedItemColor: Colors.black,
