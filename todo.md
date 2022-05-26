@@ -1,0 +1,10 @@
+- [x] change resources names
+- [x] create space between resource name and image
+- [x] remove bottom navigation labels
+- [ ] scroll all page not just text
+- [ ] bold playing sentence not just paragraph
+- [ ] UI changes
+- [ ] delete ddownload icon
+- [ ] remove auto download check box in profile
+- [ ] auto download by open page 
+- [ ] create page that contants all resources
