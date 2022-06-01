@@ -10,24 +10,12 @@ import 'package:zabaner/views/widgets/profile_tab_widget.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key, required this.isGuest}) : super(key: key);
   final bool isGuest;
-  var tab = [
-    true,
-    false,
-    false,
-  ].obs;
-  var tabIndex = 0.obs;
   final GetStorage _getStorage = GetStorage();
   @override
   Widget build(BuildContext context) {
     GetStorage.init();
-    final tabWidget = [
-      ProfileAccount(
-        isGuest: isGuest,
-      ),
-       ProfileSupport(),
-      ProfileSetting(isGuest: isGuest)
-    ];
-
+    RxInt tab = 0.obs;
+    final PageController _pageController = PageController();
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -60,37 +48,25 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Obx(() => ProfileTab(
-                                    image: tab[0] == true
+                                    image: tab.value == 0
                                         ? "account_enable2.png"
                                         : "account_disable2.png",
                                     title: "Account",
-                                    onTap: () {
-                                      tab.value = List.filled(3, false);
-                                      tab[0] = true;
-                                      tabIndex.value = 0;
-                                    },
+                                    onTap: () => _pageController.jumpToPage(0),
                                   )),
                               Obx(() => ProfileTab(
-                                    image: tab[1] == true
+                                    image: tab.value == 1
                                         ? "support_enable2.png"
                                         : "support_disable2.png",
                                     title: "Support",
-                                    onTap: () {
-                                      tab.value = List.filled(3, false);
-                                      tab[1] = true;
-                                      tabIndex.value = 1;
-                                    },
+                                    onTap: () => _pageController.jumpToPage(1),
                                   )),
                               Obx(() => ProfileTab(
-                                    image: tab[2] == true
+                                    image: tab.value == 2
                                         ? "setting_enable2.png"
                                         : "setting_disable2.png",
                                     title: "Settings",
-                                    onTap: () {
-                                      tab.value = List.filled(3, false);
-                                      tab[2] = true;
-                                      tabIndex.value = 2;
-                                    },
+                                    onTap: () => _pageController.jumpToPage(2),
                                   )),
                               ProfileTab(
                                 image: "exit.png",
@@ -118,10 +94,18 @@ class ProfileScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                    child: SizedBox(
-                  height: Get.height,
-                  child: SingleChildScrollView(
-                      child: Obx(() => tabWidget[tabIndex.value])),
+                    child: PageView(
+                  onPageChanged: (int index) {
+                    tab.value = index;
+                  },
+                  controller: _pageController,
+                  children: [
+                    ProfileAccount(
+                      isGuest: isGuest,
+                    ),
+                    SingleChildScrollView(child: ProfileSupport()),
+                    ProfileSetting(isGuest: isGuest)
+                  ],
                 ))
               ],
             ),

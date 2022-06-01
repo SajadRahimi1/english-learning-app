@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
+import 'package:zabaner/views/screens/books_list_screen.dart';
 
 class BookResources extends StatelessWidget {
   const BookResources({Key? key, required this.resource, required this.isGuest})
@@ -90,7 +91,8 @@ class BookListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(() => BookScreen(isGuest: isGuest), arguments: id),
+      // onTap: () => Get.to(() => BookScreen(isGuest: isGuest), arguments: id),
+      onTap: () => Get.to(() => BooksListScreen()),
       // onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

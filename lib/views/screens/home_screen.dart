@@ -8,6 +8,7 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/news_detail_screen.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
+import 'package:zabaner/views/screens/profile_screen.dart';
 import 'package:zabaner/views/screens/video_detailt_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -35,7 +36,9 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       // profile image
                       InkWell(
-                          onTap: () => Navigator.pushNamed(context, '/profile'),
+                          // onTap: () => Navigator.pushNamed(context, '/profile'),
+                          onTap: () =>
+                              Get.to(() => ProfileScreen(isGuest: isGuest)),
                           // child: CircleAvatar(
                           //     radius: Get.width / 13,
                           //     backgroundImage: NetworkImage(
