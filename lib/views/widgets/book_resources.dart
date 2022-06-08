@@ -4,6 +4,7 @@ import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
 import 'package:zabaner/views/screens/books_list_screen.dart';
+import 'package:zabaner/models/extensions.dart';
 
 class BookResources extends StatelessWidget {
   const BookResources({Key? key, required this.resource, required this.isGuest})
@@ -50,13 +51,14 @@ class BookResources extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: resource.length,
+              itemCount: resource.length.max(5),
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width / 25,
                 right: MediaQuery.of(context).size.width / 25,
               ),
               reverse: true,
               itemBuilder: (context, index) => BookListTile(
+                  resource: resource,
                   isGuest: isGuest,
                   imagePath: resource[index].imagePath,
                   title: resource[index].title,
@@ -83,16 +85,21 @@ class BookListTile extends StatelessWidget {
       required this.imagePath,
       required this.title,
       required this.isGuest,
+      required this.resource,
       required this.id})
       : super(key: key);
   final String imagePath, title, id;
   final bool isGuest;
 
+  final List<Resource> resource;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       // onTap: () => Get.to(() => BookScreen(isGuest: isGuest), arguments: id),
-      onTap: () => Get.to(() => BooksListScreen()),
+      onTap: () => Get.to(() => BooksListScreen(
+            resource: resource,
+          )),
       // onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

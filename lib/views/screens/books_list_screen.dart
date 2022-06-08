@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/models/resources_model.dart';
+import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/chapter_list_screen.dart';
 
 class BooksListScreen extends StatelessWidget {
-  const BooksListScreen({Key? key}) : super(key: key);
+  const BooksListScreen({Key? key, required this.resource}) : super(key: key);
+  final List<Resource> resource;
 
   @override
   Widget build(BuildContext context) {
@@ -16,25 +20,27 @@ class BooksListScreen extends StatelessWidget {
               elevation: 0,
               leading: Padding(
                 padding: EdgeInsets.only(right: Get.width / 40),
-                child: Row(
-                  children: const [
-                    Text(
-                      "بازگشت",
-                      style: TextStyle(
-                          fontFamily: "Yekan", color: Color(0xff000000)),
-                    ),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 20,
-                      color: Colors.black,
-                    ),
-                  ],
+                child: InkWell(
+                  onTap: () => Get.back(),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.arrow_back,
+                        size: 20,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "بازگشت",
+                        style: TextStyle(
+                            fontFamily: "Yekan", color: Color(0xff000000)),
+                      ),
+                    ],
+                  ),
                 ),
               )),
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
-            child: Column(
-              children: [
+              padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
+              child: Column(children: [
                 // Top of screen
                 SizedBox(
                   height: Get.height / 10,
@@ -73,68 +79,73 @@ class BooksListScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        width: Get.width,
-                        height: Get.height / 6,
-                        decoration: BoxDecoration(
-                            color: Color(0xffDBDBDB),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Row(children: [
-                          // image
-                          Container(
-                            width: Get.width / 3,
-                            height: Get.height,
-                            decoration: BoxDecoration(
-                                color: Color(0xfff5400d),
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-
-                          // empty space
-                          SizedBox(
-                            width: Get.width / 12,
-                          ),
-
-                          Expanded(
+                    child: ListView.builder(
+                        itemCount: resource.length,
+                        itemBuilder: (_, index) => InkWell(
+                              onTap: () => Get.to(() =>
+                                  ChapterListScreen(resource: resource[index])),
                               child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "گرامر و ترکیب",
-                                  style: TextStyle(
-                                      fontFamily: "Yekan",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  children: [
-                                    ImageIcon(
-                                        AssetImage("assets/images/time.png"),
-                                        size: 22),
-                                    Text("\t\t" "24 دقیقه")
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    ImageIcon(
-                                        AssetImage("assets/images/words.png"),
-                                        size: 22),
-                                    Text("\t\t" "817 کلمه")
-                                  ],
-                                )
-                              ],
-                            ),
-                          ))
-                        ]),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )),
+                                width: Get.width,
+                                height: Get.height / 6,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffDBDBDB),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(children: [
+                                  // image
+                                  Container(
+                                    width: Get.width / 3,
+                                    height: Get.height,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xfff5400d),
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: NetworkImage(baseUrl +
+                                                resource[index].imagePath),
+                                            fit: BoxFit.cover)),
+                                  ),
+
+                                  // empty space
+                                  SizedBox(
+                                    width: Get.width / 12,
+                                  ),
+
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        resource[index].title,
+                                        style: TextStyle(
+                                            fontFamily: "Yekan",
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Row(
+                                        children: [
+                                          ImageIcon(
+                                              AssetImage(
+                                                  "assets/images/time.png"),
+                                              size: 22),
+                                          Text("\t\t" "24 دقیقه")
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          ImageIcon(
+                                              AssetImage(
+                                                  "assets/images/words.png"),
+                                              size: 22),
+                                          Text("\t\t" "817 کلمه")
+                                        ],
+                                      )
+                                    ],
+                                  ))
+                                ]),
+                              ),
+                            )))
+              ]))),
     );
   }
 }

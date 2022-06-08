@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/podcast_list_screen.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
 
 class PocastResources extends StatelessWidget {
@@ -55,6 +56,7 @@ class PocastResources extends StatelessWidget {
               ),
               reverse: true,
               itemBuilder: (context, index) => PocastListTile(
+                  resource: resource,
                   imagePath: resource[index].imagePath,
                   isGuest: isGuest,
                   title: resource[index].title,
@@ -81,15 +83,18 @@ class PocastListTile extends StatelessWidget {
       required this.imagePath,
       required this.title,
       required this.isGuest,
+      required this.resource,
       required this.id})
       : super(key: key);
   final String imagePath, title, id;
   final bool isGuest;
+  final List<Resource> resource;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       // onTap: () => Navigator.pushNamed(context, '/podcast', arguments: id),
-      onTap: () => Get.to(()=>PodcastPlay(isGuest: isGuest), arguments: id),
+      // onTap: () => Get.to(()=>PodcastPlay(isGuest: isGuest), arguments: id),
+      onTap: () => Get.to(() => PodcastListScreen(resource: resource)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
