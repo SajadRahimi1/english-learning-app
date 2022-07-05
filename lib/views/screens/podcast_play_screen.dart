@@ -126,15 +126,12 @@ class PodcastPlay extends StatelessWidget {
                                                       controller.en.value,
                                                   visibleFA:
                                                       controller.fa.value,
-                                                  color: controller.playingText
-                                                              .value ==
-                                                          controller
-                                                              .podcastItem
-                                                              .paragraphs[
-                                                                  index - 1]
-                                                              .en
-                                                      ? orange
-                                                      : Colors.white),
+                                                  enable: controller
+                                                          .playingText.value ==
+                                                      controller
+                                                          .podcastItem
+                                                          .paragraphs[index - 1]
+                                                          .en),
                                             )))),
                       ),
                     )),

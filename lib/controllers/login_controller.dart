@@ -23,6 +23,7 @@ class LoginController extends GetConnect {
         'accept': 'application/json',
         'Authorization': 'Bearer ${_getStorage.read('token')}'
       });
+      print(_request.body);
       if (_request.statusCode == 200) {
         Get.offAll(() => MainScreen(
               isGuest: false,

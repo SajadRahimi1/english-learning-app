@@ -102,7 +102,7 @@ class NewsDetailScreen extends StatelessWidget {
                                   ? SizedBox(
                                       width: Get.width,
                                       child: Text(
-                                     "\n"+   controller.newsDetail.title,
+                                        "\n" + controller.newsDetail.title,
                                         style: const TextStyle(
                                             fontFamily: "Yekan", fontSize: 22),
                                         textAlign: TextAlign.center,
@@ -118,14 +118,12 @@ class NewsDetailScreen extends StatelessWidget {
                                                 .paragraphs[index - 1].fa,
                                             visibleEN: controller.en.value,
                                             visibleFA: controller.fa.value,
-                                            color: controller
-                                                        .playingText.value ==
+                                            enable:
+                                                controller.playingText.value ==
                                                     controller
                                                         .newsDetail
                                                         .paragraphs[index - 1]
-                                                        .en
-                                                ? orange
-                                                : Colors.white),
+                                                        .en),
                                       ))),
                         ),
                       )),

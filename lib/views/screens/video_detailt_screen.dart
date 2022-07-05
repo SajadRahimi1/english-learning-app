@@ -148,11 +148,9 @@ class VideoDetailScreen extends StatelessWidget {
                                     .videoItems.value.paragraphs[index].en,
                                 faText: controller
                                     .videoItems.value.paragraphs[index].fa,
-                                color: controller.playingText.value ==
-                                        controller.videoItems.value
-                                            .paragraphs[index].en
-                                    ? orange
-                                    : Colors.white),
+                                enable: controller.playingText.value ==
+                                    controller
+                                        .videoItems.value.paragraphs[index].en),
                           )))
                   : const SizedBox()),
             ),

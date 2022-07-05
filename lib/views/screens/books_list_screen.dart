@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/book_ist_controller.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/screens/chapter_list_screen.dart';
 
 class BooksListScreen extends StatelessWidget {
-  const BooksListScreen({Key? key, required this.resource}) : super(key: key);
-  final List<Resource> resource;
+  const BooksListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final BookListController _controller = Get.put(BookListController());
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -38,7 +41,7 @@ class BooksListScreen extends StatelessWidget {
                   ),
                 ),
               )),
-          body: Padding(
+          body: _controller.obx((status) => Padding(
               padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
               child: Column(children: [
                 // Top of screen
@@ -80,10 +83,12 @@ class BooksListScreen extends StatelessWidget {
 
                 Expanded(
                     child: ListView.builder(
-                        itemCount: resource.length,
+                        itemCount: _controller.model.length,
                         itemBuilder: (_, index) => InkWell(
-                              onTap: () => Get.to(() =>
-                                  ChapterListScreen(resource: resource[index])),
+                              onTap: () => Get.to(() => ChapterListScreen(
+                                    id: _controller.model[index].id,
+                                    type: "book",
+                                  )),
                               child: Container(
                                 width: Get.width,
                                 height: Get.height / 6,
@@ -100,7 +105,8 @@ class BooksListScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
                                             image: NetworkImage(baseUrl +
-                                                resource[index].imagePath),
+                                                _controller
+                                                    .model[index].imagePath),
                                             fit: BoxFit.cover)),
                                   ),
 
@@ -117,7 +123,7 @@ class BooksListScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        resource[index].title,
+                                        _controller.model[index].title,
                                         style: TextStyle(
                                             fontFamily: "Yekan",
                                             fontWeight: FontWeight.bold),
@@ -128,7 +134,8 @@ class BooksListScreen extends StatelessWidget {
                                               AssetImage(
                                                   "assets/images/time.png"),
                                               size: 22),
-                                          Text("\t\t" "24 دقیقه")
+                                          Text("\t\t"
+                                              "${_controller.model[index].podcastTime} دقیقه")
                                         ],
                                       ),
                                       Row(
@@ -137,7 +144,8 @@ class BooksListScreen extends StatelessWidget {
                                               AssetImage(
                                                   "assets/images/words.png"),
                                               size: 22),
-                                          Text("\t\t" "817 کلمه")
+                                          Text("\t\t"
+                                              "${_controller.model[index].wordsCount} کلمه")
                                         ],
                                       )
                                     ],
@@ -145,7 +153,7 @@ class BooksListScreen extends StatelessWidget {
                                 ]),
                               ),
                             )))
-              ]))),
+              ])))),
     );
   }
 }

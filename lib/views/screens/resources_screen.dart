@@ -100,10 +100,12 @@ class ResourcesScreen extends StatelessWidget {
                                         isGuest: isGuest,
                                         resource: _controller
                                             .resourcesList[1].resources),
-                                    VideoResources(
-                                        isGuest: isGuest,
-                                        resource: _controller
-                                            .resourcesList[2].resources)
+                                    _controller.resourcesList.length > 2
+                                        ? VideoResources(
+                                            isGuest: isGuest,
+                                            resource: _controller
+                                                .resourcesList[2].resources)
+                                        : SizedBox()
                                   ],
                                 )),
                           ),

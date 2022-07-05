@@ -3,8 +3,8 @@ import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:zabaner/models/book_item_model.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:zabaner/models/book_paragraph_model.dart';
 import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
 import 'dart:io' as io;
@@ -14,7 +14,7 @@ class BookController extends GetxController with StateMixin {
   final GetConnect _getConnect = GetConnect();
   final GetStorage _getStorage = GetStorage();
   // late BookModel bookDetail;
-  late BookItemModel bookItemModel;
+  late BookParagraphModel bookItemModel;
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   AutoScrollController scrollController = AutoScrollController();
   late DateTime _dateTime;
@@ -163,8 +163,11 @@ class BookController extends GetxController with StateMixin {
               ind = i;
             }
           }
-          scrollController.scrollToIndex(ind,
-              preferPosition: AutoScrollPosition.begin);
+          scrollController.scrollToIndex(
+            ind,
+            preferPosition: AutoScrollPosition.begin,
+            duration: const Duration(milliseconds: 800),
+          );
         });
       } else {
         Get.snackbar("", "ابتدا فایل صورتی را دانلود کنید");
@@ -178,6 +181,7 @@ class BookController extends GetxController with StateMixin {
     io.File _checkFile = io.File(appDoc.path + id + title);
     print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
+      Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
               onReceiveProgress: (recive, total) {
@@ -194,28 +198,26 @@ class BookController extends GetxController with StateMixin {
         downloadingPercent.value = 0;
       }
     } else {
-      Get.snackbar(
-        "",
-        "شما این فایل را قبلا دانلود کرده اید",
-        backgroundColor: orange,
-      );
+      // Get.snackbar(
+      //   "",
+      //   "شما این فایل را قبلا دانلود کرده اید",
+      //   backgroundColor: orange,
+      // );
     }
   }
 
-  void getPodcastItemData(String bookId, bool isGuest) async {
+  void getPodcastItemData(String bookId, String itemId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
-        ? await _getConnect.get(getBookDetailUrl + bookId)
+        ? await _getConnect.get(getBookDetailUrl + bookId + "/item/" + itemId)
         : await _getConnect.get(
-            getBookDetailUrl + bookId,
-            headers: {
-              'accept': 'application/json',
-              'Authorization': 'Bearer ${_getStorage.read('token')}'
-            },
+            getBookDetailUrl + bookId + "/item/" + itemId,
+            headers: {'Authorization': 'Bearer ${_getStorage.read('token')}'},
           );
 
     if (_request.statusCode == 200) {
-      bookItemModel = bookItemModelFromJson(_request.bodyString ?? "");
+      bookItemModel = bookParagraphModelFromJson(_request.bodyString ?? "");
+      download(bookItemModel.podcastPath, bookId, bookItemModel.title);
       for (var item in bookItemModel.paragraphs) {
         if (item.fa.isNotEmpty) {
           fa.value = true;

@@ -18,8 +18,7 @@ class ResourcesController extends GetxController with StateMixin {
 
   Future<void> getResources() async {
     _getConnect.allowAutoSignedCert = true;
-    var request = await _getConnect
-        .get(resourcesUrl, headers: {'accept': 'application/json'});
+    var request = await _getConnect.get(resourcesUrl);
     print(request.body);
     if (request.statusCode == 200) {
       resourcesList.addAll(resourcesFromJson(request.bodyString ?? ""));

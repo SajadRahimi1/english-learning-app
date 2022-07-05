@@ -8,13 +8,18 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
 class BookScreen extends StatelessWidget {
-  BookScreen({Key? key, required this.isGuest}) : super(key: key);
+  BookScreen(
+      {Key? key,
+      required this.isGuest,
+      required this.bookId,
+      required this.itemId})
+      : super(key: key);
   final BookController controller = Get.put(BookController());
+  final String bookId, itemId;
   final bool isGuest;
   @override
   Widget build(BuildContext context) {
-    final String bookId = ModalRoute.of(context)?.settings.arguments as String;
-    controller.getPodcastItemData(bookId, isGuest);
+    controller.getPodcastItemData(bookId, itemId, isGuest);
     // final GetStorage _getStotage = GetStorage();
 
     GetStorage.init();
@@ -38,28 +43,29 @@ class BookScreen extends StatelessWidget {
                       child: const Icon(Icons.arrow_back)),
                   backgroundColor: orange,
                   actions: [
-                    Obx(() => controller.downloadingState.value == "downloading"
-                        ? Obx(() => CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: CircularProgressIndicator(
-                                value: controller.downloadingPercent.value,
-                                strokeWidth: 2,
-                              ),
-                            ))
-                        :
-                        // Download
-                        InkWell(
-                            onTap: () {
-                              controller.download(
-                                  controller.bookItemModel.podcastPath,
-                                  bookId,
-                                  controller.bookItemModel.title);
-                            },
-                            child: Icon(
-                              Icons.cloud_download,
-                              size: Get.width / 12,
-                            ),
-                          )),
+                    // Obx(() => controller.downloadingState.value == "downloading"
+                    //     ? Obx(() => CircleAvatar(
+                    //           backgroundColor: Colors.transparent,
+                    //           child: CircularProgressIndicator(
+                    //             value: controller.downloadingPercent.value,
+                    //             strokeWidth: 2,
+                    //           ),
+                    //         ))
+                    //     :
+                    //     // Download
+                    //     InkWell(
+                    //         onTap: () {
+                    //           controller.download(
+                    //               controller.bookItemModel.podcastPath,
+                    //               bookId,
+                    //               controller.bookItemModel.title);
+                    //         },
+                    //         child: Icon(
+                    //           Icons.cloud_download,
+                    //           size: Get.width / 12,
+                    //         ),
+                    //       )),
+
                     Row(
                       children: [
                         const Text("   انگلیسی:",
@@ -87,7 +93,7 @@ class BookScreen extends StatelessWidget {
                 // Paragraph
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Get.width / 25),
+                    padding: EdgeInsets.symmetric(horizontal: Get.width / 45),
                     child: SizedBox(
                         width: Get.width,
                         height: Get.height,
@@ -106,7 +112,6 @@ class BookScreen extends StatelessWidget {
                                     ))
                                 : Obx(() => AutoScrollTag(
                                       index: index,
-                                      
                                       key: ValueKey(index - 1),
                                       controller: controller.scrollController,
                                       child: TextHighlight(
@@ -116,11 +121,12 @@ class BookScreen extends StatelessWidget {
                                               .paragraphs[index - 1].fa,
                                           visibleEN: controller.en.value,
                                           visibleFA: controller.fa.value,
-                                          color: controller.playingText.value ==
-                                                  controller.bookItemModel
-                                                      .paragraphs[index - 1].en
-                                              ? orange
-                                              : Colors.white),
+                                          enable:
+                                              controller.playingText.value ==
+                                                  controller
+                                                      .bookItemModel
+                                                      .paragraphs[index - 1]
+                                                      .en),
                                     )))),
                   ),
                 ),

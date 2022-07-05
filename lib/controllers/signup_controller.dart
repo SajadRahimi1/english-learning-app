@@ -14,7 +14,7 @@ class SignupController extends GetConnect {
 
   Future<void> signup(
       String username, String password, String mobile, String? email) async {
-            allowAutoSignedCert = true;
+    allowAutoSignedCert = true;
 
     var _response = email!.isNotEmpty
         ? await post(signupUrl, {
@@ -43,7 +43,10 @@ class SignupController extends GetConnect {
 
           break;
         case 4003:
-          Get.snackbar("خطا", "ایمیل قبلا در سامانه ثبت شده است",);
+          Get.snackbar(
+            "خطا",
+            "ایمیل قبلا در سامانه ثبت شده است",
+          );
           break;
       }
     }

@@ -5,47 +5,44 @@ class TextHighlight extends StatelessWidget {
     Key? key,
     required this.enText,
     required this.faText,
-    required this.color,
+    required this.enable,
     this.visibleEN = true,
     this.visibleFA = true,
   }) : super(key: key);
   final String enText, faText;
-  final Color color;
+  final bool enable;
   final bool visibleEN, visibleFA;
 
   @override
   Widget build(BuildContext context) {
     return !visibleEN && !visibleFA
         ? const SizedBox()
-        : Card(
-            color: color,
-            elevation: 3,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
-              child: Column(children: [
-                Visibility(
-                  visible: visibleEN,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(enText,
-                        textAlign: TextAlign.left,
-                        textDirection: TextDirection.ltr),
-                  ),
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
+            child: Column(children: [
+              Visibility(
+                visible: visibleEN,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(enText,
+                      textAlign: TextAlign.left,
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                          fontWeight: enable ? FontWeight.bold : null)),
                 ),
-                Visibility(
-                  visible: visibleFA,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(faText,
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: const TextStyle(fontFamily: "Yekan")),
-                  ),
+              ),
+              Visibility(
+                visible: visibleFA,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(faText,
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                          fontWeight: enable ? FontWeight.bold : null)),
                 ),
-              ]),
-            ),
+              ),
+            ]),
           );
   }
 }

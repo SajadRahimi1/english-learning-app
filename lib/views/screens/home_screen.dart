@@ -302,9 +302,9 @@ class HomeScreen extends StatelessWidget {
                             // Navigator.pushNamed(context, '/bookScreen',
                             //     arguments:
                             //         _controller.homeModel.histories[index].id);
-                            Get.to(BookScreen(isGuest: isGuest),
-                                arguments:
-                                    _controller.homeModel.histories[index].id);
+                            // Get.to(BookScreen(isGuest: isGuest),
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "videos") {

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/chapter_list_controller.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/book_screen.dart';
 
 class ChapterListScreen extends StatelessWidget {
-  const ChapterListScreen({Key? key, required this.resource}) : super(key: key);
-  final Resource resource;
+  const ChapterListScreen({Key? key, required this.id, required this.type})
+      : super(key: key);
+  final String id, type;
 
   @override
   Widget build(BuildContext context) {
+    final ChapterController _controller =
+        Get.put(ChapterController(id: id, type: type));
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -37,7 +42,7 @@ class ChapterListScreen extends StatelessWidget {
                   ),
                 ),
               )),
-          body: Padding(
+          body: _controller.obx((status) => Padding(
               padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
               child: Column(children: [
                 // Top of screen
@@ -92,7 +97,8 @@ class ChapterListScreen extends StatelessWidget {
                           color: Color(0xfff5400d),
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                              image: NetworkImage(baseUrl + resource.imagePath),
+                              image: NetworkImage(
+                                  baseUrl + _controller.bookModel.imagePath),
                               fit: BoxFit.cover)),
                     ),
 
@@ -107,7 +113,7 @@ class ChapterListScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          resource.title,
+                          _controller.bookModel.title,
                           style: TextStyle(
                               fontFamily: "Yekan", fontWeight: FontWeight.bold),
                         ),
@@ -130,56 +136,79 @@ class ChapterListScreen extends StatelessWidget {
                   ]),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                
+
                 // chapter list
                 Expanded(
                     child: ListView.builder(
-                        itemCount: 8,
-                        itemBuilder: (_, index) => Container(
-                              margin: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height / 40),
-                              width: Get.width,
-                              height: Get.height / 14,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffebebeb),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text("فصل یکم"),
-                                  Row(
-                                    children: [
-                                      ImageIcon(
-                                          AssetImage("assets/images/time.png"),
-                                          size: 22),
-                                      Text("\t\t" "24 دقیقه")
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      ImageIcon(
-                                          AssetImage("assets/images/words.png"),
-                                          size: 22),
-                                      Text("\t\t" "817 کلمه")
-                                    ],
-                                  ),
-                                  CircleAvatar(
-                                    backgroundColor: const Color(0xff7E7E7E),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.play_arrow,
-                                        color: Colors.white,
+                        itemCount: _controller.bookModel.items.length,
+                        itemBuilder: (_, index) => InkWell(
+                              onTap: () {
+                                if (type == "book") {
+                                  Get.to(() => BookScreen(
+                                      isGuest: false,
+                                      bookId: _controller.bookModel.id,
+                                      itemId: _controller
+                                          .bookModel.items[index].id));
+                                }
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height /
+                                        40),
+                                width: Get.width,
+                                height: Get.height / 14,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffebebeb),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width / 3,
+                                      child: Text(
+                                        _controller
+                                            .bookModel.items[index].title,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                  )
-                                ],
+                                    Row(
+                                      children: [
+                                        const ImageIcon(
+                                            AssetImage(
+                                                "assets/images/time.png"),
+                                            size: 22),
+                                        Text("\t\t"
+                                            "${_controller.bookModel.items[index].podcastTime} دقیقه")
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        ImageIcon(
+                                            AssetImage(
+                                                "assets/images/words.png"),
+                                            size: 22),
+                                        Text("\t\t"
+                                            "${_controller.bookModel.items[index].wordsCount} کلمه")
+                                      ],
+                                    ),
+                                    CircleAvatar(
+                                      backgroundColor: const Color(0xff7E7E7E),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             )))
-              ]))),
+              ])))),
     );
   }
 }

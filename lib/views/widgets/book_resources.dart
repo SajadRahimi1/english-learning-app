@@ -98,7 +98,7 @@ class BookListTile extends StatelessWidget {
     return InkWell(
       // onTap: () => Get.to(() => BookScreen(isGuest: isGuest), arguments: id),
       onTap: () => Get.to(() => BooksListScreen(
-            resource: resource,
+           
           )),
       // onTap: () => Navigator.pushNamed(context, '/bookScreen', arguments: id),
       child: Column(

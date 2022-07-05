@@ -113,11 +113,11 @@ class MainScreen extends StatelessWidget {
                           return ProfileScreen(
                             isGuest: isGuest,
                           );
-                        case '/bookScreen':
+                        // case '/bookScreen':
                           bookScreenBool = true;
-                          return bookScreen = BookScreen(
-                            isGuest: isGuest,
-                          );
+                          // return bookScreen = BookScreen(
+                          //   isGuest: isGuest,
+                          // );
                         case "/podcast":
                           return PodcastScreen(
                             isGuest: isGuest,
@@ -154,9 +154,10 @@ class MainScreen extends StatelessWidget {
                       switch (settings.name) {
                         case '/bookScreen':
                           bookScreenBool = true;
-                          return bookScreen = BookScreen(
-                            isGuest: isGuest,
-                          );
+                          // return bookScreen = BookScreen(
+                          //   isGuest: isGuest,
+                          // );
+                          break;
                         case '/profile':
                           return ProfileScreen(
                             isGuest: isGuest,
