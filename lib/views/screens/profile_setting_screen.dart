@@ -39,13 +39,13 @@ class ProfileSetting extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(() => SettingCard(
-                      title: "دانلود خودکار صوت",
-                      enable: _controller.autoDownload.value,
-                      onTap: (value) {
-                        _controller.getStorage.write('auto_download', value);
-                      },
-                    )),
+                // Obx(() => SettingCard(
+                //       title: "دانلود خودکار صوت",
+                //       enable: _controller.autoDownload.value,
+                //       onTap: (value) {
+                //         _controller.getStorage.write('auto_download', value);
+                //       },
+                //     )),
                 Obx(() => SettingCard(
                       title: "کارت حافظه محل پیش فرض برای ذخیره اطلاعات باشد",
                       enable: _controller.saveStorage.value,
