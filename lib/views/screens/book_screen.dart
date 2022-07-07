@@ -88,7 +88,7 @@ class _BookScreenState extends State<BookScreen> {
                                 //     : Colors.grey,
                                 // width: 0.6)
                                 ),
-                            child: Row(children: [
+                            child: Row(children: const[
                               Icon(Icons.arrow_drop_down_sharp,
                                   color: Colors.black),
                               Icon(Icons.arrow_drop_up_sharp,

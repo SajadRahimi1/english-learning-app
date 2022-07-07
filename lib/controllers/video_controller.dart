@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -43,6 +44,7 @@ class VideoController extends GetxController with StateMixin {
   var isPlaying = false.obs;
   final Dio dio = Dio();
   var playIndex = 0;
+  RxBool autoScroll = true.obs;
   late AutoScrollController scrollController;
   var bookmark = false.obs;
   @override
@@ -133,8 +135,13 @@ class VideoController extends GetxController with StateMixin {
           playIndex = i;
         }
       }
-      scrollController.scrollToIndex(playIndex,
-          preferPosition: AutoScrollPosition.begin);
+      if (autoScroll.value) {
+        scrollController.scrollToIndex(
+          playIndex + 1,
+          preferPosition: AutoScrollPosition.begin,
+          duration: const Duration(milliseconds: 1200),
+        );
+      }
     }
   }
 
@@ -158,7 +165,7 @@ class VideoController extends GetxController with StateMixin {
     }
   }
 
-  void getVideoItemData(String podcastId, bool isGuest) async {
+  Future<void> getVideoItemData(String podcastId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
         ? await _getConnect.get(getVideoDataUrl + podcastId)
@@ -218,39 +225,42 @@ class VideoController extends GetxController with StateMixin {
     }
   }
 
-  void download(String urlPath, String id, String title) async {
+  Future<void> download(String urlPath, String id, String title) async {
     io.File _checkFile = io.File(appDoc.path + id + title);
-
     print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
+      // Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
+      //
+      Get.defaultDialog(
+          title: "در حال دانلود فایل صوتی",
+          onWillPop: () async => downloadingPercent.value == 1 ? true : false,
+          backgroundColor: orange,
+          content: Obx(() => CircularProgressIndicator(
+                value: downloadingPercent.value,
+              )));
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
               onReceiveProgress: (recive, total) {
         downloadingState.value = "downloading";
         downloadingPercent.value = recive / total;
+
         print(downloadingPercent);
       });
       Get.closeAllSnackbars();
+      Get.back();
 
       if (_downloadRequest.statusCode == 200) {
         print("Completed");
         Get.snackbar("", "دانلود با موفقیت به اتمام رسید",
             backgroundColor: orange);
         downloadingPercent.value = 0;
-        videoController =
-            VideoPlayerController.file(io.File(appDoc.path + id + title))
-              ..initialize().then((_) {
-                change(null, status: RxStatus.success());
-                videoInitialized.value = true;
-              });
-        videoController.addListener(play);
       }
     } else {
-      Get.snackbar(
-        "",
-        "شما این فایل را قبلا دانلود کرده اید",
-        backgroundColor: orange,
-      );
+      // Get.snackbar(
+      //   "",
+      //   "شما این فایل را قبلا دانلود کرده اید",
+      //   backgroundColor: orange,
+      // );
     }
   }
 

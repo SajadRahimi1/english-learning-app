@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zabaner/controllers/video_list_controller.dart';
 import 'package:zabaner/models/resources_model.dart';
 import 'package:zabaner/models/urls.dart';
+import 'package:zabaner/views/screens/video_detailt_screen.dart';
 
 class VideoListScreen extends StatelessWidget {
-  const VideoListScreen({Key? key, required this.resource}) : super(key: key);
-  final List<Resource> resource;
+  const VideoListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final VideoListController _controller = Get.put(VideoListController());
     return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
           backgroundColor: const Color(0xffffffff),
           appBar: AppBar(
               leadingWidth: Get.width,
@@ -37,7 +39,7 @@ class VideoListScreen extends StatelessWidget {
                   ),
                 ),
               )),
-          body: Padding(
+          body: _controller.obx((status) => Padding(
               padding: EdgeInsets.symmetric(horizontal: Get.width / 40),
               child: Column(children: [
                 // Top of screen
@@ -79,59 +81,67 @@ class VideoListScreen extends StatelessWidget {
 
                 Expanded(
                     child: ListView.builder(
-                        itemCount: resource.length,
-                        itemBuilder: (_, index) => Container(
-                              width: Get.width,
-                              height: Get.height / 6,
-                              margin: EdgeInsets.only(bottom: Get.height / 40),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xffebebeb),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(children: [
-                                // image
-                                Container(
-                                  width: Get.width / 3,
-                                  height: Get.height,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xfff5400d),
-                                      borderRadius: BorderRadius.circular(15),
-                                      image: DecorationImage(
-                                          image: NetworkImage(baseUrl +
-                                              resource[index].imagePath),
-                                          fit: BoxFit.cover)),
-                                ),
+                        itemCount: _controller.model.length,
+                        itemBuilder: (_, index) => InkWell(
+                              onTap: () => Get.to(() => VideoDetailScreen(
+                                  isGuest: false,
+                                  id: _controller.model[index].id)),
+                              child: Container(
+                                width: Get.width,
+                                height: Get.height / 6,
+                                margin:
+                                    EdgeInsets.only(bottom: Get.height / 40),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xffebebeb),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(children: [
+                                  // image
+                                  Container(
+                                    width: Get.width / 3,
+                                    height: Get.height,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xfff5400d),
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: NetworkImage(baseUrl +
+                                                _controller
+                                                    .model[index].imagePath),
+                                            fit: BoxFit.cover)),
+                                  ),
 
-                                // empty space
-                                SizedBox(
-                                  width: Get.width / 12,
-                                ),
+                                  // empty space
+                                  SizedBox(
+                                    width: Get.width / 12,
+                                  ),
 
-                                Expanded(
-                                    child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      resource[index].title,
-                                      style: TextStyle(
-                                          fontFamily: "Yekan",
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Row(
-                                      children: [
-                                        ImageIcon(
-                                            AssetImage(
-                                                "assets/images/time.png"),
-                                            size: 22),
-                                        Text("\t\t" "24 دقیقه")
-                                      ],
-                                    ),
-                                  ],
-                                ))
-                              ]),
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _controller.model[index].title,
+                                        style: TextStyle(
+                                            fontFamily: "Yekan",
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Row(
+                                        children: [
+                                          ImageIcon(
+                                              AssetImage(
+                                                  "assets/images/time.png"),
+                                              size: 22),
+                                          Text("\t\t" "24 دقیقه")
+                                        ],
+                                      ),
+                                    ],
+                                  ))
+                                ]),
+                              ),
                             )))
               ]))),
-    );
+        ));
   }
 }

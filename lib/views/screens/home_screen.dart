@@ -313,9 +313,9 @@ class HomeScreen extends StatelessWidget {
                             // Navigator.pushNamed(context, '/video',
                             //     arguments:
                             //         _controller.homeModel.histories[index].id);
-                            Get.to(VideoDetailScreen(isGuest: isGuest),
-                                arguments:
-                                    _controller.homeModel.histories[index].id);
+                            Get.to(VideoDetailScreen(isGuest: isGuest,
+                                id:
+                                    _controller.homeModel.histories[index].id));
                           }
                         },
                         child: Container(

@@ -8,18 +8,39 @@ import 'package:zabaner/models/urls.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
-class VideoDetailScreen extends StatelessWidget {
-  VideoDetailScreen({Key? key, required this.isGuest}) : super(key: key);
-  final VideoController controller = Get.put(VideoController());
+class VideoDetailScreen extends StatefulWidget {
+  VideoDetailScreen({Key? key, required this.isGuest, required this.id})
+      : super(key: key);
   final bool isGuest;
+  final String id;
+
+  @override
+  State<VideoDetailScreen> createState() => _VideoDetailScreenState();
+}
+
+class _VideoDetailScreenState extends State<VideoDetailScreen> {
+  final VideoController controller = Get.put(VideoController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.customeInit();
+    controller.getVideoItemData(widget.id, widget.isGuest).then((value) {
+      controller.download(controller.videoItems.value.videoPath, widget.id,
+          controller.videoItems.value.title);
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String id =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? "";
-
-    controller.customeInit();
-    controller.getVideoItemData(id, isGuest);
-
     return SafeArea(
         child: WillPopScope(
       onWillPop: () async {
@@ -105,28 +126,52 @@ class VideoDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Obx(() => controller.downloadingState.value == "downloading"
-                        ? Obx(() => CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: CircularProgressIndicator(
-                                value: controller.downloadingPercent.value,
-                                strokeWidth: 2,
-                              ),
-                            ))
-                        :
-                        // Download
-                        InkWell(
-                            onTap: () {
-                              controller.download(
-                                  controller.videoItems.value.videoPath,
-                                  id,
-                                  controller.videoItems.value.title);
-                            },
-                            child: Icon(
-                              Icons.cloud_download,
-                              size: Get.width / 12,
-                            ),
+                    // Obx(() => controller.downloadingState.value == "downloading"
+                    //     ? Obx(() => CircleAvatar(
+                    //           backgroundColor: Colors.transparent,
+                    //           child: CircularProgressIndicator(
+                    //             value: controller.downloadingPercent.value,
+                    //             strokeWidth: 2,
+                    //           ),
+                    //         ))
+                    //     :
+                    //     // Download
+                    //     InkWell(
+                    //         onTap: () {
+                    //           controller.download(
+                    //               controller.videoItems.value.videoPath,
+                    //               id,
+                    //               controller.videoItems.value.title);
+                    //         },
+                    //         child: Icon(
+                    //           Icons.cloud_download,
+                    //           size: Get.width / 12,
+                    //         ),
+                    //       )),
+                    InkWell(
+                      onTap: () => controller.autoScroll.toggle(),
+                      child: Obx(() => Container(
+                            margin:
+                                EdgeInsets.symmetric(vertical: Get.height / 60),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: controller.autoScroll.value
+                                    ? Colors.blue
+                                    : Colors.red
+                                // border: Border.all(
+                                // color: controller.autoScroll.value
+                                //     ? Colors.black
+                                //     : Colors.grey,
+                                // width: 0.6)
+                                ),
+                            child: Row(children: const [
+                              Icon(Icons.arrow_drop_down_sharp,
+                                  color: Colors.black),
+                              Icon(Icons.arrow_drop_up_sharp,
+                                  color: Colors.black),
+                            ]),
                           )),
+                    ),
                   ]),
             ),
 
@@ -273,7 +318,7 @@ class VideoDetailScreen extends StatelessWidget {
                                     onTap: () {
                                       if (controller.fileExists(controller
                                               .appDoc.path +
-                                          id +
+                                          widget.id +
                                           controller.videoItems.value.title)) {
                                         if (!controller.isPlaying.value) {
                                           controller.videoController.play();

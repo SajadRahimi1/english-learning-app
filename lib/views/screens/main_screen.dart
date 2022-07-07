@@ -74,12 +74,12 @@ class MainScreen extends StatelessWidget {
                   : newsDetailScreen.controller.onClose();
               newsDetailScreenBool = false;
             }
-            if (videoScreenBool) {
-              videoScreen.controller.isClosed
-                  ? () {}
-                  : videoScreen.controller.onClose();
-              videoScreenBool = false;
-            }
+            // if (videoScreenBool) {
+            //   videoScreen.controller.isClosed
+            //       ? () {}
+            //       : videoScreen.controller.onClose();
+            //   videoScreenBool = false;
+            // }
           } else {
             if (!doubleTap) {
               doubleTap = true;
@@ -136,8 +136,9 @@ class MainScreen extends StatelessWidget {
                           );
                         case "/video":
                           videoScreenBool = true;
-                          return videoScreen =
-                              VideoDetailScreen(isGuest: isGuest);
+                          // return videoScreen =
+                          //     VideoDetailScreen(isGuest: isGuest);
+                          break;
                       }
                       return HomeScreen(
                         isGuest: isGuest,
@@ -180,8 +181,9 @@ class MainScreen extends StatelessWidget {
                           );
                         case "/video":
                           videoScreenBool = true;
-                          return videoScreen =
-                              VideoDetailScreen(isGuest: isGuest);
+                          // return videoScreen =
+                          //     VideoDetailScreen(isGuest: isGuest);
+                          break;
                       }
                       return ResourcesScreen(
                         isGuest: isGuest,

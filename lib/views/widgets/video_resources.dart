@@ -96,7 +96,7 @@ class VideoListTile extends StatelessWidget {
       // onTap: () =>
       //     Get.to(() => VideoDetailScreen(isGuest: isGuest), arguments: id),
       onTap: () => Get.to(() => VideoListScreen(
-            resource: resource,
+            
           )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
