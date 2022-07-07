@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart' show CircularProgressIndicator;
 import 'package:get_storage/get_storage.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:path_provider/path_provider.dart' as path;
@@ -27,6 +28,7 @@ class BookController extends GetxController with StateMixin {
   var playingText = "".obs;
   var playSpeed = 1.0.obs;
   var isHide = false.obs;
+  var autoScroll = true.obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
   var duration = const Duration().obs;
@@ -42,6 +44,14 @@ class BookController extends GetxController with StateMixin {
     percentPlayed = 0.0.obs;
     downloadingPercent = 0.0.obs;
     downloadingState = "".obs;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    scrollController.dispose();
+    player.closeAudioSession();
   }
 
   void customeInit() {
@@ -163,11 +173,13 @@ class BookController extends GetxController with StateMixin {
               ind = i;
             }
           }
-          scrollController.scrollToIndex(
-            ind,
-            preferPosition: AutoScrollPosition.begin,
-            duration: const Duration(milliseconds: 800),
-          );
+          if (autoScroll.value) {
+            scrollController.scrollToIndex(
+              ind + 1,
+              preferPosition: AutoScrollPosition.begin,
+              duration: const Duration(milliseconds: 1200),
+            );
+          }
         });
       } else {
         Get.snackbar("", "ابتدا فایل صورتی را دانلود کنید");
@@ -181,15 +193,25 @@ class BookController extends GetxController with StateMixin {
     io.File _checkFile = io.File(appDoc.path + id + title);
     print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
-      Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
+      // Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
+      //
+      Get.defaultDialog(
+          title: "در حال دانلود فایل صوتی",
+          onWillPop: () async => downloadingPercent.value == 1 ? true : false,
+          backgroundColor: orange,
+          content: Obx(() => CircularProgressIndicator(
+                value: downloadingPercent.value,
+              )));
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
               onReceiveProgress: (recive, total) {
         downloadingState.value = "downloading";
         downloadingPercent.value = recive / total;
+
         print(downloadingPercent);
       });
       Get.closeAllSnackbars();
+      Get.back();
 
       if (_downloadRequest.statusCode == 200) {
         print("Completed");

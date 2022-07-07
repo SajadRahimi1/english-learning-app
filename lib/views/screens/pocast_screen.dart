@@ -195,14 +195,16 @@ class PodcastScreen extends StatelessWidget {
                                             onTap: () {
                                               Get.to(
                                                   // context, '/playPodcast',
-                                                  PodcastPlay(isGuest: isGuest),
-                                                  arguments: id +
-                                                      ":" +
-                                                      controller.podcast
-                                                          .items[index].id +
-                                                      ":" +
-                                                      controller.appDoc.path +
-                                                      id);
+                                                  PodcastPlay(
+                                                      isGuest: isGuest,
+                                                      id: id +
+                                                          ":" +
+                                                          controller.podcast
+                                                              .items[index].id +
+                                                          ":" +
+                                                          controller
+                                                              .appDoc.path +
+                                                          id));
                                             }),
 
                                         // title

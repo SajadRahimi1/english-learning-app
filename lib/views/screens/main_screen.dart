@@ -54,19 +54,19 @@ class MainScreen extends StatelessWidget {
                 .navigationKey[_controller.currentIndex.value].currentState!
                 .pop(_controller.navigationKey[_controller.currentIndex.value]
                     .currentContext);
-            if (podcastScreenBool) {
-              podcastScreen.controller.isClosed
-                  ? () {}
-                  : podcastScreen.controller.onClose();
-              podcastScreenBool = false;
-            }
+            // if (podcastScreenBool) {
+            //   podcastScreen.widget.controller.isClosed
+            //       ? () {}
+            //       : podcastScreen.controller.onClose();
+            //   podcastScreenBool = false;
+            // }
 
-            if (bookScreenBool) {
-              bookScreen.controller.isClosed
-                  ? () {}
-                  : bookScreen.controller.onClose();
-              bookScreenBool = false;
-            }
+            // if (bookScreenBool) {
+            //   bookScreen.controller.isClosed
+            //       ? () {}
+            //       : bookScreen.controller.onClose();
+            //   bookScreenBool = false;
+            // }
 
             if (newsDetailScreenBool) {
               newsDetailScreen.controller.isClosed
@@ -113,20 +113,21 @@ class MainScreen extends StatelessWidget {
                           return ProfileScreen(
                             isGuest: isGuest,
                           );
-                        // case '/bookScreen':
+                          // case '/bookScreen':
                           bookScreenBool = true;
-                          // return bookScreen = BookScreen(
-                          //   isGuest: isGuest,
-                          // );
+                        // return bookScreen = BookScreen(
+                        //   isGuest: isGuest,
+                        // );
                         case "/podcast":
                           return PodcastScreen(
                             isGuest: isGuest,
                           );
                         case "/playPodcast":
                           podcastScreenBool = true;
-                          return podcastScreen = PodcastPlay(
-                            isGuest: isGuest,
-                          );
+                          // return podcastScreen = PodcastPlay(
+                          //   isGuest: isGuest,
+                          // );
+                          break;
                         case "/newsDetail":
                           return NewsDetailScreen(isGuest: isGuest);
                         case "/home":
@@ -168,9 +169,10 @@ class MainScreen extends StatelessWidget {
                           );
                         case "/playPodcast":
                           podcastScreenBool = true;
-                          return podcastScreen = PodcastPlay(
-                            isGuest: isGuest,
-                          );
+                          // return podcastScreen = PodcastPlay(
+                          //   isGuest: isGuest,
+                          // );
+                          break;
 
                         case "/resource":
                           return ResourcesScreen(

@@ -7,19 +7,43 @@ import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 import 'package:zabaner/models/level.dart';
 
-class PodcastPlay extends StatelessWidget {
-  PodcastPlay({Key? key, required this.isGuest}) : super(key: key);
-  final PlayPodcastController controller = Get.put(PlayPodcastController());
+class PodcastPlay extends StatefulWidget {
+  PodcastPlay({Key? key, required this.isGuest, required this.id})
+      : super(key: key);
+  final String id;
   final bool isGuest;
-  @override
-  Widget build(BuildContext context) {
-    final String id =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? "";
 
-    GetStorage.init();
+  @override
+  State<PodcastPlay> createState() => _PodcastPlayState();
+}
+
+class _PodcastPlayState extends State<PodcastPlay> {
+  final PlayPodcastController controller = Get.put(PlayPodcastController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     controller.customeInit();
 
-    controller.getPodcastItemData(id, isGuest);
+    controller.getPodcastItemData(widget.id, widget.isGuest).then((value) {
+      controller.download(controller.podcastItem.podcastPath, widget.id,
+          controller.podcastItem.title);
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final String id =
+    //     ModalRoute.of(context)?.settings.arguments.toString() ?? "";
+
     return WillPopScope(
       onWillPop: () async {
         controller.onClose();
@@ -39,28 +63,30 @@ class PodcastPlay extends StatelessWidget {
                       child: const Icon(Icons.arrow_back)),
                   backgroundColor: orange,
                   actions: [
-                    Obx(() => controller.downloadingState.value == "downloading"
-                        ? Obx(() => CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: CircularProgressIndicator(
-                                value: controller.downloadingPercent.value,
-                                strokeWidth: 2,
-                              ),
-                            ))
-                        :
-                        // Download
-                        InkWell(
-                            onTap: () {
-                              controller.download(
-                                  controller.podcastItem.podcastPath,
-                                  id,
-                                  controller.podcastItem.title);
-                            },
-                            child: Icon(
-                              Icons.cloud_download,
-                              size: Get.width / 12,
-                            ),
+                    InkWell(
+                      onTap: () => controller.autoScroll.toggle(),
+                      child: Obx(() => Container(
+                            margin:
+                                EdgeInsets.symmetric(vertical: Get.height / 60),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: controller.autoScroll.value
+                                    ? Colors.blue
+                                    : Colors.red
+                                // border: Border.all(
+                                // color: controller.autoScroll.value
+                                //     ? Colors.black
+                                //     : Colors.grey,
+                                // width: 0.6)
+                                ),
+                            child: Row(children: [
+                              Icon(Icons.arrow_drop_down_sharp,
+                                  color: Colors.black),
+                              Icon(Icons.arrow_drop_up_sharp,
+                                  color: Colors.black),
+                            ]),
                           )),
+                    ),
                     Row(
                       children: [
                         const Text("   انگلیسی:",
@@ -260,7 +286,7 @@ class PodcastPlay extends StatelessWidget {
                                         if (!controller.isPlaying.value) {
                                           controller.playAudio(
                                               controller.appDoc.path +
-                                                  id +
+                                                  widget.id +
                                                   controller.podcastItem.title);
                                         } else {
                                           controller.player.pausePlayer();

@@ -6,6 +6,7 @@ import 'package:zabaner/models/level.dart';
 import 'package:intl/intl.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/screens/book_screen.dart';
+import 'package:zabaner/views/screens/chapter_list_screen.dart';
 import 'package:zabaner/views/screens/news_detail_screen.dart';
 import 'package:zabaner/views/screens/podcast_play_screen.dart';
 import 'package:zabaner/views/screens/profile_screen.dart';
@@ -293,18 +294,19 @@ class HomeScreen extends StatelessWidget {
                             // Navigator.pushNamed(context, '/podcast',
                             //     arguments:
                             //         _controller.homeModel.histories[index].id);
-                            Get.to(PodcastPlay(isGuest: isGuest),
-                                arguments:
-                                    _controller.homeModel.histories[index].id);
+                            Get.to(PodcastPlay(
+                                isGuest: isGuest,
+                                id: _controller.homeModel.histories[index].id));
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "books") {
                             // Navigator.pushNamed(context, '/bookScreen',
                             //     arguments:
                             //         _controller.homeModel.histories[index].id);
-                            // Get.to(BookScreen(isGuest: isGuest),
-                            //     arguments:
-                            //         _controller.homeModel.histories[index].id);
+                            Get.to(() => ChapterListScreen(
+                                  id: _controller.homeModel.histories[index].id,
+                                  type: "book",
+                                ));
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "videos") {

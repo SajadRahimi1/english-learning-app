@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   AutoScrollController scrollController = AutoScrollController();
   var isPlaying = false.obs;
   var ind = 0;
+  RxBool autoScroll = true.obs;
   var en = false.obs, fa = false.obs;
   var playingText = "".obs;
   var isHide = false.obs;
@@ -101,18 +103,29 @@ class PlayPodcastController extends GetxController with StateMixin {
     isPlaying.value = false;
   }
 
-  void download(String urlPath, String id, String title) async {
+  Future<void> download(String urlPath, String id, String title) async {
     io.File _checkFile = io.File(appDoc.path + id + title);
     print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
+      // Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
+      //
+      Get.defaultDialog(
+          title: "در حال دانلود فایل صوتی",
+          onWillPop: () async => downloadingPercent.value == 1 ? true : false,
+          backgroundColor: orange,
+          content: Obx(() => CircularProgressIndicator(
+                value: downloadingPercent.value,
+              )));
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
               onReceiveProgress: (recive, total) {
         downloadingState.value = "downloading";
         downloadingPercent.value = recive / total;
+
         print(downloadingPercent);
       });
       Get.closeAllSnackbars();
+      Get.back();
 
       if (_downloadRequest.statusCode == 200) {
         print("Completed");
@@ -121,11 +134,11 @@ class PlayPodcastController extends GetxController with StateMixin {
         downloadingPercent.value = 0;
       }
     } else {
-      Get.snackbar(
-        "",
-        "شما این فایل را قبلا دانلود کرده اید",
-        backgroundColor: orange,
-      );
+      // Get.snackbar(
+      //   "",
+      //   "شما این فایل را قبلا دانلود کرده اید",
+      //   backgroundColor: orange,
+      // );
     }
   }
 
@@ -153,7 +166,7 @@ class PlayPodcastController extends GetxController with StateMixin {
   //   }
   // }
 
-  void getPodcastItemData(String podcastId, bool isGuest) async {
+  Future<void> getPodcastItemData(String podcastId, bool isGuest) async {
     _getConnect.allowAutoSignedCert = true;
     var _request = isGuest
         ? await _getConnect.get(getPodcastDetailUrl + podcastId)
@@ -235,6 +248,13 @@ class PlayPodcastController extends GetxController with StateMixin {
               playingText.value = podcastItem.paragraphs[i].en;
               ind = i;
             }
+          }
+          if (autoScroll.value) {
+            scrollController.scrollToIndex(
+              ind + 1,
+              preferPosition: AutoScrollPosition.begin,
+              duration: const Duration(milliseconds: 1200),
+            );
           }
         });
       } else {

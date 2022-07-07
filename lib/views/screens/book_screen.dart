@@ -7,19 +7,39 @@ import 'package:zabaner/models/level.dart';
 import 'package:zabaner/views/colors.dart';
 import 'package:zabaner/views/widgets/text_highlight.dart';
 
-class BookScreen extends StatelessWidget {
+class BookScreen extends StatefulWidget {
   BookScreen(
       {Key? key,
       required this.isGuest,
       required this.bookId,
       required this.itemId})
       : super(key: key);
-  final BookController controller = Get.put(BookController());
   final String bookId, itemId;
   final bool isGuest;
+
+  @override
+  State<BookScreen> createState() => _BookScreenState();
+}
+
+class _BookScreenState extends State<BookScreen> {
+  final BookController controller = Get.put(BookController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.getPodcastItemData(widget.bookId, widget.itemId, widget.isGuest);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    controller.getPodcastItemData(bookId, itemId, isGuest);
     // final GetStorage _getStotage = GetStorage();
 
     GetStorage.init();
@@ -44,28 +64,38 @@ class BookScreen extends StatelessWidget {
                   backgroundColor: orange,
                   actions: [
                     // Obx(() => controller.downloadingState.value == "downloading"
-                    //     ? Obx(() => CircleAvatar(
-                    //           backgroundColor: Colors.transparent,
-                    //           child: CircularProgressIndicator(
-                    //             value: controller.downloadingPercent.value,
-                    //             strokeWidth: 2,
-                    //           ),
-                    //         ))
-                    //     :
-                    //     // Download
-                    //     InkWell(
-                    //         onTap: () {
-                    //           controller.download(
-                    //               controller.bookItemModel.podcastPath,
-                    //               bookId,
-                    //               controller.bookItemModel.title);
-                    //         },
-                    //         child: Icon(
-                    //           Icons.cloud_download,
-                    //           size: Get.width / 12,
+                    //     ? CircleAvatar(
+                    //         backgroundColor: Colors.transparent,
+                    //         child: CircularProgressIndicator(
+                    //           value: controller.downloadingPercent.value,
+                    //           strokeWidth: 2,
                     //         ),
-                    //       )),
-
+                    //       )
+                    //     : SizedBox()),
+                    InkWell(
+                      onTap: () => controller.autoScroll.toggle(),
+                      child: Obx(() => Container(
+                            margin:
+                                EdgeInsets.symmetric(vertical: Get.height / 60),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: controller.autoScroll.value
+                                    ? Colors.blue
+                                    : Colors.red
+                                // border: Border.all(
+                                // color: controller.autoScroll.value
+                                //     ? Colors.black
+                                //     : Colors.grey,
+                                // width: 0.6)
+                                ),
+                            child: Row(children: [
+                              Icon(Icons.arrow_drop_down_sharp,
+                                  color: Colors.black),
+                              Icon(Icons.arrow_drop_up_sharp,
+                                  color: Colors.black),
+                            ]),
+                          )),
+                    ),
                     Row(
                       children: [
                         const Text("   انگلیسی:",
@@ -255,7 +285,7 @@ class BookScreen extends StatelessWidget {
                                         if (!controller.isPlaying.value) {
                                           controller.playAudio(controller
                                                   .appDoc.path +
-                                              bookId +
+                                              widget.bookId +
                                               controller.bookItemModel.title);
                                         } else {
                                           controller.player.pausePlayer();

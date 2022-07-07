@@ -94,7 +94,7 @@ class PocastListTile extends StatelessWidget {
     return InkWell(
       // onTap: () => Navigator.pushNamed(context, '/podcast', arguments: id),
       // onTap: () => Get.to(()=>PodcastPlay(isGuest: isGuest), arguments: id),
-      onTap: () => Get.to(() => PodcastListScreen(resource: resource)),
+      onTap: () => Get.to(() => PodcastListScreen()),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
