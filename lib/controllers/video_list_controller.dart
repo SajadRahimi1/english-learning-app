@@ -16,7 +16,7 @@ class VideoListController extends GetxController with StateMixin {
   late final List<VideoListModel> model;
 
   Future<void> getData() async {
-    final _request = await _getConnect.get(getPodcastDetailUrl);
+    final _request = await _getConnect.get(getVideoDataUrl);
     if (_request.statusCode == 200) {
       model = videoListModelFromJson(_request.bodyString ?? "");
       change(null, status: RxStatus.success());

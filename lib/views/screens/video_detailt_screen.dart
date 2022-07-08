@@ -33,13 +33,6 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    controller.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: WillPopScope(
@@ -151,8 +144,8 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                     InkWell(
                       onTap: () => controller.autoScroll.toggle(),
                       child: Obx(() => Container(
-                            margin:
-                                EdgeInsets.symmetric(vertical: Get.height / 60),
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.height / 100),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 color: controller.autoScroll.value

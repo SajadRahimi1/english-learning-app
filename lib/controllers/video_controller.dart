@@ -232,7 +232,7 @@ class VideoController extends GetxController with StateMixin {
       // Get.snackbar("", "در حال دانلود فایل صوتی", backgroundColor: orange);
       //
       Get.defaultDialog(
-          title: "در حال دانلود فایل صوتی",
+          title: "در حال دانلود ویدیو",
           onWillPop: () async => downloadingPercent.value == 1 ? true : false,
           backgroundColor: orange,
           content: Obx(() => CircularProgressIndicator(
@@ -254,6 +254,13 @@ class VideoController extends GetxController with StateMixin {
         Get.snackbar("", "دانلود با موفقیت به اتمام رسید",
             backgroundColor: orange);
         downloadingPercent.value = 0;
+        videoController =
+            VideoPlayerController.file(io.File(appDoc.path + id + title))
+              ..initialize().then((_) {
+                change(null, status: RxStatus.success());
+                videoInitialized.value = true;
+              });
+        videoController.addListener(play);
       }
     } else {
       // Get.snackbar(
