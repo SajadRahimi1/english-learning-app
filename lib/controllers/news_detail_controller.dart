@@ -239,11 +239,11 @@ class NewsDetailController extends GetxController with StateMixin {
         downloadingPercent.value = 0;
       }
     } else {
-      Get.snackbar(
-        "",
-        "شما این فایل را قبلا دانلود کرده اید",
-        backgroundColor: orange,
-      );
+      // Get.snackbar(
+      //   "",
+      //   "شما این فایل را قبلا دانلود کرده اید",
+      //   backgroundColor: orange,
+      // );
     }
   }
 }
