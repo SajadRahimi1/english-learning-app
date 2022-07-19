@@ -285,9 +285,9 @@ class HomeScreen extends StatelessWidget {
                             // Navigator.pushNamed(context, '/newsDetail',
                             //     arguments:
                             //         _controller.homeModel.histories[index].id);
-                            Get.to(NewsDetailScreen(isGuest: isGuest),
-                                arguments:
-                                    _controller.homeModel.histories[index].id);
+                            // Get.to(NewsDetailScreen(isGuest: isGuest),
+                            //     arguments:
+                            //         _controller.homeModel.histories[index].id);
                           }
                           if (_controller.homeModel.histories[index].type ==
                               "podcasts") {

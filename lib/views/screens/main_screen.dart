@@ -68,12 +68,12 @@ class MainScreen extends StatelessWidget {
             //   bookScreenBool = false;
             // }
 
-            if (newsDetailScreenBool) {
-              newsDetailScreen.controller.isClosed
-                  ? () {}
-                  : newsDetailScreen.controller.onClose();
-              newsDetailScreenBool = false;
-            }
+            // if (newsDetailScreenBool) {
+            //   newsDetailScreen.controller.isClosed
+            //       ? () {}
+            //       : newsDetailScreen.controller.onClose();
+            //   newsDetailScreenBool = false;
+            // }
             // if (videoScreenBool) {
             //   videoScreen.controller.isClosed
             //       ? () {}
@@ -128,8 +128,8 @@ class MainScreen extends StatelessWidget {
                           //   isGuest: isGuest,
                           // );
                           break;
-                        case "/newsDetail":
-                          return NewsDetailScreen(isGuest: isGuest);
+                        // case "/newsDetail":
+                        //   return NewsDetailScreen(isGuest: isGuest);
                         case "/home":
                           return HomeScreen(
                             isGuest: isGuest,
@@ -198,13 +198,13 @@ class MainScreen extends StatelessWidget {
                   onGenerateRoute: (settings) => MaterialPageRoute(
                     settings: settings,
                     builder: (context) {
-                      if (settings.name == '/newsDetail') {
-                        newsDetailScreen = NewsDetailScreen(
-                          isGuest: isGuest,
-                        );
-                        newsDetailScreenBool = true;
-                        return newsDetailScreen;
-                      }
+                      // if (settings.name == '/newsDetail') {
+                      //   newsDetailScreen = NewsDetailScreen(
+                      //     isGuest: isGuest,
+                      //   );
+                      //   newsDetailScreenBool = true;
+                      //   return newsDetailScreen;
+                      // }
                       if (settings.name == '/news') {
                         return NewsScreen(
                           isGuest: isGuest,

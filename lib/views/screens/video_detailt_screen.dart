@@ -43,7 +43,6 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
       child: Scaffold(
           body: controller.obx(
         (status) => Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // video in top of screen
             Container(
@@ -169,8 +168,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
             ),
 
             // paragraphs
-            SizedBox(
-              height: Get.height / 3,
+            Expanded(
               child: Obx(() => controller.videoItems.value.paragraphs.isNotEmpty
                   ? ListView.builder(
                       controller: controller.scrollController,
@@ -197,8 +195,8 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
             Obx(() => AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 height: controller.isHide.value
-                    ? Get.height / 11 / 1.5
-                    : Get.height / 11,
+                    ? Get.height / 10 / 1.5
+                    : Get.height / 10,
                 child: Column(children: [
                   // hide or show icon
                   SizedBox(
@@ -361,7 +359,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                 ]))),
 
             SizedBox(
-              height: Get.height / 50,
+              height: Get.height / 60,
             )
           ],
         ),

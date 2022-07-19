@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,7 +12,7 @@ import 'dart:io' as io;
 import 'package:zabaner/views/screens/login_screen.dart';
 
 class NewsDetailController extends GetxController with StateMixin {
-  final GetConnect _getConnect = GetConnect();
+  final GetConnect _getConnect = GetConnect(allowAutoSignedCert: true);
   late NewsItemModel newsDetail;
   final GetStorage _getStorage = GetStorage();
   late DateTime _dateTime;
@@ -26,6 +27,7 @@ class NewsDetailController extends GetxController with StateMixin {
   var playingText = "".obs;
   var playSpeed = 1.0.obs;
   var isHide = false.obs;
+  var autoScroll = true.obs;
   var percentPlayed = 0.0.obs;
   var downloadingPercent = 0.0.obs;
   var duration = const Duration().obs;
@@ -192,6 +194,13 @@ class NewsDetailController extends GetxController with StateMixin {
               ind = i;
             }
           }
+          if (autoScroll.value) {
+            scrollController.scrollToIndex(
+              ind + 1,
+              preferPosition: AutoScrollPosition.begin,
+              duration: const Duration(milliseconds: 1200),
+            );
+          }
         });
       } else {
         Get.snackbar("", "ابتدا فایل صورتی را دانلود کنید");
@@ -205,6 +214,13 @@ class NewsDetailController extends GetxController with StateMixin {
     io.File _checkFile = io.File(appDoc.path + id + title);
     print(appDoc.path + id + title);
     if (!_checkFile.existsSync()) {
+      Get.defaultDialog(
+          title: "در حال دانلود فایل صوتی",
+          onWillPop: () async => downloadingPercent.value == 1 ? true : false,
+          backgroundColor: orange,
+          content: Obx(() => CircularProgressIndicator(
+                value: downloadingPercent.value,
+              )));
       var _downloadRequest = await dio
           .download(baseUrl + urlPath, appDoc.path + id + title,
               onReceiveProgress: (recive, total) {
@@ -212,7 +228,9 @@ class NewsDetailController extends GetxController with StateMixin {
         downloadingPercent.value = recive / total;
         print(downloadingPercent);
       });
+
       Get.closeAllSnackbars();
+      Get.back();
 
       if (_downloadRequest.statusCode == 200) {
         print("Completed");

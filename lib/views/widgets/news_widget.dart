@@ -34,7 +34,7 @@ class NewsWidget extends StatelessWidget {
           InkWell(
               onTap: () {
                 // Navigator.pushNamed(context, '/newsDetail', arguments: id);
-                Get.to(NewsDetailScreen(isGuest: isGuest), arguments: id);
+                Get.to(NewsDetailScreen(isGuest: isGuest,id: id));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),
